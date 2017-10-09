@@ -12,12 +12,13 @@ import {
 } from 'react-router-dom'
 
 
-import DemoInput from "./DemoInput";
+
 import {styles} from "./styles";
 import {globalStyles} from "../components/styles";
 
 import {TopMenu} from "../menu";
 import {CreateImageForm} from "../create-image-form";
+import {ImageUploader} from "../image-uploader";
 export  class Home extends Component {
 
 render() {
@@ -29,6 +30,7 @@ render() {
           </div>
           <div id="mainContent">
                 <CreateImageForm/>
+                <ImageUploader/>
           </div>
 
 
