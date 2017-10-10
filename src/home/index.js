@@ -19,23 +19,52 @@ import {globalStyles} from "../components/styles";
 import {TopMenu} from "../menu";
 import {CreateImageForm} from "../create-image-form";
 import {ImageUploader} from "../image-uploader";
+import {LoginForm} from "../login-form";
+import {storeHelper,store} from "../store";
+
+
+
+
+
 export  class Home extends Component {
+  constructor(props){
+    super(props);
+    this.state={authorization:storeHelper.getAuthorization()};
 
+    store.subscribe(()=>{
+          this.setState(Object.assign({}, this.state, {authorization:storeHelper.getAuthorization()}));
+    });
+
+  }
 render() {
+      console.log("******:");
 
+      if(this.state.authorization){
+            return(
+              <div className="container">
+                  <div style={globalStyles.headerSection}>
+                       <TopMenu selected="home"/>
+                  </div>
+                  <div id="mainContent">
+                        <CreateImageForm/>
+                        <ImageUploader/>
+                  </div>
+
+              </div>
+            );
+  }
+else{
     return (
       <div className="container">
           <div style={globalStyles.headerSection}>
-               <TopMenu selected="home"/>
           </div>
           <div id="mainContent">
-                <CreateImageForm/>
-                <ImageUploader/>
+                <LoginForm/>
           </div>
-
-
-
       </div>
             );
   }
+
+}
+
 }

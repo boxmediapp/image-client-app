@@ -4,9 +4,6 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import './css/App.css';
-import './css/home.css';
-import "./css/global-input.css"
 
 
 import {Home} from "./home";
@@ -23,17 +20,18 @@ export default class App extends Component{
 
     return (
 
-      <Router>
+            <Router>
 
-        <div className="topContainer">
+              <div className="topContainer">
 
-            <Route  path="/" exact component={Home}/>
-
-
-            </div>
+                  <Route  path="/" exact component={Home}/>
 
 
-      </Router>
+                  </div>
+
+
+            </Router>
+
       )
     }
 }

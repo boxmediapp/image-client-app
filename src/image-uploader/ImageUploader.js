@@ -29,9 +29,9 @@ export  default class ImageUploader extends Component {
   render() {
 
     return (
-               <div class="container">
-                       <div class="row">
-                         <div class="col-sm-12">
+               <div className="container">
+                       <div className="row">
+                         <div className="col-sm-12">
                               <div className="dropzone">
                                   <Dropzone onDrop={this.onDrop.bind(this)}>
                                       <ImagePreview url={this.state.imagePreviewUrl}/>
@@ -39,9 +39,9 @@ export  default class ImageUploader extends Component {
                               </div>
                          </div>
                       </div>
-                      <div class="row">
-                          <div class="col-sm-12">
-                                <button type="button" class="btn btn-default">Upload</button>
+                      <div className="row">
+                          <div className="col-sm-12">
+                                <button type="button" className="btn btn-default">Upload</button>
                           </div>
                       </div>
 
