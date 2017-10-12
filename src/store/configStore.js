@@ -5,15 +5,15 @@ import thunk from "redux-thunk";
 import {persistStore,autoRehydrate} from "redux-persist"
 
 
-import {userSettings} from "./userSettings";
-import {appConfig} from "./appConfig";
+import {userSettings} from "./reducers/userSettings";
+import {applicationSettings} from "./reducers/applicationSettings";
 import {combineReducers} from "redux";
 
 //const appliedMiddleWare=applyMiddleware(thunk,logger);
 const appliedMiddleWare=applyMiddleware(thunk);
 var reducers=combineReducers({
     userSettings:userSettings.reducer,
-    appconfig:appConfig.reducer
+    applicationSettings:applicationSettings.reducer
 });
 
 

@@ -6,7 +6,7 @@ const initialState={
      appconfig:""
 }
 
-export const appConfig={
+export const applicationSettings={
       reducer:function (state=initialState, action){
               switch(action.type){
               case ActionNames.SET_APP_CONFIG:

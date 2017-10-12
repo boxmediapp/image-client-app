@@ -3,8 +3,8 @@ import React,{Component} from "react";
 
 import configStore  from "./configStore";
 
-import {userSettings} from "./userSettings";
-import {appConfig} from "./appConfig"
+import {userSettings} from "./reducers/userSettings";
+import {applicationSettings} from "./reducers/applicationSettings"
 
 const store=configStore();
 
@@ -27,10 +27,10 @@ const data={
     }
   },
   setAppConfig:function(appconfig){
-    store.dispatch(appConfig.actions.appconfig(appconfig));
+    store.dispatch(applicationSettings.actions.appconfig(appconfig));
   },
   getAppConfig:function(){
-    return store.getState().appconfig;
+    return store.getState().applicationSettings.appconfig;
   }
 };
 

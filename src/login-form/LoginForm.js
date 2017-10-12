@@ -69,8 +69,7 @@ export default class LoginForm extends Component {
            }
         };
       }
-      render() {
-
+      render() {          
           return (
              <div className="container">
                    <div className="row">
