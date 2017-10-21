@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {ListEpisodes} from "../components";
-import {imageUtil} from "../utils";
+import {genericUtil} from "../utils";
 
-import {data,store} from "../store";
+import {episodedata,store} from "../store";
 import {api} from "../api";
+
 export default class EpisodeListView extends Component{
 
   constructor(props){
@@ -13,26 +14,25 @@ export default class EpisodeListView extends Component{
 
   }
   bindToStore(){
-    this.state={episodes:data.epidodes.list(), imageStatus:data.epidodes.imageStatus,search:data.epidodes.search,};
+    this.state=episodedata.getEpisodeList();
     this.ubsubsribe=store.subscribe(()=>{
-          this.setEpisodes(data.epidodes.list(),data.epidodes.imageStatus,data.epidodes.search);
+            this.setEpisodes(episodedata.getEpisodeList());
     });
   }
   bindToQueryParameters(){
-      var imageStatus=imageUtil.getQueryParam(this.props.location.search, "imageStatus");
-      var search=imageUtil.getQueryParam(this.props.location.search, "search");
+      var imageStatus=genericUtil.getQueryParam(this.props.location.search, "imageStatus");
+      var search=genericUtil.getQueryParam(this.props.location.search, "search");
        api.listEpisodes({imageStatus,search}).then(episodes =>{
 
-          data.epidodes.setEpisodes(episodes,imageStatus,search);
+          episodedata.setEpisodeList({episodes,imageStatus,search});
       });
   }
-  setEpisodes(episodes,imageStatus,search){
-    console.log("::::store:"+episodes);
-      if(this.state.episodes===episodes && this.state.imageStatus===imageStatus && this.state.search===search){
-        return;
+  setEpisodes(episodelistdata){
+
+      if(episodedata.isEpisodeListIdentical(this.state,episodelistdata)){
+            return;
       }
-      this.setState(Object.assign({},this.state,{episodes,imageStatus,search}));
-      console.log("****store****************"+JSON.stringify(store.getState()));
+      this.setState(Object.assign({},this.state,episodelistdata));
   }
   render(){
        return (

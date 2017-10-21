@@ -1,7 +1,7 @@
 
 import "whatwg-fetch";
 import {config} from "../configs";
-import {data} from "../store";
+import {appdata} from "../store";
 
 
 
@@ -24,11 +24,11 @@ const pHTTPPostRequest=function(path, headers, body){
 
 
 const pBuildHttpHeader=function(){
-       return {Authorization: data.getAuthorization()};
+       return {Authorization: appdata.getAuthorization()};
 };
 
 const pBuildHttpHeaderWithUsernameAndPassword=function(username,password){
-      return {Authorization: data.buildAuthorization(username,password)};
+      return {Authorization: appdata.buildAuthorization(username,password)};
 };
 
 const httpGetRequest=function(path){
@@ -71,9 +71,9 @@ class ServiceAPI {
                  return httpGetRequest("images/episodes");
                }
          }
-
-
-
+         getEpisodeById(id){
+            return httpGetRequest("images/episodes/"+id);
+         }
 
 }
 

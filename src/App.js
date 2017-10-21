@@ -11,7 +11,7 @@ import "./styles/App.css";
 
 import {textValues,images} from  "./configs";
 
-import {data,store} from "./store";
+import {appdata,store} from "./store";
 import {api} from "./api";
 
 import {DisplayLogin} from "./display-login";
@@ -21,10 +21,10 @@ import {EpisodeListView,EpisodeView} from "./episodes";
 export default class App extends Component{
   constructor(props){
     super(props);
-    this.state={authorization:data.getAuthorization()};
+    this.state={authorization:appdata.getAuthorization()};
     this.ubsubsribe=store.subscribe(()=>{
-          this.setAuthorization(data.getAuthorization());
-          console.log("Store AppConfig:"+JSON.stringify(data.getAppConfig()));
+          this.setAuthorization(appdata.getAuthorization());
+          console.log("Store AppConfig:"+JSON.stringify(appdata.getAppConfig()));
     });
 
   }
@@ -35,7 +35,7 @@ export default class App extends Component{
     api.loadConfig().then(appconfig=>{
       console.log("going to set config:"+JSON.stringify(appconfig));
 
-        data.setAppConfig(appconfig);
+        appdata.setAppConfig(appconfig);
 
 
       this.setState(Object.assign({}, this.state, {authorization:currentAuthorization}));

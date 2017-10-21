@@ -1,48 +1,71 @@
 import React, {Component} from 'react'
-import {ListEpisodes} from "../components";
-import {imageUtil} from "../utils";
+import {ListEpisodes,ImageUploader} from "../components";
+import {genericUtil} from "../utils";
 
-import {data,store} from "../store";
+import {episodedata,store} from "../store";
 import {api} from "../api";
+import {textValues} from "../configs";
+
 export default class EpisodeView extends Component{
 
   constructor(props){
         super(props);
-        this.bindToQueryParameters();
-
-        this.bindToStore();
+        var episodeId=genericUtil.getPathVariable(this.props.location.pathname,textValues.episode.view.link);
+        var episode=episodedata.findEpisodeById(episodeId);
+        this.state={episode};
+        this.ubsubsribe=store.subscribe(()=>{
+              var episode=episodedata.findEpisodeById(episodeId);
+              this.setEpisode(episode);
+        });
+         api.getEpisodeById(episodeId).then(episode =>{
+            episodedata.updateEpsiode(episode);
+        });
 
   }
-  bindToQueryParameters(){
-      // var imageStatus=imageUtil.getQueryParam(this.props.location.search, "imageStatus");
-      // var search=imageUtil.getQueryParam(this.props.location.search, "search");
-      //  api.listEpisodes({imageStatus,search}).then(episodes =>{
-      //
-      //     data.epidodes.setEpisodes(episodes,imageStatus,search);
-      // });
-  }
-  bindToStore(){
-    // this.state={episodes:data.epidodes.list(), imageStatus:data.epidodes.imageStatus,search:data.epidodes.search};
-    // this.ubsubsribe=store.subscribe(()=>{
-    //       this.setEpisodes(data.epidodes.list(),data.epidodes.imageStatus,data.epidodes.search);
-    // });
+  setEpisode(episode){
+    if(episode===this.state.episode || episodedata.isEpisodeIsIdentical(episode, this.state.episode)){
+        return;
+    }
+    this.setState(Object.assign({}, this.state,{episode}));
   }
 
-  // setEpisodes(episodes,imageStatus,search){
-  //   console.log("::::store:"+episodes);
-  //     if(this.state.episodes===episodes && this.state.imageStatus===imageStatus && this.state.search===search){
-  //       return;
-  //     }
-  //     this.setState(Object.assign({},this.state,{episodes,imageStatus,search}));
-  //     console.log("****store****************"+JSON.stringify(store.getState()));
-  // }
+
   render(){
-      console.log("******this.props.location:"+JSON.stringify(this.props.location));
-       return (
-           <div>
-             Episode View**
-           </div>
-         );
+
+      var episode=this.state.episode;
+      if(episode){
+
+        return (
+          <div className="container">
+                  <div className="row">
+                      <div className="col-sm-6">
+                         <label htmlFor="contractNumber">Contract Number:</label>
+                         <input type="text" className="form-control" id="contractNumber" placeholder="Contract number" name="contractNumber" value={episode.contractNumber} readOnly={true}/>
+                       </div>
+                       <div className="col-sm-6">
+                         <label htmlFor="episodeNumber">Episde Number:</label>
+                       <input type="text" className="form-control" id="episodeNumber" placeholder="Episode Number" name="episodeNumber" readOnly={true} value={episode.episodeNumber}/>
+                     </div>
+                 </div>
+                 <div className="row">
+                   <div className="col-sm-12">
+                      <label htmlFor="title">Title:</label>
+                      <input type="text" className="form-control" id="title" placeholder="Title" name="title" value={episode.title} readOnly={true}/>
+                    </div>
+                 </div>
+                 <div className="row">
+                   <div className="col-sm-12">
+                       <ImageUploader/>
+                   </div>
+                 </div>
+
+         </div>
+          );
+      }
+      else{
+        return null;
+      }
+
   }
 
   componentWillUnmount(){

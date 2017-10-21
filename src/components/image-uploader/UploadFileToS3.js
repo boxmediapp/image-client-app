@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 
 
-import {data} from "../store";
+import {data} from "../../store";
 
 
 
 export default class UploadFileToS3 {
 
   startUpload(s3, file, onComplete,onProgress, onError, onAbort){
+
+
     var formData = new FormData();
     formData.append("key", s3.file);
     formData.append("acl", s3.acl);

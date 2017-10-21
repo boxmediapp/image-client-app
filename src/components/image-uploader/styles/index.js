@@ -8,10 +8,5 @@ export const styles={
       borderColor: 'rgb(102, 102, 102)',
       borderStyle: 'dashed',
       borderRadius: 15
-  },
-  imagePropContainer:{
-      
-
   }
-
 };

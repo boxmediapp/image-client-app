@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import  {styles} from  "./styles";
-import {data} from "../store";
-import {api} from "../api";
+import {appdata} from "../../store";
+import {api} from "../../api";
 export default class DisplayUploadButton extends Component {
 
   onUpload(){
-     var appconfig=data.getAppConfig();
+     var appconfig=appdata.getAppConfig();
 
      var uploadRequest={
-                 file:appconfig.imagePublicFolder+"/"+this.props.uploadFilename,
+                 file:appconfig.imageClientFolder+"/"+this.props.uploadFilename,
                  bucket:appconfig.imageBucket
       };
       var that=this;

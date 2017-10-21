@@ -6,7 +6,7 @@ import {config} from "../../configs";
 import {CodeDataRenderer} from "global-input-react";
 import  "./styles/LoginForm.css";
 import {api} from "../../api";
-import {data} from "../../store";
+import {appdata} from "../../store";
 
 export default class LoginForm extends Component {
    constructor(props){
@@ -23,7 +23,7 @@ export default class LoginForm extends Component {
   login(){
       const {username,password}=this.state;
       api.login(username,password).then(function(user){
-          data.setCredentials(username,password);
+          appdata.setCredentials(username,password);
       }).catch(function(){
            console.log("Fail!");
       });

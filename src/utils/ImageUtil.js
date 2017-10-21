@@ -1,4 +1,6 @@
+
 export default class ImageUtil{
+
   getImageType(content){
     if(!content){
       console.log("Failed to read the file");
@@ -33,18 +35,6 @@ export default class ImageUtil{
     }
     return imageType;
   }
-  getQueryParam(query,variable) {
-    if(!query){
-      return null;
-    }
-    query=query.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) == variable) {
-            return decodeURIComponent(pair[1]);
-        }
-    }
-  }
 
+  
 }
