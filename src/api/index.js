@@ -1,3 +1,4 @@
+
 import "whatwg-fetch";
 import {config} from "../configs";
 import {data} from "../store";
@@ -53,6 +54,22 @@ class ServiceAPI {
          }
          requestS3UploadURL(request){
            return httpPostRequest("presigned", JSON.stringify(request));
+         }
+         listEpisodes(request){
+               var imageStatus=request.imageStatus;
+               var search=request.search;
+               if(imageStatus && search){
+                      return httpGetRequest("images/episodes?imageStatus="+imageStatus+"&search="+search);
+               }
+               else if(imageStatus){
+                      return httpGetRequest("images/episodes?imageStatus="+imageStatus);
+               }
+               else if(search){
+                      return httpGetRequest("images/episodes?search="+search);
+               }
+               else{
+                 return httpGetRequest("images/episodes");
+               }
          }
 
 

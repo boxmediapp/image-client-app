@@ -7,13 +7,15 @@ import {persistStore,autoRehydrate} from "redux-persist"
 
 import {userSettings} from "./reducers/userSettings";
 import {applicationSettings} from "./reducers/applicationSettings";
+import {episodeList} from "./reducers/episodeList"
 import {combineReducers} from "redux";
 
 //const appliedMiddleWare=applyMiddleware(thunk,logger);
 const appliedMiddleWare=applyMiddleware(thunk);
 var reducers=combineReducers({
     userSettings:userSettings.reducer,
-    applicationSettings:applicationSettings.reducer
+    applicationSettings:applicationSettings.reducer,
+    episodeList:episodeList.reducer
 });
 
 

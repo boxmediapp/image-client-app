@@ -5,6 +5,7 @@ import configStore  from "./configStore";
 
 import {userSettings} from "./reducers/userSettings";
 import {applicationSettings} from "./reducers/applicationSettings"
+import {episodeList} from "./reducers/episodeList";
 
 const store=configStore();
 
@@ -31,6 +32,20 @@ const data={
   },
   getAppConfig:function(){
     return store.getState().applicationSettings.appconfig;
+  },
+  epidodes:{
+        setEpisodes(episodes,imageStatus,search){
+            store.dispatch(episodeList.actions.setEpisodes({episodes,imageStatus,search}));
+        },
+        list:function(){
+          return store.getState().episodeList.episodes;
+        },
+        imageStatus:function(){
+          return store.getState().episodeList.imageStatus;
+        },
+        search:function(){
+          return store.getState().episodeList.search;
+        }
   }
 };
 
