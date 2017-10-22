@@ -29,8 +29,31 @@ export default class EpisodeView extends Component{
     this.setState(Object.assign({}, this.state,{episode}));
   }
 
-onHDUploadComplete(filename){
-        console.log(filename+" is uploaded");
+onHDUploadComplete(filename, baseURL, imageTags, width,height){
+        console.log(filename+" is uploaded:"+baseURL);
+        var imageset={
+             tags:imageTags,
+             episodeId:this.state.episode.id,
+             programmeNumber:this.state.episode.programmeNumber,
+             title:this.state.episode.title
+        }
+        api.createImageSet(imageset).then(function(imageset){
+            var image={
+               filename:filename,
+               s3BaseURL:baseURL,
+               width:width,
+               height:height               
+            };
+            api.createImage(imageset.id,image).then(function(image){
+                  console.log("***image created:"+JSON.stringify(image));
+            }).catch(error=>{
+                console.error("****:"+error);
+            });
+
+            console.log("success:"+JSON.stringify(imageset));
+        }).catch(function(error){
+          console.error("****:"+error);
+        });
 
 }
   render(){

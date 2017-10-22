@@ -1,7 +1,3 @@
-.newImageDropContainer {
-    margin-left: 50px;
-    margin-top: 50px;
-}
 
 
 .previewImageContainer {
@@ -13,19 +9,8 @@
   margin-top: 50px;
 
 }
-.previewImageCell {
-    display:flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-end;
-    width: 100%;
-
-}
 
 
-.imagePreview {
-    max-height: 300px;
-}
 .previewText {
     text-align: center;
 }

@@ -21,7 +21,7 @@ export  default class ImageUploader extends Component {
      super(props);
      this.state={file:null,imagePreviewUrl:null,
        imageType:null,width:0,height:0, modalMessage:null, progressValue:0, progressTotal:0,
-       imageTags:null, fileVersion:"001"};
+       imageTags:null, filepath:null,baseURL:null};
    }
    setProgressValue(progressValue,progressTotal){
      this.setState(Object.assign({}, this.state,{progressValue,progressTotal}));
@@ -75,6 +75,7 @@ export  default class ImageUploader extends Component {
 
 
   startUpload(s3){
+    this.setFilePath(s3.file, s3.baseURL)
     this.setProgressValue(0,1);
     genericUtil.startUpload({s3,
                file:this.state.file,
@@ -91,9 +92,8 @@ export  default class ImageUploader extends Component {
     this.setProgressValue(progressValue,total);
   }
   onUploadComplete(){
-    var uploadFilename=this.buildFileName();
     this.clearProgress();
-    this.props.onComplete(uploadFilename);
+    this.props.onComplete(this.state.filepath,this.state.baseURL, this.state.imageTags, this.state.width,this.state.height);
   }
   onUploadError(result){
     console.log("error:"+JSON.stringify(result));
@@ -105,9 +105,17 @@ export  default class ImageUploader extends Component {
     this.setErrorMessage(textValues.upload.aborted);
   }
   buildFileName(){
-    return genericUtil.buildImageFileName(this.props.episode,this.state.fileVersion,this.state.width, this.state.height,this.state.imageType);
+    var fileVersion=genericUtil.getFileVersion(this.props.episode.imageSetNumber);
+    var contractNumber=this.props.episode.contractNumber;
+    var episodeNumber=this.props.episode.episodeNumber;
+    return genericUtil.buildImageFileName(contractNumber,episodeNumber,fileVersion,this.state.width, this.state.height,this.state.imageType);
+  }
+  setFilePath(filepath, baseURL){
+    this.setState(Object.assign({}, this.state,{filepath,baseURL}))
+
   }
   onUpload(){
+
      var appconfig=appdata.getAppConfig();
      var uploadFilename=this.buildFileName();
      var uploadRequest={
@@ -137,13 +145,11 @@ setImageTags(imageTags){
   renderDropNewImage(){
 
     return(
-      <div className="newImageDropContainer dropzone">
-          <Dropzone onDrop={this.onDrop.bind(this)} style={styles.newImagedropZone}>
+      <div className="dropzone">
+          <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(533)}>
               <div className="previewText">Click or drag and drop the image to  here</div>
           </Dropzone>
           <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
-
-
      </div>
     );
 
@@ -165,9 +171,9 @@ setImageTags(imageTags){
       }
       return(
              <div className="previewImageContainer">
-                   <div  className="previewImageCell">
-                       <Dropzone onDrop={this.onDrop.bind(this)} style={styles.previewImagedropZone(this.state.width)}>
-                              <img src={this.state.imagePreviewUrl} className="imagePreview"/>
+                   <div  className="dropzone">
+                       <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(this.state.width, this.state.height)}>
+                              <img src={this.state.imagePreviewUrl} style={styles.dropzone(this.state.width)}/>
                               <ProgressBar {...this.state}/>
                        </Dropzone>
                    </div>
@@ -207,7 +213,7 @@ class RenderTagInput extends Component{
        return (
          <div className="formField">
             <label htmlFor="title">tag:</label>
-            <input type="text" className="form-control" id="imageTags" placeholder="Tags" name="tags" onChange={evt=>{this.props.setImageTags(evt.target.value)}}/>
+            <input type="text" className="form-control" id="imageTags" placeholder="Required for upload" name="tags" onChange={evt=>{this.props.setImageTags(evt.target.value)}}/>
          </div>
        );
      }

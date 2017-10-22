@@ -74,6 +74,12 @@ class ServiceAPI {
          getEpisodeById(id){
             return httpGetRequest("images/episodes/"+id);
          }
+         createImageSet(imageset){
+            return httpPostRequest("images/image-sets", JSON.stringify(imageset));
+         }
+         createImage(setid,image){
+           return httpPostRequest("images/image-sets/"+setid, JSON.stringify(image));
+         }
 
 }
 

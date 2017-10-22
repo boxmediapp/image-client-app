@@ -76,7 +76,20 @@ export default class GenericUtil{
     xhr.open("POST", request.s3.baseURL);
     xhr.send(formData);
   }
-  buildImageFileName(episode, versionNumber,width,height,type){
-    return episode.contractNumber+"_"+episode.episodeNumber+"_"+versionNumber+"_"+width+"x"+height+"."+type;
+  buildImageFileName(contractNumber, episodeNumber, versionNumber,width,height,type){
+    return contractNumber+"_"+episodeNumber+"_"+versionNumber+"_"+width+"x"+height+"."+type;
   }
+  getFileVersion(currentSequenceNumber){
+    var fileNumber=0;
+    if(currentSequenceNumber){
+            fileNumber=currentSequenceNumber;
+            fileNumber++;
+    }
+    var ret=""+fileNumber;
+    while(ret.length<3){
+      ret="0"+ret;
+    }
+    return ret;
+  }
+
 }
