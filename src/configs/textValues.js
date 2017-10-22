@@ -8,6 +8,10 @@ const textValues={
        list:{
          link:"/",
        }
+    },
+    upload:{
+      failed:"Failed to upload the file to the s3 bucket",
+      aborted:"Upload aborted"
     }
   };
 export default textValues;

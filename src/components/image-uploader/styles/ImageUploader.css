@@ -1,34 +1,47 @@
-.imagePropertyCell {
-
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-
+.newImageDropContainer {
+    margin-left: 50px;
+    margin-top: 50px;
 }
 
-.imagePreviewContainer {
+
+.previewImageContainer {
   display:flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-left: 50px;
+  margin-top: 50px;
+
 }
-.previewContainer {
+.previewImageCell {
     display:flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-end;
     width: 100%;
+
 }
 
 
 .imagePreview {
-    max-height: 200px;
+    max-height: 300px;
 }
 .previewText {
-    max-height: 200px;
+    text-align: center;
 }
 
 
 .imageFooter{
 
+  display:flex;
+  flex-direction: row;
+}
+.formField{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.dimensionContainer{
+  margin-right: 40px;
 }

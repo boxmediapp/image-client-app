@@ -29,7 +29,10 @@ export default class EpisodeView extends Component{
     this.setState(Object.assign({}, this.state,{episode}));
   }
 
+onHDUploadComplete(filename){
+        console.log(filename+" is uploaded");
 
+}
   render(){
 
       var episode=this.state.episode;
@@ -55,7 +58,7 @@ export default class EpisodeView extends Component{
                  </div>
                  <div className="row">
                    <div className="col-sm-12">
-                       <ImageUploader/>
+                       <ImageUploader episode={this.state.episode}  onComplete={this.onHDUploadComplete.bind(this)}/>
                    </div>
                  </div>
 

@@ -1,4 +1,0 @@
-<div id="mainContent">
-      <CreateImageForm/>
-      <ImageUploader uploadFilename="test123"/>
-</div>

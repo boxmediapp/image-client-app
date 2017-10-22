@@ -28,46 +28,55 @@ export default class GenericUtil{
       return content.substring(prefix.length);
     }
   }
-  startUpload(s3, file, onComplete,onProgress, onError, onAbort){
+  startUpload(request){
     var formData = new FormData();
-    formData.append("key", s3.file);
-    formData.append("acl", s3.acl);
-    formData.append("success_action_status", s3.successActionStatus);
-    formData.append("policy", s3.policy);
-    formData.append("x-amz-algorithm", s3.xamzAlgorithm);
-    formData.append("x-amz-credential", s3.xamzCredential);
-    formData.append("x-amz-date", s3.xamzDate);
-    formData.append("x-amz-signature", s3.xamzSignature);
-    formData.append("file",file);
+    formData.append("key", request.s3.file);
+    formData.append("acl", request.s3.acl);
+    formData.append("success_action_status", request.s3.successActionStatus);
+    formData.append("policy", request.s3.policy);
+    formData.append("x-amz-algorithm", request.s3.xamzAlgorithm);
+    formData.append("x-amz-credential", request.s3.xamzCredential);
+    formData.append("x-amz-date", request.s3.xamzDate);
+    formData.append("x-amz-signature", request.s3.xamzSignature);
+    formData.append("file",request.file);
     var xhr = new XMLHttpRequest();
     xhr.upload.addEventListener("progress", function(evt){
       if (evt.lengthComputable) {
-         if(onProgress){
-            onProgress(evt.loaded,evt.total);
+         if(request.onProgress){
+            request.onProgress(evt.loaded,evt.total);
          }
       }
     });
 
     xhr.upload.addEventListener("load", function(evt){
-      console.log("comlete:"+JSON.stringify(evt));
-      if(onComplete){
-          onComplete(evt);
+      if(request.onComplete){
+        if(xhr.responseXML){
+            request.onComplete(evt, xhr.responseXML);
+        }
+        else if(xhr.responseText){
+            request.onComplete(evt, xhr.responseText);
+        }
+        else{
+          request.onComplete(evt, xhr.response);
+        }
+
       }
 
     });
     xhr.upload.addEventListener("error", function(evt){
-      console.log("error:"+JSON.stringify(evt));
-      if(onError){
-          onError(evt);
+      if(request.onError){
+          request.onError(evt);
       }
     });
     xhr.upload.addEventListener("abort", function(evt){
-      console.log("abort:"+JSON.stringify(evt));
-      if(onAbort){
-          onAbort(evt);
+      if(request.onAbort){
+          request.onAbort(evt);
       }
     });
-    xhr.open("POST", s3.baseURL);
+    xhr.open("POST", request.s3.baseURL);
     xhr.send(formData);
+  }
+  buildImageFileName(episode, versionNumber,width,height,type){
+    return episode.contractNumber+"_"+episode.episodeNumber+"_"+versionNumber+"_"+width+"x"+height+"."+type;
   }
 }

@@ -11,7 +11,6 @@ export default class EpisodeListView extends Component{
         super(props);
         this.bindToStore();
         this.bindToQueryParameters();
-
   }
   bindToStore(){
     this.state=episodedata.getEpisodeList();
