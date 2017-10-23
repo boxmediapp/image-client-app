@@ -132,8 +132,12 @@ setImageTags(imageTags){
    this.setState(Object.assign({}, this.state,{imageTags}));
 }
   render() {
+
     if(this.state.imagePreviewUrl){
             return this.renderPreview();
+    }
+    if(this.props.image){
+        return this.renderImage(this.props.image);
     }
     else {
       return this.renderDropNewImage();
@@ -146,7 +150,7 @@ setImageTags(imageTags){
 
     return(
       <div className="dropzone">
-          <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(533)}>
+          <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone()}>
               <div className="previewText">Click or drag and drop the image to  here</div>
           </Dropzone>
           <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
@@ -173,7 +177,7 @@ setImageTags(imageTags){
              <div className="previewImageContainer">
                    <div  className="dropzone">
                        <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(this.state.width, this.state.height)}>
-                              <img src={this.state.imagePreviewUrl} style={styles.dropzone(this.state.width)}/>
+                              <img src={this.state.imagePreviewUrl} style={styles.dropzone(this.state.width, this.state.height)}/>
                               <ProgressBar {...this.state}/>
                        </Dropzone>
                    </div>
@@ -188,7 +192,29 @@ setImageTags(imageTags){
       );
     }
 
+    renderImage(image){
+        var imageURL=image.s3BaseURL+"/"+image.filename;
+      return(
+             <div className="previewImageContainer">
+                   <div  className="dropzone">
+                       <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(image.width, image.height)}>
+                              <img src={imageURL} style={styles.dropzone(image.width, image.height)}/>
+                              <ProgressBar {...this.state}/>
+                       </Dropzone>
+                   </div>
+                   <div  className="imageFooter container">
+                            <RenderDimension render={true} {...this.state}/>
+                   </div>
+                   <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
+             </div>
+      );
+
+    }
+
+
 }
+
+
 
 class RenderDimension extends Component{
   render(){

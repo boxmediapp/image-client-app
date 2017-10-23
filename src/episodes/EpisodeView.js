@@ -6,6 +6,7 @@ import {episodedata,store} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 
+
 export default class EpisodeView extends Component{
 
   constructor(props){
@@ -42,7 +43,7 @@ onHDUploadComplete(filename, baseURL, imageTags, width,height){
                filename:filename,
                s3BaseURL:baseURL,
                width:width,
-               height:height               
+               height:height
             };
             api.createImage(imageset.id,image).then(function(image){
                   console.log("***image created:"+JSON.stringify(image));
@@ -79,11 +80,14 @@ onHDUploadComplete(filename, baseURL, imageTags, width,height){
                       <input type="text" className="form-control" id="title" placeholder="Title" name="title" value={episode.title} readOnly={true}/>
                     </div>
                  </div>
+                 <DisplatImageSets imageSets={this.state.episode.imageSets}/>
+
                  <div className="row">
                    <div className="col-sm-12">
                        <ImageUploader episode={this.state.episode}  onComplete={this.onHDUploadComplete.bind(this)}/>
                    </div>
                  </div>
+
 
          </div>
           );
@@ -98,5 +102,60 @@ onHDUploadComplete(filename, baseURL, imageTags, width,height){
     if(this.ubsubsribe){
       this.ubsubsribe();
     }
+  }
+}
+
+
+
+
+class DisplatImageSets extends Component{
+
+
+  render(){
+
+      var imageSets=this.props.imageSets;
+      if(imageSets){
+
+        return imageSets.map(this.renderImageSet);
+      }
+      else{
+        return null;
+      }
+
+  }
+renderImageSet(imgset){
+  var that=this;
+  if(!imgset || !imgset.images){
+    return null;
+  }
+  return(
+        <div className="imageSetRecord">
+            <div className="imageSetTag">
+               {imgset.tags}
+             </div>
+             <DisplayImages images={imgset.images}/>
+
+
+       </div>
+     );
+ }
+
+
+}
+class DisplayImages extends Component{
+  render(){
+      var images=this.props.images;
+     if(images){
+         return images.map(this.renderImage);
+     }
+     else{
+       return null;
+     }
+
+  }
+  renderImage(image){
+    return(
+          <ImageUploader image={image}/>
+       );
   }
 }

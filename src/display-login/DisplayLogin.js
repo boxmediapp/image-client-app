@@ -4,7 +4,7 @@ import {LoginForm} from "../components";
 import {images,textValues} from "../configs";
 
 import  "./styles/DisplayLogin.css";
-//import AutoLogin from "../do-not-check-in";
+import AutoLogin from "../do-not-check-in";
 export  default class DisplayLogin extends Component {
 
     render() {
