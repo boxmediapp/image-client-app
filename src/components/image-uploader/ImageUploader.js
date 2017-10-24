@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 
-import Dropzone from 'react-dropzone'
+
 
 
 import {imageUtil,genericUtil} from "../../utils";
@@ -9,7 +9,10 @@ import {api} from "../../api";
 import {textValues} from "../../configs";
 import {ModalDialog} from "../index";
 import {styles} from "./styles";
-import  "./styles/ImageUploader.css";
+
+
+import  RenderImage from "./RenderImage";
+
 
 
 
@@ -21,7 +24,11 @@ export  default class ImageUploader extends Component {
      super(props);
      this.state={file:null,imagePreviewUrl:null,
        imageType:null,width:0,height:0, modalMessage:null, progressValue:0, progressTotal:0,
-       imageTags:null, filepath:null,baseURL:null};
+       imageTags:"", filepath:null,baseURL:null};
+       if(this.props.image){
+          this.imageTags=this.props.image.tags;
+       }
+
    }
    setProgressValue(progressValue,progressTotal){
      this.setState(Object.assign({}, this.state,{progressValue,progressTotal}));
@@ -132,162 +139,18 @@ setImageTags(imageTags){
    this.setState(Object.assign({}, this.state,{imageTags}));
 }
   render() {
-
-    if(this.state.imagePreviewUrl){
-            return this.renderPreview();
-    }
-    if(this.props.image){
-        return this.renderImage(this.props.image);
-    }
-    else {
-      return this.renderDropNewImage();
-    }
-
+        return(
+           <div>
+              <RenderImage {...this.state} onDrop={this.onDrop.bind(this)}
+                onUpload={this.onUpload.bind(this)} setImageTags={this.setImageTags.bind(this)}/>
+              <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
+           </div>
+        );
 
   }
 
-  renderDropNewImage(){
-
-    return(
-      <div className="dropzone">
-          <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone()}>
-              <div className="previewText">Click or drag and drop the image to  here</div>
-          </Dropzone>
-          <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
-     </div>
-    );
-
-  }
-    renderPreview(){
-      var renderUpload=false;
-      var renderTags=false;
-      if(this.state.width==1920 && this.state.height ==1080 && this.state.imageTags){
-        renderUpload=true;
-      }
-      if(this.state.width==1920 && this.state.height ==1080){
-        renderTags=true;
-      }
-
-      var showModalDialog=false;
-      if(this.state.modalMessage){
-          showModalDialog=true;
-          console.log("*******modalMessage******");
-      }
-      return(
-             <div className="previewImageContainer">
-                   <div  className="dropzone">
-                       <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(this.state.width, this.state.height)}>
-                              <img src={this.state.imagePreviewUrl} style={styles.dropzone(this.state.width, this.state.height)}/>
-                              <ProgressBar {...this.state}/>
-                       </Dropzone>
-                   </div>
-                   <div  className="imageFooter container">
-                            <RenderDimension render={true} {...this.state}/>
-                            <RenderTagInput {...this.state} render={renderTags} setImageTags={this.setImageTags.bind(this)}/>
-                            <RenderUploadButton {...this.state} render={renderUpload} onUpload={this.onUpload.bind(this)}/>
-
-                   </div>
-                   <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
-             </div>
-      );
-    }
-
-    renderImage(image){
-        var imageURL=image.s3BaseURL+"/"+image.filename;
-      return(
-             <div className="previewImageContainer">
-                   <div  className="dropzone">
-                       <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(image.width, image.height)}>
-                              <img src={imageURL} style={styles.dropzone(image.width, image.height)}/>
-                              <ProgressBar {...this.state}/>
-                       </Dropzone>
-                   </div>
-                   <div  className="imageFooter container">
-                            <RenderDimension render={true} {...this.state}/>
-                   </div>
-                   <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
-             </div>
-      );
-
-    }
 
 
-}
-
-
-
-class RenderDimension extends Component{
-  render(){
-    if(this.props.render){
-      return(
-
-        <div className="dimensionContainer">
-          {this.props.width} x {this.props.height}
-        </div>
-      );
-    }
-    else{
-      return null;
-    }
-
-  }
-}
-class RenderTagInput extends Component{
-
-  render(){
-     if(this.props.render){
-       return (
-         <div className="formField">
-            <label htmlFor="title">tag:</label>
-            <input type="text" className="form-control" id="imageTags" placeholder="Required for upload" name="tags" onChange={evt=>{this.props.setImageTags(evt.target.value)}}/>
-         </div>
-       );
-     }
-     else{
-       return null;
-     }
-
-  }
-}
-
-class RenderUploadButton extends Component{
-  render(){
-     if(this.props.render){
-       return (
-         <div className="formField">
-           <button type="button" className="btn btn-default" onClick={this.props.onUpload}>Upload</button>
-         </div>
-       );
-     }
-    else{
-      return null;
-    }
-
-  }
-}
-
-
-class ProgressBar extends Component {
-  render(){
-    if(this.props.progressTotal){
-      var thumbnailwidth=this.props.width*300/this.props.height;
-      var finishedWith=this.props.width*300/this.props.height*this.props.progressValue/this.props.progressTotal;
-      return(
-            <div style={styles.progressBar(thumbnailwidth)}>
-                <div style={styles.progressBarProgress(finishedWith)}>
-                </div>
-            </div>
-
-      );
-    }
-    else{
-        return null;
-    }
-
-
-
-
-  }
 
 
 }

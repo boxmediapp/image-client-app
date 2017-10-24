@@ -30,7 +30,7 @@ export default class EpisodeView extends Component{
     this.setState(Object.assign({}, this.state,{episode}));
   }
 
-onHDUploadComplete(filename, baseURL, imageTags, width,height){
+onUploadComplete(filename, baseURL, imageTags, width,height){
         console.log(filename+" is uploaded:"+baseURL);
         var imageset={
              tags:imageTags,
@@ -80,11 +80,11 @@ onHDUploadComplete(filename, baseURL, imageTags, width,height){
                       <input type="text" className="form-control" id="title" placeholder="Title" name="title" value={episode.title} readOnly={true}/>
                     </div>
                  </div>
-                 <DisplatImageSets imageSets={this.state.episode.imageSets}/>
+                 <DisplatImageSets episode={this.state.episode} onComplete={this.onUploadComplete.bind(this)} imageSets={this.state.episode.imageSets}/>
 
                  <div className="row">
                    <div className="col-sm-12">
-                       <ImageUploader episode={this.state.episode}  onComplete={this.onHDUploadComplete.bind(this)}/>
+                       <ImageUploader episode={this.state.episode}  onComplete={this.onUploadComplete.bind(this)}/>
                    </div>
                  </div>
 
@@ -133,8 +133,7 @@ renderImageSet(imgset){
             <div className="imageSetTag">
                {imgset.tags}
              </div>
-             <DisplayImages images={imgset.images}/>
-
+             <DisplayImages episode={this.props.episode} onComplete={this.props.onComplete} imageSet={imgset} images={imgset.images} />
 
        </div>
      );
@@ -155,7 +154,7 @@ class DisplayImages extends Component{
   }
   renderImage(image){
     return(
-          <ImageUploader image={image}/>
+          <ImageUploader episode={this.props.episode} onComplete={this.props.onComplete} imageSet={this.props.imageSet}  image={image}/>
        );
   }
 }

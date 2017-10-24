@@ -25,28 +25,41 @@ export const styles={
       justifyContent:"center"
     };
   },
+  uploadButtonContainer:{
+    display:"flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+  },
+  tagContainer:{
+    display:"flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+  },
+  previewImageContainer: {
+    display:"flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginLeft: 50,
+    marginTop: 50
+  },
+  imageFooter:{
+    display:"flex",
+    flexDirection: "row",
+  },
+  previewText: {
+      textAlign: "center"
+  },
+  dimensionContainer:{
+    marginRight: 40
+  }
 
-  progressBar: function(width){
-    return{
-        position:"relative",
-        maxWidth: "100%",
-        top: -150,
-        left: 0,
-        border:"1px solid black",
-        width:width,
-        height:30,
-        backgroundColor:"rgba(255,255,255,0.2)  "
-      };
- },
-progressBarProgress: function(width){
-   return{
-       maxWidth: "100%",
-       border:"1px solid black",
-       width:width,
-       height:30,
-       backgroundColor:"rgba(255,255,255,0.8)  "
-     };
-}
+
+
+
+
 
 
 
