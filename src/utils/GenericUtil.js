@@ -76,20 +76,25 @@ export default class GenericUtil{
     xhr.open("POST", request.s3.baseURL);
     xhr.send(formData);
   }
-  buildImageFileName(contractNumber, episodeNumber, versionNumber,width,height,type){
-    return contractNumber+"_"+episodeNumber+"_"+versionNumber+"_"+width+"x"+height+"."+type;
-  }
-  getFileVersion(currentSequenceNumber){
-    var fileNumber=0;
-    if(currentSequenceNumber){
-            fileNumber=currentSequenceNumber;
-            fileNumber++;
+  getMaximumFileCounter(imageSets){
+    var fileCounter=0;
+    if(!imageSets){
+      return fileCounter;
     }
-    var ret=""+fileNumber;
-    while(ret.length<3){
-      ret="0"+ret;
-    }
-    return ret;
+    imageSets.forEach(imgset=>{
+        if(imgset.fileCounter>fileCounter){
+          fileCounter=imgset.fileCounter;
+        }
+    });
+    return fileCounter;
   }
+  buildImageFileName(contractNumber, episodeNumber, fileCounter,width,height,type){
+    var fileVersion=""+fileCounter;
+    while(fileVersion.length<3){
+      fileVersion="0"+fileVersion;
+    }
+    return contractNumber+"_"+episodeNumber+"_"+fileVersion+"_"+width+"x"+height+"."+type;
+  }
+
 
 }

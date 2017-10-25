@@ -14,7 +14,7 @@ export default class RenderDimension extends Component{
 
     if(width && height){
       return(
-        <div stle={styles.dimensionContainer}>
+        <div style={styles.dimensionContainer}>
               {width} x {height}
         </div>
       );

@@ -53,7 +53,8 @@ export const styles={
       textAlign: "center"
   },
   dimensionContainer:{
-    marginRight: 40
+    marginRight: 40,
+    border:"1px soid blue"
   }
 
 

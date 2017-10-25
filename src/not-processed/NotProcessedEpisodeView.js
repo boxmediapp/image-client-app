@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {ListEpisodes} from "../components";
+import ListEpisodes from "./ListEpisodes";
 import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";
 import {api} from "../api";
 
-export default class EpisodeListView extends Component{
+export default class NotProcessedEpisodeView extends Component{
 
   constructor(props){
         super(props);
@@ -19,10 +19,9 @@ export default class EpisodeListView extends Component{
     });
   }
   bindToQueryParameters(){
-      var imageStatus=genericUtil.getQueryParam(this.props.location.search, "imageStatus");
-      var search=genericUtil.getQueryParam(this.props.location.search, "search");
-       api.listEpisodes({imageStatus,search}).then(episodes =>{
-
+    var imageStatus="not-process";
+       var search=genericUtil.getQueryParam(this.props.location.search, "search");
+       api.findNotProcessedEpisodes(search).then(episodes =>{
           episodedata.setEpisodeList({episodes,imageStatus,search});
       });
   }

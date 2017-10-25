@@ -15,7 +15,8 @@ import {appdata,store} from "./store";
 import {api} from "./api";
 
 import {DisplayLogin} from "./display-login";
-import {EpisodeListView,EpisodeView} from "./episodes";
+import {AddImageView} from "./add-image-view";
+import {NotProcessedEpisodeView} from "./not-processed";
 
 
 export default class App extends Component{
@@ -63,8 +64,8 @@ export default class App extends Component{
                     return (
                             <Router>
                               <div className="topContainer">
-                                  <Route  path={textValues.episode.list.link} exact component={EpisodeListView}/>
-                                  <Route path={textValues.episode.view.link} component={EpisodeView}/>
+                                  <Route  path={textValues.episode.list.link} exact component={NotProcessedEpisodeView}/>
+                                  <Route path={textValues.addImageView.link} component={AddImageView}/>
                               </div>
                             </Router>
                       )
