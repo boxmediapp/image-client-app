@@ -1,3 +1,5 @@
+//var episodeId=genericUtil.getPathVariable(this.props.location.pathname,textValues.episode.view.link);
+
 export default class GenericUtil{
   getQueryParam(query,variable) {
     if(!query){

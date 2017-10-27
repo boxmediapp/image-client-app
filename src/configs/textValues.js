@@ -1,13 +1,16 @@
 const textValues={
     title:"Box Plus Image Application",
-    episode:{       
+    episode:{
        list:{
          link:"/",
        }
     },
     addImageView:{
-      link:"/add-image-view",
-      text:"Add Image"
+      episode:{
+          link:"/add-image-view",
+          text:"Add Image"
+      }
+
     },
     upload:{
       failed:"Failed to upload the file to the s3 bucket",

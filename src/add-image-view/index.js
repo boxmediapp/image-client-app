@@ -1,3 +1,3 @@
-import AddImageView from "./AddImageView";
+import EpisodeView from "./EpisodeView";
 
-export {AddImageView};
+export {EpisodeView};

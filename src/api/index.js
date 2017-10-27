@@ -67,10 +67,21 @@ class ServiceAPI {
             return httpGetRequest("image-service/not-processed-episodes/"+id);
          }
          createImageSet(imageset){
-            return httpPostRequest("images/image-sets", JSON.stringify(imageset));
+            return httpPostRequest("image-service/image-sets", JSON.stringify(imageset));
          }
-         createImage(setid,image){
-           return httpPostRequest("images/image-sets/"+setid, JSON.stringify(image));
+         createImage(image){
+           return httpPostRequest("image-service/images", JSON.stringify(image));
+         }
+         findImageSets(search){
+           if(search){
+                  return httpGetRequest("image-service/image-sets?search="+search);
+           }
+           else{
+             return httpGetRequest("image-service/image-sets");
+           }
+         }
+         findImageSetsByContractAndEpisode(contractNumber,episodeNumber){
+              return httpGetRequest("image-service/image-sets?programmeNumber="+contractNumber+"-"+episodeNumber);
          }
 
 }

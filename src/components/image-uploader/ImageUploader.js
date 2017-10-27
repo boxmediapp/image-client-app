@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 
 
 import {imageUtil,genericUtil} from "../../utils";
-import {appdata} from "../../store";
+
 import {api} from "../../api";
 import {textValues} from "../../configs";
 import {ModalDialog} from "../index";
@@ -72,8 +72,8 @@ export  default class ImageUploader extends Component {
                 img.onload=()=>{
                       console.log("::"+img.width+":"+img.height);
                       var modalMessage=this.state.modalMessage;
-                      if(img.width!=1920 && img.height !=1080){
-                          modalMessage="the image has to be 1920 x 1080";
+                      if(!this.props.isUploadImageSizeCorrect(img.width,img.height)){
+                          modalMessage="the image is not the required size";
                       }
                       this.setState(Object.assign({},this.state,{
                         file,
@@ -120,7 +120,7 @@ export  default class ImageUploader extends Component {
   }
   onUploadComplete(){
     this.clearProgress();
-    this.props.onComplete(this.state.filepath,this.state.baseURL, this.state.imageTags, this.state.width,this.state.height);
+    this.props.onComplete(this.state);
   }
   onUploadError(result){
     console.log("error:"+JSON.stringify(result));
@@ -139,21 +139,10 @@ export  default class ImageUploader extends Component {
   onUpload(){
     var uploadRequest={};
 
-     var appconfig=appdata.getAppConfig();
-     if(this.props.image){
-       var uploadRequest={
-                   file:this.props.filename,
-                   bucket:appconfig.imageBucket
-        };
-     }
-     else{
-       var uploadFilename=genericUtil.buildImageFileName(this.props.contractNumber,this.props.episodeNumber,this.props.fileCounter,this.state.width, this.state.height,this.state.imageType);
-       var uploadRequest={
-                   file:appconfig.imageClientFolder+"/"+uploadFilename,
-                   bucket:appconfig.imageBucket
-        };
-     }
-
+    var uploadRequest={
+                file:this.props.buildFileName(this.state.width, this.state.height,this.state.imageType),
+                bucket:this.props.bucket
+     };
       var that=this;
       api.requestS3UploadURL(uploadRequest).then(function(data){
          console.log("presign response:"+JSON.stringify(data));
@@ -167,8 +156,7 @@ setImageTags(imageTags){
         return(
            <div>
               <RenderImage {...this.props} {...this.state} onDrop={this.onDrop.bind(this)}
-                onUpload={this.onUpload.bind(this)} setImageTags={this.setImageTags.bind(this)}
-                isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}/>
+                onUpload={this.onUpload.bind(this)} setImageTags={this.setImageTags.bind(this)}/>
               <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
            </div>
         );

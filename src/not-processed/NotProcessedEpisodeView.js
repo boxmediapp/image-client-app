@@ -4,6 +4,8 @@ import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";
 import {api} from "../api";
+import {images,textValues} from "../configs";
+import "./styles/index.css";
 
 export default class NotProcessedEpisodeView extends Component{
 
@@ -35,6 +37,13 @@ export default class NotProcessedEpisodeView extends Component{
   render(){
        return (
            <div>
+             <div className="header">
+                    <img src={images.logo} className="logo"/>
+                    <div className="title">
+                          {textValues.title}
+                    </div>
+             </div>
+             <h1>Missing Images</h1>
              <ListEpisodes data={this.state}/>
            </div>
          );

@@ -5,7 +5,6 @@ const ActionNames ={
 
 const initialState={
      episodes:[],
-     imageStatus:"",
      search:""
 }
 
@@ -13,7 +12,7 @@ export const episodeList={
       reducer:function (state=initialState, action){
               switch(action.type){
               case ActionNames.SET_EPISODE_LIST:
-                            return Object.assign({},state,{episodes:action.episodes,imageStatus:action.imageStatus,search:action.search});
+                            return Object.assign({},state,{episodes:action.episodes,search:action.search});
               case ActionNames.UPDATE_A_EPISODE:
                                           var foundInd=-1;
                                           state.episodes.forEach((ep,ind)=>{
@@ -33,7 +32,6 @@ export const episodeList={
                     return {
                           type: ActionNames.SET_EPISODE_LIST,
                           episodes:request.episodes,
-                          imageStatus:request.imageStatus,
                           search:request.search
                       };
                 },

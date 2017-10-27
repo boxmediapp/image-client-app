@@ -7,14 +7,24 @@ export default class EpisodeStoreData{
           this.store.dispatch(episodeList.actions.setEpisodes(listdata));
       }
       getEpisodeList(){
-        return {episodes:this.store.getState().episodeList.episodes, imageStatus:this.store.getState().episodeList.imageStatus,search:this.store.getState().episodeList.search};
+        return {episodes:this.store.getState().episodeList.episodes, search:this.store.getState().episodeList.search};
       }
       isEpisodeListIdentical(data1, data2){
-          return data1.episodes===data2.episodes && data1.imageStatus===data2.imageStatus && data1.search===data2.search;
+          return data1.episodes===data2.episodes && data1.search===data2.search;
       }
       isEpisodeIsIdentical(episode1, episode2){
          if(episode1 && episode2){
-            return episode1.title===episode2.title && episode1.programmeNumber === episode2.programmeNumber && episode1.imageStatus === episode2.imageStatus;
+            if(episode1.title===episode2.title && episode1.programmeNumber === episode2.programmeNumber){
+                  if(episode1.imageSets && episode2.imageSets){
+                    return episode1.imageSets.length===episode2.imageSets.length;
+                  }
+                  else{
+                      return false;
+                  }
+            }
+            else{
+              return false;
+            }
          }
          else if(episode1){
            return false;

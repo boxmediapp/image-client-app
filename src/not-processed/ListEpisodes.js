@@ -86,12 +86,12 @@ class TextCell extends Component {
 class ActionCell extends Component {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    var link=textValues.addImageView.link+"/?episodeid="+data[rowIndex][columnKey];
-
+    var link=textValues.addImageView.episode.link+"/?episodeid="+data[rowIndex][columnKey];
+    var linkText=textValues.addImageView.episode.text;
     return (
       <Cell {...props}>
         <Link to={link}>
-              {textValues.addImageView.text}
+              {linkText}
         </Link>
       </Cell>
     );

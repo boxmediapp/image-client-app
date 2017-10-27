@@ -15,7 +15,7 @@ import {appdata,store} from "./store";
 import {api} from "./api";
 
 import {DisplayLogin} from "./display-login";
-import {AddImageView} from "./add-image-view";
+import {EpisodeView} from "./add-image-view";
 import {NotProcessedEpisodeView} from "./not-processed";
 
 
@@ -25,7 +25,6 @@ export default class App extends Component{
     this.state={authorization:appdata.getAuthorization()};
     this.ubsubsribe=store.subscribe(()=>{
           this.setAuthorization(appdata.getAuthorization());
-          console.log("Store AppConfig:"+JSON.stringify(appdata.getAppConfig()));
     });
 
   }
@@ -34,7 +33,6 @@ export default class App extends Component{
   }
   onLoggedIn(currentAuthorization){
     api.loadConfig().then(appconfig=>{
-      console.log("going to set config:"+JSON.stringify(appconfig));
 
         appdata.setAppConfig(appconfig);
 
@@ -65,7 +63,7 @@ export default class App extends Component{
                             <Router>
                               <div className="topContainer">
                                   <Route  path={textValues.episode.list.link} exact component={NotProcessedEpisodeView}/>
-                                  <Route path={textValues.addImageView.link} component={AddImageView}/>
+                                  <Route path={textValues.addImageView.episode.link} component={EpisodeView}/>
                               </div>
                             </Router>
                       )

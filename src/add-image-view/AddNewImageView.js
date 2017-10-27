@@ -7,16 +7,11 @@ import {api} from "../api";
 import {textValues} from "../configs";
 
 
-export default class AddImageView extends Component{
+export default class AddNewImageView extends Component{
 
   constructor(props){
         super(props);
-        //var episodeId=genericUtil.getPathVariable(this.props.location.pathname,textValues.episode.view.link);
-        var contractNumber="";
-        var episodeNumber="";
-        var title="";
-        var imageSets=[];
-
+        
 
 
         var episodeId=genericUtil.getQueryParam(this.props.location.search, "episodeid");
