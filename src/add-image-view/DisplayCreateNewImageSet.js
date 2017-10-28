@@ -2,31 +2,32 @@
 
 import React, {Component} from 'react'
 import {ImageUploader,ProgressBar,ModalDialog} from "../components";
-import {genericUtil,imageUtil} from "../utils";
+import {genericUtil,imageUtil,ResizeProcess} from "../utils";
 
 import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
 import {textValues,imageRequirements} from "../configs";
-import ResizeProcess from "./ResizeProcess";
 import {styles} from "./styles";
 
 
 export default class DisplayCreateNewImageSet extends Component{
 constructor(props){
   super(props);
-  this.state={progressValue:0,progressTotal:1:modalMessage:null,process:false};
+  this.state={progressValue:0,progressTotal:1,modalMessage:null,process:false};
   this.process=new ResizeProcess(this, this.props);
 }
-
-onUploadComplete(data){
-    this.process.onUploadComplete(data);
+onClearMessage(){
+  this.setState(Object.assign({}, this.state,{modalMessage:null}));
+}
+setErrorMessage(modalMessage){
+   this.setState(Object.assign({}, this.state,{modalMessage}));
 }
 
 onProcessCompleted(){
-    this.props.onNewImageCreated(image);
+    this.props.onNewImageCreated();
 }
 startResize(step,imageSet,image){
-    var process=tue;
+    var process=true;
     var progressValue=0;
     var progressTotal=1;
     this.setState(Object.assign({}, this.state,{process,progressValue,progressTotal}));
@@ -38,12 +39,7 @@ clearProgress(){
     this.setProgressValue(0,0);
 }
 
-  buildFileName(width, height, filetype){
-    return this.process.buildFileName(width,height,filetype);
-  }
-  isUploadImageSizeCorrect(width, height){
-    return width && height && width==1920 && height ==1080;
-  }
+
 
 
 
@@ -67,9 +63,9 @@ clearProgress(){
                <div className="col-sm-12">
                    <ImageUploader  {...this.props}
                      fileCounter={this.props.fileCounter}
-                     onComplete={this.onUploadComplete.bind(this)}
-                     buildFileName={this.buildFileName.bind(this)}
-                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
+                     onComplete={this.process.onMainAssetUploaded.bind(this.process)}
+                     buildFileName={this.process.buildFileName.bind(this.process)}
+                     isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
                      bucket={appconfig.imageBucket}/>
                </div>
              </div>
@@ -79,21 +75,18 @@ clearProgress(){
 
   }
   renderResizeImage(){
-    var width=imageRequirements[step].width;
-    var height=imageRequirements[step].height;
-    var appconfig=appdata.getAppConfig();
-    var filepath=this.buildFileName(width, height,"png");
-    var imageURL=imageUtil.getS3ImageURL(this.state.image);
-     return (
+
+    var {width, height,imageURL}=this.process.getSourceImageInfo();
+    return (
        <div style={styles.previewImageContainer}>
              <div>
-                 <img src={this.props.imageURL} style={styles.image(this.props.width, this.props.height)}/>
-                 <ProgressBar width={this.props.width} height={this.props.height}
+                 <img src={imageURL} style={styles.image(width, height)}/>
+                 <ProgressBar width={width} height={height}
                    progressValue={this.state.progressValue}
                    progressTotal={this.state.progressTotal}/>
              </div>
              <div  style={styles.imageFooter}>
-                      {this.props.width} x {this.props.height}
+                      {width} x {height}
              </div>
              <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
        </div>

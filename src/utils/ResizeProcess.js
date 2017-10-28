@@ -1,6 +1,14 @@
 import {textValues,imageRequirements} from "../configs";
-import {genericUtil,imageUtil} from "../utils";
+
 import {api} from "../api";
+
+import ImageUtil from "./ImageUtil";
+import GenericUtil from "./GenericUtil";
+import {episodedata,store,appdata} from "../store";
+const imageUtil=new ImageUtil();
+const genericUtil=new GenericUtil();
+
+
 export default class ResizeProcess{
       constructor(caller,data){
         this.caller=caller;
@@ -23,7 +31,7 @@ export default class ResizeProcess{
         return this.appconfig.imageClientFolder+"/"+uploadFilename;
       }
 
-      onUploadComplete(data){
+      onMainAssetUploaded(data){
             this.createImageSet(data).then(imageSet=>{
                     var image={
                        filename:data.filepath,
@@ -39,6 +47,16 @@ export default class ResizeProcess{
                     });
               });
         }
+        isMainImageSizeCorrect(width, height){
+            return width && height && width==1920 && height ==1080;
+        }
+        getSourceImageInfo(){
+          return {
+              width:this.image.width,
+              height:this.image.height,
+              imageURL:imageUtil.getS3ImageURL(this.image)
+          };
+        }
       startResizeProcess(imageSet,image){
          this.imageSet=imageSet;
          this.image=image;
@@ -50,7 +68,7 @@ export default class ResizeProcess{
               this.caller.onProcessCompleted();
             }
             else{
-                  this.caller.startResize(step,imageSet,image);
+                  this.caller.startResize(this.step,this.imageSet,this.image);
                   this.startResize();
             }
       }
@@ -61,10 +79,11 @@ export default class ResizeProcess{
         this.width=width;
         this.height=height;
         var imageType="png";
-        var filepath=this.buildFileName(width, height,imageType);
+        this.imageType=imageType;
         imageUtil.resizeImage({imageURL,width,height,imageType,onComplete:this.onResizeComplete.bind(this)});
       }
       onResizeComplete(resizedImage){
+          var filepath=this.buildFileName(this.width, this.height,this.imageType);
           var uploadRequest={
                     file:filepath,
                     bucket:this.appconfig.imageBucket
@@ -106,7 +125,7 @@ export default class ResizeProcess{
            imageStatus:'WAITING_APPROVE',
         };
         api.createImage(image).then(image=>{
-              this.gotoStep(this.step+1);
+              this.goto(this.step+1);
         });
 
       }
