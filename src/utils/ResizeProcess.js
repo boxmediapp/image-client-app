@@ -74,13 +74,21 @@ export default class ResizeProcess{
       }
       startResize(){
         var imageURL=imageUtil.getS3ImageURL(this.image);
-        var width=imageRequirements[this.step].width;
-        var height=imageRequirements[this.step].height;
-        this.width=width;
-        this.height=height;
+        var sourceWidth=this.image.width;
+        var sourceHeight=this.image.height;
+        var sourceX=0;
+        var sourceY=0;
+        var destX=sourceX;
+        var destY=sourceY;
+        var destWidth=imageRequirements[this.step].width;
+        var destHeight=imageRequirements[this.step].height;
+
+        this.width=destWidth;
+        this.height=destHeight;
         var imageType="png";
         this.imageType=imageType;
-        imageUtil.resizeImage({imageURL,width,height,imageType,onComplete:this.onResizeComplete.bind(this)});
+        imageUtil.resizeImage({imageURL,sourceWidth,sourceHeight,sourceX,sourceY,destX,destY,destWidth,destHeight,
+          imageType,onComplete:this.onResizeComplete.bind(this)});
       }
       onResizeComplete(resizedImage){
           var filepath=this.buildFileName(this.width, this.height,this.imageType);

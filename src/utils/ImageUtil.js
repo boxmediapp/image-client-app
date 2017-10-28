@@ -64,9 +64,10 @@ export default class ImageUtil{
      var that=this;
     image.onload = function (imageEvent) {
           var canvas = document.createElement('canvas');
-          canvas.width = request.width;
-          canvas.height = request.height;
-          canvas.getContext('2d').drawImage(image, 0, 0, request.width, request.height);
+          canvas.width = request.destWidth;
+          canvas.height = request.destHeight;
+          canvas.getContext('2d').drawImage(image, request.sourceX, request.sourceY,
+            request.sourceWidth, request.sourceHeight,request.destX,request.destY,request.destWidth, request.destHeight);
           var dataUrl = canvas.toDataURL('image/'+request.imageType);
           var resizedImage = that.dataURLToBlob(dataUrl);
           request.onComplete(resizedImage);
