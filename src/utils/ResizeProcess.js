@@ -73,22 +73,47 @@ export default class ResizeProcess{
             }
       }
       startResize(){
-        var imageURL=imageUtil.getS3ImageURL(this.image);
-        var sourceWidth=this.image.width;
-        var sourceHeight=this.image.height;
-        var sourceX=0;
-        var sourceY=0;
-        var destX=sourceX;
-        var destY=sourceY;
-        var destWidth=imageRequirements[this.step].width;
-        var destHeight=imageRequirements[this.step].height;
 
-        this.width=destWidth;
-        this.height=destHeight;
-        var imageType="png";
-        this.imageType=imageType;
-        imageUtil.resizeImage({imageURL,sourceWidth,sourceHeight,sourceX,sourceY,destX,destY,destWidth,destHeight,
-          imageType,onComplete:this.onResizeComplete.bind(this)});
+        this.width=imageRequirements[this.step].width;
+        this.height=imageRequirements[this.step].height;
+        var resizeRequest={
+          imageURL:imageUtil.getS3ImageURL(this.image),
+          sourceWidth:this.image.width,
+          sourceHeight:this.image.height,
+          sourceX:0,
+          sourceY:0,
+          destX:0,
+          destY:0,
+          destWidth:this.width,
+          destHeight:this.height,
+          imageType:"png",
+          onComplete:this.onResizeComplete.bind(this)
+        };
+
+        this.processResizeRequest(resizeRequest);
+
+        imageUtil.resizeImage(resizeRequest);
+      }
+      processResizeRequest(resizeRequest){
+          var {sourceX,sourceY,sourceWidth,sourceHeight,destWidth,destHeight}=resizeRequest;
+
+          if(Math.round(sourceWidth*destHeight/sourceHeight)==destWidth){
+                return;
+          }
+          var widthDiff=sourceWidth-destWidth;
+          var heightDiff=sourceHeight-destHeight;
+          var maxWidth=widthDiff>=0?sourceWidth:destWidth;
+          var maxHeight=heightDiff>=0?sourceHeight:destHeight;
+          if(Math.abs(widthDiff/maxWidth)>Math.abs(heightDiff/maxHeight)){
+                resizeRequest.sourceX=(sourceWidth-(sourceHeight*destWidth/destHeight))/2;
+                resizeRequest.sourceY=0;
+                resizeRequest.sourceWidth=sourceWidth-resizeRequest.sourceX*2
+          }
+          else{
+              throw Error("Not Supported yet");
+          }
+
+
       }
       onResizeComplete(resizedImage){
           var filepath=this.buildFileName(this.width, this.height,this.imageType);
