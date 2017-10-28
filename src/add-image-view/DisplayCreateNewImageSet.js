@@ -1,76 +1,103 @@
 
 
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader} from "../components";
-import {genericUtil} from "../utils";
+import {ImageUploader,ProgressBar,ModalDialog} from "../components";
+import {genericUtil,imageUtil} from "../utils";
 
 import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
-import {textValues} from "../configs";
-
+import {textValues,imageRequirements} from "../configs";
+import ResizeProcess from "./ResizeProcess";
+import {styles} from "./styles";
 
 
 export default class DisplayCreateNewImageSet extends Component{
+constructor(props){
+  super(props);
+  this.state={progressValue:0,progressTotal:1:modalMessage:null,process:false};
+  this.process=new ResizeProcess(this, this.props);
+}
 
-  onUploadComplete(data){
-        this.createImageSet(data).then(imageset=>{
-              return this.createImage(imageset,data);
-        }).then(image=>{          
-          this.props.onNewImageCreated(image);
-        });
-  }
+onUploadComplete(data){
+    this.process.onUploadComplete(data);
+}
+
+onProcessCompleted(){
+    this.props.onNewImageCreated(image);
+}
+startResize(step,imageSet,image){
+    var process=tue;
+    var progressValue=0;
+    var progressTotal=1;
+    this.setState(Object.assign({}, this.state,{process,progressValue,progressTotal}));
+}
+setProgressValue(progressValue,progressTotal){
+    this.setState(Object.assign({}, this.state,{progressValue,progressTotal}));
+}
+clearProgress(){
+    this.setProgressValue(0,0);
+}
+
   buildFileName(width, height, filetype){
-    var appconfig=appdata.getAppConfig();
-    var uploadFilename=genericUtil.buildImageFileName(this.props.contractNumber,this.props.episodeNumber,this.props.fileCounter,width, height,filetype);
-    return appconfig.imageClientFolder+"/"+uploadFilename;
-  }
-  isImageSizeMatch(requiredWidth, requiredHeight){
-
+    return this.process.buildFileName(width,height,filetype);
   }
   isUploadImageSizeCorrect(width, height){
     return width && height && width==1920 && height ==1080;
   }
-  createImageSet(data){
-    var imageset={
-         episodeId:this.props.episodeId,
-         programmeNumber:this.props.contractNumber+"/"+this.props.episodeNumber,
-         title:this.props.title,
-         fileCounter:this.props.fileCounter
-    }
-    return api.createImageSet(imageset);
-  }
 
-  createImage(imageset,data){
-            var image={
-               filename:data.filepath,
-               s3BaseURL:data.baseURL,
-               width:data.width,
-               height:data.height,
-               tags:data.imageTags,
-               imageSet:imageset,
-               imageStatus:'WAITING_APPROVE',
-            };
-            api.createImage(image);
-  }
+
+
   render(){
-        var appconfig=appdata.getAppConfig();
-        return (
-          <div className="container">
-                 <div className="row">
-                   <div className="col-sm-12">
-                       <ImageUploader  {...this.props}
-                         fileCounter={this.props.fileCounter}
-                         onComplete={this.onUploadComplete.bind(this)}
-                         buildFileName={this.buildFileName.bind(this)}
-                         isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
-                         bucket={appconfig.imageBucket}/>
-                   </div>
-                 </div>
+        return this.renderStep(this.state.step);
+  }
+  renderStep(step){
+      if(!this.state.process){
+              return this.renderUploadMaster();
+      }
+      else {
+        return this.renderResizeImage();
+      }
 
-         </div>
-          );
+  }
+  renderUploadMaster(){
+    var appconfig=appdata.getAppConfig();
+    return (
+      <div className="container">
+             <div className="row">
+               <div className="col-sm-12">
+                   <ImageUploader  {...this.props}
+                     fileCounter={this.props.fileCounter}
+                     onComplete={this.onUploadComplete.bind(this)}
+                     buildFileName={this.buildFileName.bind(this)}
+                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
+                     bucket={appconfig.imageBucket}/>
+               </div>
+             </div>
 
+     </div>
+      );
 
+  }
+  renderResizeImage(){
+    var width=imageRequirements[step].width;
+    var height=imageRequirements[step].height;
+    var appconfig=appdata.getAppConfig();
+    var filepath=this.buildFileName(width, height,"png");
+    var imageURL=imageUtil.getS3ImageURL(this.state.image);
+     return (
+       <div style={styles.previewImageContainer}>
+             <div>
+                 <img src={this.props.imageURL} style={styles.image(this.props.width, this.props.height)}/>
+                 <ProgressBar width={this.props.width} height={this.props.height}
+                   progressValue={this.state.progressValue}
+                   progressTotal={this.state.progressTotal}/>
+             </div>
+             <div  style={styles.imageFooter}>
+                      {this.props.width} x {this.props.height}
+             </div>
+             <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
+       </div>
+     );
   }
 
 

@@ -34,22 +34,7 @@ export  default class ImageUploader extends Component {
 
 
    }
-   isImageSizeMatch(requiredWidth, requiredHeight){
-         return this.state.width && this.state.height && this.state.width==requiredWidth && this.state.height ==requiredHeight;
-   }
-   isUploadImageSizeCorrect(){
-     if(this.state.image){
-          if(this.isImageSizeMatch(this.state.image.width,this.state.image.height)){
-            return true;
-          }
-          else{
-            return false;
-          }
-     }
-     else{
-       return this.isImageSizeMatch(1920,1080);
-     }
-   }
+   
    setProgressValue(progressValue,progressTotal){
      this.setState(Object.assign({}, this.state,{progressValue,progressTotal}));
    }
@@ -57,36 +42,16 @@ export  default class ImageUploader extends Component {
 
    onDrop(acceptedFiles, rejectedFiles){
       if(acceptedFiles && acceptedFiles.length>0){
-        var acceptedFile=acceptedFiles[0];
-        let reader = new FileReader();
-        reader.onloadend = () => {
-                var imageType=imageUtil.getImageType(reader.result);
-                var file=acceptedFile;
-                var imagePreviewUrl=reader.result;
-                if(!imageType){
-                    console.error("not image");
-                    this.setErrorMessage("This is not a valid image file");
-                    return;
-                }
-                var img=new Image();
-                img.onload=()=>{
-                      console.log("::"+img.width+":"+img.height);
-                      var modalMessage=this.state.modalMessage;
-                      if(!this.props.isUploadImageSizeCorrect(img.width,img.height)){
-                          modalMessage="the image is not the required size";
-                      }
-                      this.setState(Object.assign({},this.state,{
-                        file,
-                        imagePreviewUrl,
-                        imageType,
-                        width:img.width,
-                        height:img.height,
-                        modalMessage
-                      }));
-                };
-                img.src=imagePreviewUrl;
-         };
-        reader.readAsDataURL(acceptedFile);
+        imageUtil.getImagePreviewAndInfo(acceptedFiles[0],data=>{
+              var modalMessage=this.state.modalMessage;
+              if(!this.props.isUploadImageSizeCorrect(data.width,data.height)){
+                      modalMessage="the image is not the required size";
+              }
+              this.setState(Object.assign({},this.state,data,{modalMessage}));
+
+        }, modalMessage =>{
+          this.setErrorMessage(modalMessage);
+        });
 
       }
 

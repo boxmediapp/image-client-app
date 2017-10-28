@@ -35,6 +35,65 @@ export default class ImageUtil{
     }
     return imageType;
   }
+  loadImage(imageURL, onComplete){
+    var img=new Image();
+    img.onload=()=>{
+        onComplete(img);
+    };
+    img.src=imageURL;
+  }
+  getImagePreviewAndInfo(acceptedFile,onSucess, onError){
+        let reader = new FileReader();
+        reader.onloadend = () => {
+            var imageType=this.getImageType(reader.result);
+            var file=acceptedFile;
+            var imagePreviewUrl=reader.result;
+            if(!imageType){
+                onError("The file is not recognized as image type");
+                return;
+            }
+            this.loadImage(imagePreviewUrl,img=>{
+                    onSucess({file,imagePreviewUrl,imageType,width:img.width,height:img.height});
+                  });
+            };
+        reader.readAsDataURL(acceptedFile);
+  }
+  resizeImage(request){
+     var image = new Image();
+     image.crossOrigin="Anonymous";
+     var that=this;
+    image.onload = function (imageEvent) {
+          var canvas = document.createElement('canvas');
+          canvas.width = request.width;
+          canvas.height = request.height;
+          canvas.getContext('2d').drawImage(image, 0, 0, request.width, request.height);
+          var dataUrl = canvas.toDataURL('image/'+request.imageType);
+          var resizedImage = that.dataURLToBlob(dataUrl);
+          request.onComplete(resizedImage);
+      }
+      image.src = request.imageURL;
+  }
+  dataURLToBlob(dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+        var parts = dataURL.split(',');
+        var contentType = parts[0].split(':')[1];
+        var raw = parts[1];
+        return new Blob([raw], {type: contentType});
+    }
 
-  
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+    var uInt8Array = new Uint8Array(rawLength);
+    for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+    return new Blob([uInt8Array], {type: contentType});
+  }
+  getS3ImageURL(image){
+    return image.s3BaseURL+"/"+image.filename;
+  }
+
 }
