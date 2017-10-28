@@ -18,7 +18,7 @@ export default class DisplayImage extends Component{
         return this.state.filename;
       }
       isUploadImageSizeCorrect(width, height){
-        return width && height && this.props.image.width==1920 && this.props.image.height ==1080;
+        return width && height && this.props.image.width==width && this.props.image.height ==height;
       }
 
       onUploadComplete(data){

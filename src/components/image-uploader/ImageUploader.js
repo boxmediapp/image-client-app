@@ -34,7 +34,7 @@ export  default class ImageUploader extends Component {
 
 
    }
-   
+
    setProgressValue(progressValue,progressTotal){
      this.setState(Object.assign({}, this.state,{progressValue,progressTotal}));
    }
@@ -77,15 +77,24 @@ export  default class ImageUploader extends Component {
                onAbort:this.onUploadAborted.bind(this)
             });
   }
-  clearProgress(){
-    this.setProgressValue(0,0);
+   initSate(){
+    this.setState({file:null,imagePreviewUrl:null,
+      imageType:null,width:0,height:0, modalMessage:null, progressValue:0, progressTotal:0,
+      imageTags:null, filepath:null,baseURL:null});
+
+
+
+
   }
   onUploadProgess(progressValue,total){
     this.setProgressValue(progressValue,total);
   }
   onUploadComplete(){
-    this.clearProgress();
+
+
     this.props.onComplete(this.state);
+    this.initSate();
+
   }
   onUploadError(result){
     console.log("error:"+JSON.stringify(result));

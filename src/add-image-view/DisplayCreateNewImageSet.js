@@ -13,7 +13,7 @@ import {styles} from "./styles";
 export default class DisplayCreateNewImageSet extends Component{
 constructor(props){
   super(props);
-  this.state={progressValue:0,progressTotal:1,modalMessage:null,process:false};
+  this.state={progressValue:0,progressTotal:0,modalMessage:null,process:false};
   this.process=new ResizeProcess(this, this.props);
 }
 onClearMessage(){
@@ -22,9 +22,12 @@ onClearMessage(){
 setErrorMessage(modalMessage){
    this.setState(Object.assign({}, this.state,{modalMessage}));
 }
-
+onClearState(){
+  this.setState({progressValue:0,progressTotal:0,modalMessage:null,process:false});
+}
 onProcessCompleted(){
     this.props.onNewImageCreated();
+    this.onClearState();
 }
 startResize(step,imageSet,image){
     var process=true;
