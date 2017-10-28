@@ -47,7 +47,9 @@ export default class EpisodeView extends Component{
   onNewImageCreated(image){
         this.loadEpisodeById(this.state.id);
   }
-
+  onTitleChanged(title){
+      this.setTitle(title);
+  }
   render(){
     if((!this.state) || (!this.state.imageSets) || (this.state.imageSets.length==0)){
           return (
@@ -58,7 +60,7 @@ export default class EpisodeView extends Component{
                                    {textValues.title}
                              </div>
                       </div>
-                      <EpisodeViewDisplaySetProperty data={this.state}/>
+                      <EpisodeViewDisplaySetProperty data={this.state} onTitleChanged={this.onTitleChanged.bind(this)}/>
                       <CreateNewImageSetInEpisode data={this.state} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
                 </div>
                 );
@@ -86,7 +88,7 @@ class EpisodeViewDisplaySetProperty extends Component{
               else{
 
                 return(
-                    <DisplaySetProperty {...this.props.data}/>
+                    <DisplaySetProperty {...this.props.data} onTitleChanged={this.props.onTitleChanged}/>
                 );
               }
 

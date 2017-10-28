@@ -22,6 +22,14 @@ const pHTTPPostRequest=function(path, headers, body){
   });
 };
 
+const pHTTPPutRequest=function(path, headers, body){
+  return fetch(config.api.getUrl(path),{headers, method:"PUT", body})
+  .then(function(response) {
+        return response.text();
+  }).then(function(body) {
+      return JSON.parse(body);
+  });
+};
 
 const pBuildHttpHeader=function(){
        return {Authorization: appdata.getAuthorization()};
@@ -38,6 +46,11 @@ const httpGetRequest=function(path){
 const httpPostRequest=function(path,body){
   var headers=pBuildHttpHeader();
   return pHTTPPostRequest(path,headers,body);
+}
+
+const httpPutRequest=function(path,body){
+  var headers=pBuildHttpHeader();
+  return pHTTPPutRequest(path,headers,body);
 }
 
 class ServiceAPI {
@@ -82,6 +95,9 @@ class ServiceAPI {
          }
          findImageSetsByContractAndEpisode(contractNumber,episodeNumber){
               return httpGetRequest("image-service/image-sets?programmeNumber="+contractNumber+"-"+episodeNumber);
+         }
+         updateImageSet(imageSet){           
+            return httpPutRequest("image-service/image-sets/"+imageSet.id, JSON.stringify(imageSet));
          }
 
 }

@@ -11,12 +11,14 @@ import {styles} from "./styles";
 
 export default class DisplayImageSet extends Component{
 
-
+  updateTitle(title){
+      this.props.updateImageSetTitle(this.props.imageSet, title);
+  }
   render(){
 
     return (
           <div style={styles.imageSetContainer}>
-              <DisplaySetProperty {...this.props.imageSet}/>
+              <DisplaySetProperty {...this.props.imageSet} updateTitle={this.updateTitle.bind(this)}/>
               <DisplayImagesInImageSet {...this.props.imageSet}/>
          </div>
           );

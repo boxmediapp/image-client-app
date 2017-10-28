@@ -24,3 +24,25 @@
   margin-top: 20px;
 
 }
+#contractNumber{
+    width: 150px;
+    height:40px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    margin-left: 5px;
+}
+#episodeNumber{
+  width: 150px;
+  height:40px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  margin-left: 5px;
+}
+.formFieldWithLabel{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}

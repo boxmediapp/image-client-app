@@ -32,7 +32,12 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
   onNewImageCreated(image){
         this.loadImageSets(this.props.contractNumber,this.props.episodeNumber);
   }
-
+  updateImageSetTitle(imageSet, title){
+     imageSet.title=title;
+     var imageSets=[...this.state.imageSets];
+     this.setImageSets(imageSets);
+     api.updateImageSet(imageSet);
+  }
   render(){
     return (
           <div>
@@ -46,7 +51,7 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
 
                       {this.state.imageSets.map(imageSet=>{
                         return(
-                             <DisplayImageSet imageSet={imageSet} key={imageSet.id}/>
+                             <DisplayImageSet imageSet={imageSet} updateImageSetTitle={this.updateImageSetTitle.bind(this)} key={imageSet.id}/>
                         );
                       })}
                </div>
