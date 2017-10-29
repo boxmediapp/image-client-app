@@ -76,6 +76,8 @@ export default class ResizeProcess{
 
         this.width=imageRequirements[this.step].width;
         this.height=imageRequirements[this.step].height;
+        this.imageType=imageRequirements[this.step].type;
+
         var resizeRequest={
           imageURL:imageUtil.getS3ImageURL(this.image),
           sourceWidth:this.image.width,
@@ -86,7 +88,7 @@ export default class ResizeProcess{
           destY:0,
           destWidth:this.width,
           destHeight:this.height,
-          imageType:"png",
+          imageType:this.imageType,
           onComplete:this.onResizeComplete.bind(this)
         };
 

@@ -14,12 +14,17 @@ export default class DisplayImageSet extends Component{
   updateTitle(title){
       this.props.updateImageSetTitle(this.props.imageSet, title);
   }
+  deleteImage(image){
+      this.props.deleteImage(image,this.props.imageSet);
+  }
+
+
   render(){
 
     return (
           <div style={styles.imageSetContainer}>
               <DisplaySetProperty {...this.props.imageSet} updateTitle={this.updateTitle.bind(this)}/>
-              <DisplayImagesInImageSet {...this.props.imageSet}/>
+              <DisplayImagesInImageSet {...this.props.imageSet} deleteImage={this.deleteImage.bind(this)}/>
          </div>
           );
   }
@@ -29,7 +34,7 @@ class DisplayImagesInImageSet extends Component{
   render(){
       if(this.props.images){
               return this.props.images.map(image=>{
-                   return(<DisplayImage image={image} key={image.id}/>);
+                   return(<DisplayImage image={image} key={image.id} deleteImage={this.props.deleteImage}/>);
               });
       }
       else{

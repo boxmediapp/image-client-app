@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader} from "../components";
+import {ListEpisodes,ImageUploader,ModalDialog} from "../components";
 import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";
@@ -15,7 +15,7 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
 
   constructor(props){
         super(props);
-        this.state={imageSets:[]};
+        this.state={imageSets:[], modalMessage:null};
         this.loadImageSets(this.props.contractNumber,this.props.episodeNumber);
   }
   loadImageSets(contractNumber,episodeNumber){
@@ -24,6 +24,16 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
          this.setImageSets(imageSets);
      });
     }
+  }
+  onClearMessage(){
+    this.setState(Object.assign({}, this.state,{modalMessage:null}));
+  }
+  setErrorMessage(modalMessage){
+    if(modalMessage && typeof modalMessage==="object"){
+        modalMessage=JSON.stringify(modalMessage);
+    }
+
+     this.setState(Object.assign({}, this.state,{modalMessage}));
   }
   setImageSets(imageSets){
       this.setState(Object.assign({},this.state,{imageSets}));
@@ -38,6 +48,20 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
      this.setImageSets(imageSets);
      api.updateImageSet(imageSet);
   }
+  deleteImage(image,imageSet){
+        imageSet.images=imageSet.images.filter(img=>img.id!==image.id);
+        var imageSets=this.state.imageSets;
+        if((!imageSet.images)|| (!imageSet.images.length)){
+            imageSets=imageSets.filter(imgSet=>imgSet.id!==imageSet.id);
+        }
+        this.setImageSets(imageSets);
+        api.deleteImage(image).then(response=>{
+          console.log("delete respose:"+response);
+        }).catch(error=>{
+           console.error("delete is faled:"+error);
+           this.setErrorMessage("failed to delete the image on the server");
+        });
+  }
   render(){
     return (
           <div>
@@ -51,14 +75,14 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
 
                       {this.state.imageSets.map(imageSet=>{
                         return(
-                             <DisplayImageSet imageSet={imageSet} updateImageSetTitle={this.updateImageSetTitle.bind(this)} key={imageSet.id}/>
+                             <DisplayImageSet imageSet={imageSet} updateImageSetTitle={this.updateImageSetTitle.bind(this)} key={imageSet.id} deleteImage={this.deleteImage.bind(this)}/>
                         );
                       })}
                </div>
                <div className="content">
                     <CreateNewImageSetInEpisode imageSets={this.state.imageSets} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
               </div>
-
+              <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
           </div>
           );
       }

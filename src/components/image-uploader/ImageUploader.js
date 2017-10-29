@@ -98,7 +98,7 @@ export  default class ImageUploader extends Component {
   }
   onUploadError(result){
     console.log("error:"+JSON.stringify(result));
-    this.clearProgress();
+    
     this.setErrorMessage(textValues.upload.failed);
   }
   onUploadAborted(){
@@ -124,13 +124,18 @@ export  default class ImageUploader extends Component {
       });
   }
 setImageTags(imageTags){
+
    this.setState(Object.assign({}, this.state,{imageTags}));
+}
+updateTags(){
+
+    this.props.updateTags(this.state.imageTags);
 }
   render() {
         return(
            <div>
               <RenderImage {...this.props} {...this.state} onDrop={this.onDrop.bind(this)}
-                onUpload={this.onUpload.bind(this)} setImageTags={this.setImageTags.bind(this)}/>
+                onUpload={this.onUpload.bind(this)} setImageTags={this.setImageTags.bind(this)} updateTags={this.updateTags.bind(this)}/>
               <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
            </div>
         );
