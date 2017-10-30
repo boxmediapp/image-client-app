@@ -125,6 +125,8 @@ export  default class ImageUploader extends Component {
       api.requestS3UploadURL(uploadRequest).then(function(data){
          console.log("presign response:"+JSON.stringify(data));
          that.startUpload(data);
+      }).catch(error=>{
+          this.setErrorMessage("Failed upload the file:"+error);
       });
   }
 setImageTags(imageTags){

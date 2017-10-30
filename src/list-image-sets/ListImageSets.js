@@ -6,10 +6,11 @@ import "fixed-data-table-2/dist/fixed-data-table.min.css";
 import {
   Link
 } from 'react-router-dom'
-
+import {styles} from "./styles";
 export  default class ListImageSets extends Component {
 
     render(){
+
         var imageSets=this.props.imageSets;
         if(imageSets && imageSets.length>0){
           return this.renderImageSets(imageSets);
@@ -24,19 +25,12 @@ export  default class ListImageSets extends Component {
     return(
       <div className="content">
                <Table
-                 rowHeight={50}
+                 rowHeight={150}
                  headerHeight={50}
                  rowsCount={imageSets.length}
                  width={1000}
                  height={1000}>
-                       <Column
-                        columnKey="id"
 
-                        header={<Cell></Cell>}
-                        cell={<ActionCell data={imageSets}/>}
-                        fixed={true}
-                        width={100}
-                        />
                          <Column
                            columnKey="contractNumber"
                            header={<Cell>Contract</Cell>}
@@ -58,8 +52,14 @@ export  default class ListImageSets extends Component {
                                            columnKey="title"
                                            header={<Cell>Title</Cell>}
                                            cell={<TextCell data={imageSets}/>}
-                                           width={700}
+                                           width={550}
                                            />
+                                  <Column
+                                           columnKey="id"
+                                           header={<Cell>Image</Cell>}
+                                           cell={<ImageCell data={imageSets}/>}
+                                           width={250}
+                                          />
 
         </Table>
     </div>
@@ -84,16 +84,35 @@ class TextCell extends Component {
 };
 
 
-class ActionCell extends Component {
+
+
+class ImageCell extends Component {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
     var link=textValues.addImageView.contractEpisode.link+"/?contractNumber="+data[rowIndex].contractNumber+"&episodeNumber="+data[rowIndex].episodeNumber;
     var linkText=textValues.addImageView.contractEpisode.text;
+
+
+    var images=data[rowIndex].images;
+    var thumbnailImages=images.filter(image=>image.width===192 && image.height===108);
+    var imgurl=null;
+    var width=0;
+    var height=0;
+    var imgurl=null;
+    if(thumbnailImages[0]){
+        imgurl=thumbnailImages[0].s3BaseURL+"/"+thumbnailImages[0].filename;
+        width=thumbnailImages[0].width;
+        height=thumbnailImages[0].hight;
+    }
+
+
+
     return (
       <Cell {...props}>
         <Link to={link}>
-              {linkText}
+          <img src={imgurl} style={styles.image(width,height)}/>
         </Link>
+
       </Cell>
     );
   }

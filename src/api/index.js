@@ -49,7 +49,7 @@ const pHTTPDeleteRequest=function(path, headers){
             console.error("failure response on delete request:"+path);
             throw Error("HTTP response error on:"+path);
         }
-        console.error("*****:"+response.status);
+      
         return response.text();
   }).then(function(body) {
       return JSON.parse(body);
