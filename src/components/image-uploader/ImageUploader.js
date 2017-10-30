@@ -46,8 +46,12 @@ export  default class ImageUploader extends Component {
               var modalMessage=this.state.modalMessage;
               if(!this.props.isUploadImageSizeCorrect(data.width,data.height)){
                       modalMessage="the image is not the required size";
+                      this.setState(Object.assign({},this.state,{modalMessage}));
               }
-              this.setState(Object.assign({},this.state,data,{modalMessage}));
+              else{
+                this.setState(Object.assign({},this.state,data));
+              }
+
 
         }, modalMessage =>{
           this.setErrorMessage(modalMessage);
@@ -98,7 +102,7 @@ export  default class ImageUploader extends Component {
   }
   onUploadError(result){
     console.log("error:"+JSON.stringify(result));
-    
+
     this.setErrorMessage(textValues.upload.failed);
   }
   onUploadAborted(){

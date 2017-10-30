@@ -24,6 +24,7 @@ export default class DisplayImage extends Component{
 
       onUploadComplete(data){
                 console.log("Image is replaced");
+                this.forceUpdate();
       }
       updateTags(tags){
 
@@ -40,6 +41,7 @@ export default class DisplayImage extends Component{
                                <div className="col-sm-10">
                                     <ImageUploader onComplete={this.onUploadComplete.bind(this)}
                                     image={this.props.image}
+                                    imageTags={this.props.image.tags}
                                     buildFileName={this.buildFileName.bind(this)}
                                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
                                     bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}/>

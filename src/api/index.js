@@ -123,7 +123,10 @@ class ServiceAPI {
            }
          }
          findImageSetsByContractAndEpisode(contractNumber,episodeNumber){
-              return httpGetRequest("image-service/image-sets?programmeNumber="+contractNumber+"-"+episodeNumber);
+              return this.findImageSetsByProgrammeNumber(contractNumber+"-"+episodeNumber);
+         }
+         findImageSetsByProgrammeNumber(programmeNumber){
+              return httpGetRequest("image-service/image-sets?programmeNumber="+programmeNumber);
          }
          updateImageSet(imageSet){
             return httpPutRequest("image-service/image-sets/"+imageSet.id, JSON.stringify(imageSet));
@@ -134,7 +137,9 @@ class ServiceAPI {
          deleteImage(image){
            return httpDeleteRequest("image-service/images/"+image.id);
          }
-
+         getSummaries(){
+               return httpGetRequest("image-service/summaries");
+         }
 }
 
 

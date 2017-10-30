@@ -6,13 +6,15 @@ import {episodedata,store} from "../store";
 import {api} from "../api";
 import {images,textValues} from "../configs";
 import "./styles/index.css";
+import {AppHeader} from "../components";
 
 export default class NotProcessedEpisodeView extends Component{
 
   constructor(props){
-        super(props);
+        super(props);        
         this.bindToStore();
         this.bindToQueryParameters();
+
   }
   bindToStore(){
     this.state=episodedata.getEpisodeList();
@@ -37,13 +39,8 @@ export default class NotProcessedEpisodeView extends Component{
   render(){
        return (
            <div>
-             <div className="header">
-                    <img src={images.logo} className="logo"/>
-                    <div className="title">
-                          {textValues.title}
-                    </div>
-             </div>
-             <h1>Missing Images</h1>
+             <AppHeader selected="episodelink"/>
+
              <ListEpisodes data={this.state}/>
            </div>
          );

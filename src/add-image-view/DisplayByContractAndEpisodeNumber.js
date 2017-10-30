@@ -65,12 +65,7 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
   render(){
     return (
           <div>
-                <div className="header">
-                       <img src={images.logo} className="logo"/>
-                       <div className="title">
-                             {textValues.title}
-                       </div>
-                </div>
+                
                 <div className="content">
 
                       {this.state.imageSets.map(imageSet=>{

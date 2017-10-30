@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader} from "../components";
+import {AppHeader} from "../components";
 import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";
@@ -9,6 +9,7 @@ import "./styles/index.css";
 import DisplaySetProperty from "./DisplaySetProperty";
 import DisplayCreateNewImageSet from "./DisplayCreateNewImageSet";
 import DisplayByContractAndEpisodeNumber from "./DisplayByContractAndEpisodeNumber";
+import {TopMenu} from "../components";
 export default class EpisodeView extends Component{
 
   constructor(props){
@@ -54,12 +55,7 @@ export default class EpisodeView extends Component{
     if((!this.state) || (!this.state.imageSets) || (this.state.imageSets.length==0)){
           return (
                 <div>
-                      <div className="header">
-                             <img src={images.logo} className="logo"/>
-                             <div className="title">
-                                   {textValues.title}
-                             </div>
-                      </div>
+                      <AppHeader selected="episodelink"/>
                       <EpisodeViewDisplaySetProperty data={this.state} onTitleChanged={this.onTitleChanged.bind(this)}/>
                       <CreateNewImageSetInEpisode data={this.state} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
                 </div>
@@ -68,7 +64,10 @@ export default class EpisodeView extends Component{
       }
       else{
            return (
-             <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+             <div>
+                   <AppHeader selected="episodelink"/>
+                   <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+            </div>
            )
       }
     }

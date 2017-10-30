@@ -17,8 +17,8 @@ export const styles={
     height: "50%",
     margin: '0 auto',
     padding: 30,
-    border:"1px solid red",
-    zIndex:1050,
+    border:"1px solid black",
+    zIndex:2050,
     display:"flex",
     flexDirection:"column",
     justifyContent:"space-between"
