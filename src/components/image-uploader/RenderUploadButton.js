@@ -8,11 +8,6 @@ export default class RenderUploadButton extends Component{
            return null;
          }
 
-         if(!this.props.imageTags){
-           return null;
-         }
-        
-
          if(this.props.isUploadImageSizeCorrect(this.props.width,this.props.height)){
            return (
                <div style={styles.uploadButtonContainer}>

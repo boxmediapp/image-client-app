@@ -22,15 +22,13 @@ import  RenderImage from "./RenderImage";
 export  default class ImageUploader extends Component {
    constructor(props){
      super(props);
-     var imageTags="";
-     if(this.props.image){
-        imageTags=this.props.image.tags;
-     }
+
+
 
 
      this.state={file:null,imagePreviewUrl:null,
        imageType:null,width:0,height:0, modalMessage:null, progressValue:0, progressTotal:0,
-       imageTags, filepath:null,baseURL:null};
+        filepath:null,baseURL:null};
 
 
    }
@@ -129,19 +127,12 @@ export  default class ImageUploader extends Component {
           this.setErrorMessage("Failed upload the file:"+error);
       });
   }
-setImageTags(imageTags){
 
-   this.setState(Object.assign({}, this.state,{imageTags}));
-}
-updateTags(){
-
-    this.props.updateTags(this.state.imageTags);
-}
   render() {
         return(
            <div>
               <RenderImage {...this.props} {...this.state} onDrop={this.onDrop.bind(this)}
-                onUpload={this.onUpload.bind(this)} setImageTags={this.setImageTags.bind(this)} updateTags={this.updateTags.bind(this)}/>
+                onUpload={this.onUpload.bind(this)} />
               <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
            </div>
         );

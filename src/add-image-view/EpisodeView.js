@@ -6,7 +6,7 @@ import {episodedata,store} from "../store";
 import {api} from "../api";
 import {images,textValues} from "../configs";
 import "./styles/index.css";
-import DisplaySetProperty from "./DisplaySetProperty";
+
 import DisplayCreateNewImageSet from "./DisplayCreateNewImageSet";
 import DisplayByContractAndEpisodeNumber from "./DisplayByContractAndEpisodeNumber";
 import {TopMenu} from "../components";
@@ -56,8 +56,8 @@ export default class EpisodeView extends Component{
           return (
                 <div>
                       <AppHeader selected="episodelink"/>
-                      <EpisodeViewDisplaySetProperty data={this.state} onTitleChanged={this.onTitleChanged.bind(this)}/>
-                      <CreateNewImageSetInEpisode data={this.state} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
+
+                      <CreateNewImageSetInEpisode {...this.state} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
                 </div>
                 );
 
@@ -77,41 +77,21 @@ export default class EpisodeView extends Component{
     }
   }
 }
-class EpisodeViewDisplaySetProperty extends Component{
-    render(){
-
-          if(this.props.data){
-              if(this.props.data.imageSets && this.props.data.imageSets.length>0){
-                return null;
-              }
-              else{
-
-                return(
-                    <DisplaySetProperty {...this.props.data} onTitleChanged={this.props.onTitleChanged}/>
-                );
-              }
-
-          }
-          else{
-            return null;
-          }
-    }
-
-}
 
 class CreateNewImageSetInEpisode extends Component{
     render(){
-        if(!this.props.data){
+        if(!this.props.contractNumber){
           return null;
         }
         var fileCounter=1;
           return (
-              <DisplayCreateNewImageSet {...this.props.data}
-                  episodeId={this.props.data.id}
-                  title={this.props.data.title}
-                  contractNumber={this.props.data.contractNumber}
-                  episodeNumber={this.props.data.episodeNumber}
+              <DisplayCreateNewImageSet {...this.props}
+                  episodeId={this.props.id}
+                  title={this.props.title}
+                  contractNumber={this.props.contractNumber}
+                  episodeNumber={this.props.episodeNumber}
                   fileCounter={fileCounter}
+                  tags="episode"
                   onNewImageCreated={this.props.onNewImageCreated}/>
           );
 

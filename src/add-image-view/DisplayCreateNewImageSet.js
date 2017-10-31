@@ -8,13 +8,19 @@ import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
 import {textValues,imageRequirements} from "../configs";
 import {styles} from "./styles";
+import "./styles/index.css";
 
 
 export default class DisplayCreateNewImageSet extends Component{
 constructor(props){
   super(props);
-  this.state={progressValue:0,progressTotal:0,modalMessage:null,process:false};
+  this.state={progressValue:0,progressTotal:0,modalMessage:null,process:false, title:this.props.title, tags:this.props.tags,
+  resizeWidth:0, resizeHeight:0, resizeType:""};
   this.process=new ResizeProcess(this, this.props);
+}
+setResizeProperty(resizeWidth,resizeHeight, resizeType){
+  this.setState(Object.assign({}, this.state,{resizeWidth,resizeHeight,resizeType}));
+
 }
 onClearMessage(){
   this.setState(Object.assign({}, this.state,{modalMessage:null}));
@@ -42,7 +48,12 @@ clearProgress(){
     this.setProgressValue(0,0);
 }
 
-
+setTitle(title){
+  this.setState(Object.assign({}, this.state,{title}));
+}
+setTags(tags){
+  this.setState(Object.assign({}, this.state,{tags}));
+}
 
 
 
@@ -60,26 +71,60 @@ clearProgress(){
   }
   renderUploadMaster(){
     var appconfig=appdata.getAppConfig();
-    return (
-      <div className="container">
-             <div className="row">
-               <div className="col-sm-12">
-                   <ImageUploader  {...this.props}
-                     fileCounter={this.props.fileCounter}
-                     onComplete={this.process.onMainAssetUploaded.bind(this.process)}
-                     buildFileName={this.process.buildFileName.bind(this.process)}
-                     isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
-                     bucket={appconfig.imageBucket}/>
-               </div>
-             </div>
+    var {contractNumber,episodeNumber,title}=this.props;
+    var {tags,title}=this.state;
 
-     </div>
+    return (
+      <div>
+            <div className="imageSetHeader">New Image Set</div>
+            <div className="container">
+
+                    <div className="row">
+                       <div className="col-sm-6 formFieldWithLabel">
+                          <label htmlFor="contractNumber">Contract Number:</label>
+                          <input type="text" className="form-control" id="contractNumber" placeholder="Contract number" name="contractNumber" value={contractNumber} readOnly={true}/>
+                        </div>
+                        <div className="col-sm-6 formFieldWithLabel">
+                          <label htmlFor="episodeNumber">Episde Number:</label>
+                        <input type="text" className="form-control" id="episodeNumber" placeholder="Episode Number" name="episodeNumber" readOnly={true} value={episodeNumber}/>
+                      </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-12 formFieldWithLabel">
+                       <label htmlFor="title">Title:</label>
+                       <input type="text" className="form-control" id="title" placeholder="Title" name="title" value={title} onChange={evt=>{this.setTitle(evt.target.value)}}/>
+                     </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-12 formFieldWithLabel">
+                      <label htmlFor="tags">Tags:</label>
+                      <input type="text" className="form-control" id="tags" placeholder="Tags" name="tags" value={tags} onChange={evt=>{this.setTags(evt.target.value)}}/>
+                    </div>
+                  </div>
+
+
+                   <div className="row">
+                     <div className="col-sm-12">
+                         <ImageUploader  {...this.props}
+                           fileCounter={this.props.fileCounter}
+                           onComplete={this.process.onMainAssetUploaded.bind(this.process)}
+                           buildFileName={this.process.buildFileName.bind(this.process)}
+                           isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
+                           bucket={appconfig.imageBucket}/>
+                     </div>
+                   </div>
+
+
+           </div>
+
+        </div>
       );
 
   }
   renderResizeImage(){
 
     var {width, height,imageURL}=this.process.getSourceImageInfo();
+    var {resizeWidth,resizeHeight}=this.state;
     return (
        <div style={styles.previewImageContainer}>
              <div>
@@ -89,7 +134,7 @@ clearProgress(){
                    progressTotal={this.state.progressTotal}/>
              </div>
              <div  style={styles.imageFooter}>
-                      {width} x {height}
+                      Generating: {resizeWidth} x {resizeHeight}
              </div>
              <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
        </div>

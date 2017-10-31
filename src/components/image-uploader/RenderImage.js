@@ -3,7 +3,7 @@ import Dropzone from 'react-dropzone';
 import {styles} from "./styles";
 import {ProgressBar} from "../index";
 import RenderDimension from "./RenderDimension";
-import RenderTagInput from "./RenderTagInput";
+
 import RenderUploadButton from "./RenderUploadButton";
 export default class RenderImage extends Component{
   render(){
@@ -41,7 +41,7 @@ export default class RenderImage extends Component{
                  </div>
                  <div  style={styles.imageFooter}>
                           <RenderDimension {...this.props}/>
-                          <RenderTagInput {...this.props}/>
+
                           <RenderUploadButton {...this.props}/>
                  </div>
            </div>

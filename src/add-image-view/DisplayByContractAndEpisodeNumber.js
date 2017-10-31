@@ -65,7 +65,7 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
   render(){
     return (
           <div>
-                
+
                 <div className="content">
 
                       {this.state.imageSets.map(imageSet=>{
@@ -101,7 +101,7 @@ class CreateNewImageSetInEpisode extends Component{
                     <DisplayCreateNewImageSet
                         {...imageSet}
                         fileCounter={fileCounter}
-                        onNewImageCreated={this.props.onNewImageCreated}/>
+                        onNewImageCreated={this.props.onNewImageCreated} tags="episode"/>
                  </div>
                 );
 

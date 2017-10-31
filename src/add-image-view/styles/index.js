@@ -43,6 +43,16 @@ export const styles={
         justifyContent:"center"
       };
     },
+    imageProperty:{
+          width:533,
+          height:250,
+          display:"flex",
+          flexDirection:"column",
+          justifyContent:"flex-start",
+          alignItems:"flex-start"
+
+    }
+    
 
 
 };

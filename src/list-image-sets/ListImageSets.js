@@ -56,7 +56,7 @@ export  default class ListImageSets extends Component {
                                            />
                                   <Column
                                            columnKey="id"
-                                           header={<Cell>Image</Cell>}
+                                           header={<Cell></Cell>}
                                            cell={<ImageCell data={imageSets}/>}
                                            width={250}
                                           />

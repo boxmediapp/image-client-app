@@ -17,10 +17,10 @@ export default class ResizeProcess{
       }
       createImageSet(data){
         var imageset={
-             episodeId:this.data.episodeId,
-             programmeNumber:this.data.contractNumber+"/"+this.data.episodeNumber,
-             title:this.data.title,
-             fileCounter:this.data.fileCounter
+             episodeId:this.caller.props.episodeId,
+             programmeNumber:this.caller.props.contractNumber+"/"+this.caller.props.episodeNumber,
+             title:this.caller.state.title,
+             fileCounter:this.caller.props.fileCounter
         }
         return api.createImageSet(imageset);
       }
@@ -38,7 +38,7 @@ export default class ResizeProcess{
                        s3BaseURL:data.baseURL,
                        width:data.width,
                        height:data.height,
-                       tags:data.imageTags,
+                       tags:this.caller.state.tags,
                        imageSet:imageSet,
                        imageStatus:'WAITING_APPROVE',
                     };
@@ -77,6 +77,7 @@ export default class ResizeProcess{
         this.width=imageRequirements[this.step].width;
         this.height=imageRequirements[this.step].height;
         this.imageType=imageRequirements[this.step].type;
+        this.caller.setResizeProperty(this.width, this.height,this.imageType);
 
         var resizeRequest={
           imageURL:imageUtil.getS3ImageURL(this.image),
