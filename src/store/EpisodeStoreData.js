@@ -68,7 +68,7 @@ export default class EpisodeStoreData{
 
         }
         else{
-          this.setEpisodeList({episodes:[episode],imageStatus:null,search:null});
+          this.setEpisodeList({episodes:[episode],search:null});
         }
 
       }

@@ -6,15 +6,15 @@ import {episodedata,store} from "../store";
 import {api} from "../api";
 import {images,textValues} from "../configs";
 import "./styles/index.css";
-import {AppHeader} from "../components";
+import {AppHeader,SearchBox} from "../components";
+
+
 
 export default class NotProcessedEpisodeView extends Component{
-
   constructor(props){
-        super(props);        
+        super(props);
         this.bindToStore();
         this.bindToQueryParameters();
-
   }
   bindToStore(){
     this.state=episodedata.getEpisodeList();
@@ -22,12 +22,20 @@ export default class NotProcessedEpisodeView extends Component{
             this.setEpisodes(episodedata.getEpisodeList());
     });
   }
+  setSearch(search){
+    this.setState(Object.assign({}, this.state,{search}));
+  }
   bindToQueryParameters(){
-    var imageStatus="not-process";
        var search=genericUtil.getQueryParam(this.props.location.search, "search");
-       api.findNotProcessedEpisodes(search).then(episodes =>{
-          episodedata.setEpisodeList({episodes,imageStatus,search});
-      });
+       if(!search){
+         search="";
+       }
+       this.startSearch(search);
+  }
+  startSearch(search){
+    api.findNotProcessedEpisodes(search).then(episodes =>{
+       episodedata.setEpisodeList({episodes,search});
+   });
   }
   setEpisodes(episodelistdata){
 
@@ -36,11 +44,13 @@ export default class NotProcessedEpisodeView extends Component{
       }
       this.setState(Object.assign({},this.state,episodelistdata));
   }
+
+
   render(){
        return (
            <div>
              <AppHeader selected="episodelink"/>
-
+             <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
              <ListEpisodes data={this.state}/>
            </div>
          );
