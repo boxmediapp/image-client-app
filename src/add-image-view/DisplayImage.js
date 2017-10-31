@@ -7,13 +7,13 @@ import {api} from "../api";
 import {textValues} from "../configs";
 import "./styles/index.css";
 import {styles} from "./styles";
-
+import SelectImageStatus from "./SelectImageStatus";
 export default class DisplayImage extends Component{
 
       constructor(props){
             super(props);
-            var {id,filename,s3BaseURL,width,height,tags,imageSet}=this.props.image;
-            this.state={id,filename,s3BaseURL,width,height,tags,imageSet, image:this.props.image};
+
+            this.state={...this.props.image, image:this.props.image};
       }
 
 
@@ -36,6 +36,11 @@ export default class DisplayImage extends Component{
             this.setState(Object.assign({},this.state,{image}));
             api.updateImage(image);
       }
+      updateImageStatus(imageStatus){
+            var image=Object.assign({},this.state.image,{imageStatus});
+            this.setState(Object.assign({},this.state,{imageStatus}));
+            api.updateImage(image);
+      }
       render(){
               var appconfig=appdata.getAppConfig();
               return(
@@ -50,7 +55,8 @@ export default class DisplayImage extends Component{
                                     bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}/>
                                 </div>
                                 <div className="col-sm-6 imageRightProperty">
-                                       <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)} updateTags={this.updateTags.bind(this)}/>
+                                       <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
+                                         updateTags={this.updateTags.bind(this)} updateImageStatus={this.updateImageStatus.bind(this)}/>
                                          <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
                                                  this.props.deleteImage(this.props.image);
                                              }}>Delete</button>
@@ -97,6 +103,12 @@ class DisplayImageProperty extends Component{
                                      </div>
                               </div>
                      </div>
+                     <div style={styles.imageProperty}>
+                        <SelectImageStatus imageStatus={this.props.imageStatus} updateImageStatus={this.props.updateImageStatus}/>
+                     </div>
+
+
+
 
             </div>
 

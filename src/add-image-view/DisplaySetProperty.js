@@ -7,6 +7,7 @@ import {api} from "../api";
 import {images,textValues} from "../configs";
 import "./styles/index.css";
 
+
 export default class DisplaySetProperty extends Component{
   constructor(props){
       super(props);
