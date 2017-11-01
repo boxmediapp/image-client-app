@@ -29,7 +29,8 @@ export const styles={
     display:"flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    marginRight:10
   },
   tagContainer:{
     display:"flex",

@@ -10,7 +10,7 @@ export default class ModalDialog extends Component {
                     {this.props.message}
 
                     <div className="footer">
-                      <button onClick={this.props.onClearMessage}>Ok</button>
+                      <button onClick={this.props.onClearMessage} className="btn btn-primary btn-normal">Ok</button>
                     </div>
                   </div>
                   </div>

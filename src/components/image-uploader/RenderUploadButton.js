@@ -11,7 +11,7 @@ export default class RenderUploadButton extends Component{
          if(this.props.isUploadImageSizeCorrect(this.props.width,this.props.height)){
            return (
                <div style={styles.uploadButtonContainer}>
-                 <button type="button" className="btn btn-default" onClick={this.props.onUpload}>Upload</button>
+                 <button type="button" className="btn btn-primary btn-normal" onClick={this.props.onUpload}>Upload</button>
                </div>
              );
          }

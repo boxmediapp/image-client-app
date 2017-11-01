@@ -24,7 +24,7 @@ export default class ModalDisplayImage extends Component {
                     <div className="footer">
                       <button onClick={(evt) => {
                                this.setShowImage(false);
-                           }} >Hide</button>
+                           }}  className="btn btn-primary btn-normal">Hide</button>
                     </div>
                   </div>
                   </div>

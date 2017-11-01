@@ -72,7 +72,7 @@ export default class ImageUtil{
           var resizedImage = that.dataURLToBlob(dataUrl);
           request.onComplete(resizedImage);
       }
-      image.src = request.imageURL;
+      image.src = request.imageURL+"?timestamp="+(new Date()).getTime();
   }
   dataURLToBlob(dataURL) {
     var BASE64_MARKER = ';base64,';
