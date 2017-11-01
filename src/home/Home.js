@@ -7,7 +7,7 @@ import {
   Link
 } from 'react-router-dom'
 import  "./styles/index.css";
-import {images,textValues} from "../configs";
+import {textValues} from "../configs";
 import {AppHeader} from "../components";
 export  default class Home extends Component {
     constructor(props){
@@ -47,7 +47,7 @@ export  default class Home extends Component {
                            <div className="dataValue">{this.state.numberOfImageSets}</div>
                       </div>
 
- 
+
                       <div className="datarow">
                           <div className="datalabel">
                              Episodes missing images:

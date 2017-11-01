@@ -3,8 +3,8 @@ import React,{Component} from "react";
 
 import configStore  from "./configStore";
 
-import {userSettings} from "./reducers/userSettings";
-import {applicationSettings} from "./reducers/applicationSettings"
+
+
 import EpisodeStoreData from "./EpisodeStoreData";
 import AppSettingsStore from "./AppSettingsStore";
 

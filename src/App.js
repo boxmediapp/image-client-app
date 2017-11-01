@@ -19,6 +19,7 @@ import {EpisodeView,ContractEpisodeNumberView} from "./add-image-view";
 import {NotProcessedEpisodeView} from "./not-processed";
 import {Home} from "./home";
 import {ListImageSetView} from "./list-image-sets";
+import {genericUtil} from "./utils";
 
 
 
@@ -69,12 +70,13 @@ export default class App extends Component{
                                   <Route  path={textValues.episode.list.link}  component={NotProcessedEpisodeView}/>
                                   <Route path={textValues.addImageView.episode.link} component={EpisodeView}/>
                                   <Route path={textValues.imageSets.list.link} component={ListImageSetView}/>
-                                  <Route path={textValues.addImageView.contractEpisode.link} component={ContractEpisodeNumberView}/>                                  
+                                  <Route path={textValues.addImageView.contractEpisode.link} component={ContractEpisodeNumberView}/>
                               </div>
                             </Router>
                       )
                     }
                     else{
+                        this.autoLogin();
                         return (
                             <DisplayLogin/>
 
@@ -87,4 +89,18 @@ export default class App extends Component{
         this.ubsubsribe();
       }
     }
+
+   autoLogin(){
+     var cred=genericUtil.loadCred();
+     if(!cred){
+         return;
+     }
+     else{
+         var username=cred.username;
+         var password=cred.password;
+         appdata.setCredentials(username,password);
+     }
+   }
+
+
 }

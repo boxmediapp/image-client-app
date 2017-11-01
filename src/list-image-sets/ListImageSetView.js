@@ -4,7 +4,7 @@ import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";
 import {api} from "../api";
-import {images,textValues} from "../configs";
+import {textValues} from "../configs";
 import "./styles/index.css";
 import {AppHeader,SearchBox} from "../components";
 import ListImageSets from "./ListImageSets";

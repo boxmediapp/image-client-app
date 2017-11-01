@@ -2,24 +2,24 @@ const textValues={
     title:"Box Plus Image Application",
     episode:{
        list:{
-         link:"/missing-images",
+         link:"/image-app/missing-images",
          linkText:"Missing Images"
        }
     },
     addImageView:{
       episode:{
-          link:"/episode-images",
+          link:"/image-app/episode-images",
           text:"Add Image"
       },
       contractEpisode:{
-         link:"/contract-episode-images",
+         link:"/image-app/contract-episode-images",
          text:"Edit"
       }
 
     },
     imageSets:{
         list:{
-          link:"/list-image-sets",
+          link:"/image-app/list-image-sets",
           linkText:"Image Sets"
         }
     },

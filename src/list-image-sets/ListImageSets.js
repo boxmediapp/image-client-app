@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {Table, Column, Cell} from "fixed-data-table-2";
-import {textValues} from "../configs";
+import {textValues,localImages} from "../configs";
 import "fixed-data-table-2/dist/fixed-data-table.min.css";
 import {
   Link
@@ -105,7 +105,12 @@ class ImageCell extends Component {
         height=thumbnailImages[0].hight;
     }
 
-
+    if(!imgurl){
+      imgurl=localImages.missing;
+      width=192;
+      height=108;
+      
+    }
 
     return (
       <Cell {...props}>

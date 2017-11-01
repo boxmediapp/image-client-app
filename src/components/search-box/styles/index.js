@@ -1,4 +1,4 @@
-import {images} from "../../../configs";
+import {localImages} from "../../../configs";
 
 export const styles={
   search:{
@@ -8,7 +8,7 @@ export const styles={
     borderRadius: 4,
     fontSize: 16,
     backgroundColor: "white",
-    backgroundImage: "url('"+images.search+"')",
+    backgroundImage: "url('"+localImages.search+"')",
     backgroundPosition: "10px 10px",
     backgroundRepeat: "no-repeat",
     padding: "6px 25px 6px 30px",

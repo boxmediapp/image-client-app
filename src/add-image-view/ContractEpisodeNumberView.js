@@ -4,7 +4,7 @@ import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";
 import {api} from "../api";
-import {images,textValues} from "../configs";
+import {textValues} from "../configs";
 import "./styles/index.css";
 import DisplaySetProperty from "./DisplaySetProperty";
 import DisplayCreateNewImageSet from "./DisplayCreateNewImageSet";
@@ -38,7 +38,7 @@ export default class ContractEpisodeNumberView extends Component{
 
            return (
              <div>
-                   <AppHeader selected="imagesets"/>                   
+                   <AppHeader selected="imagesets"/>
                    <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
             </div>
            )

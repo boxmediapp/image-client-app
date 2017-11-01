@@ -6,7 +6,11 @@ import {styles} from "./styles";
 export default class SearchBox extends Component{
    constructor(props){
       super(props);
-      this.state={search:this.props.search};
+      var search=this.props.search;
+      if(!search){
+        search="";
+      }
+      this.state={search};
    }
   setSearch(search){
     this.setState(Object.assign({}, this.state,{search}));

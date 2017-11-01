@@ -1,11 +1,5 @@
-
-
-
-
-
 import {userSettings} from "./reducers/userSettings";
 import {applicationSettings} from "./reducers/applicationSettings"
-
 export default class AppSettingsStore{
   constructor(store){
     this.store=store;
