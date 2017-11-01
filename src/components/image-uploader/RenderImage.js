@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import {styles} from "./styles";
-import {ProgressBar} from "../index";
+import {ProgressBar,ModalDisplayImage} from "../index";
 import RenderDimension from "./RenderDimension";
 
 import RenderUploadButton from "./RenderUploadButton";
@@ -43,6 +43,7 @@ export default class RenderImage extends Component{
                           <RenderDimension {...this.props}/>
 
                           <RenderUploadButton {...this.props}/>
+                          <ModalDisplayImage imageURL={imageURL} width={width} height={height}/>
                  </div>
            </div>
     );

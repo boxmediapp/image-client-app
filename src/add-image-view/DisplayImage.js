@@ -44,7 +44,7 @@ export default class DisplayImage extends Component{
       render(){
               var appconfig=appdata.getAppConfig();
               return(
-                     <div className="content">
+                     <div className=" content imageRecord">
                        <div className="row">
                                <div className="col-sm-6">
                                     <ImageUploader onComplete={this.onUploadComplete.bind(this)}

@@ -1,9 +1,9 @@
-
+import {config} from "../../../configs"
 export const styles={
 
   dropzone:function(imgwidth, imgheight){
-    var width=533;
-    var height=300;
+    var width=config.normalImageWidth;
+    var height=config.normalImageHeight;
     if(imgwidth && imgheight){
            if(imgheight<=height){
              width=imgwidth;
@@ -43,7 +43,8 @@ export const styles={
     justifyContent: "flex-start",
     alignItems: "flex-start",
     marginLeft: 50,
-    marginTop: 50
+    marginTop: 50,
+
   },
   imageFooter:{
     display:"flex",
