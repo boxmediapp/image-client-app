@@ -34,6 +34,10 @@ const textValues={
     logout:{
       link:"/",
       linkText:"Sign out"
+    },
+    clients:{
+      link:"/image-app/clients",
+      linkText:"Clients"
     }
 
 

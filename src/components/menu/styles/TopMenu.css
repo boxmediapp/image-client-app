@@ -10,6 +10,7 @@
 
 }
 
+
 .topnav a {
   float: left;
   display: block;
@@ -46,6 +47,11 @@
  }
  .topnav a.selected {
    background-color: #617fde;
+   color:white;
+
+ }
+ .topnav a.notSelected {
+   
    color:white;
 
  }

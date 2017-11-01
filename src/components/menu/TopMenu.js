@@ -42,6 +42,11 @@ export  default class TopMenu extends Component {
                           {textValues.imageSets.list.linkText}
                     </Link>
 
+                    <Link to={textValues.clients.link} className={this.props.selected==="clients"?"selected":"notSelected"}>
+                          {textValues.clients.linkText}
+                    </Link>
+
+
                     <Link to={textValues.logout.link} className="notSelected" onClick={(evt) => {
                              this.logout();
                          }}>

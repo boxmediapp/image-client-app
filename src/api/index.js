@@ -49,7 +49,7 @@ const pHTTPDeleteRequest=function(path, headers){
             console.error("failure response on delete request:"+path);
             throw Error("HTTP response error on:"+path);
         }
-      
+
         return response.text();
   }).then(function(body) {
       return JSON.parse(body);
@@ -139,6 +139,15 @@ class ServiceAPI {
          }
          getSummaries(){
                return httpGetRequest("image-service/summaries");
+         }
+         getClientImages(programmeNumber){
+             if(programmeNumber){
+               return httpGetRequest("image-service/clients/images?programmeNumber="+programmeNumber);
+             }
+             else{
+               return httpGetRequest("image-service/clients/images");
+             }
+
          }
 }
 
