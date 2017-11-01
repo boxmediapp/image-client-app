@@ -30,6 +30,10 @@ const textValues={
     home:{
         link:"/",
         linkText:"Home"
+    },
+    logout:{
+      link:"/",
+      linkText:"Sign out"
     }
 
 

@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import {textValues} from  "../../configs";
+import {genericUtil} from "../../utils";
 import {
   Link
 
 } from 'react-router-dom'
 
 import './styles/TopMenu.css';
+import {appdata} from "../../store";
 
 export  default class TopMenu extends Component {
   constructor(props){
@@ -16,6 +18,11 @@ export  default class TopMenu extends Component {
   menuPressed(){
       console.log("pressed");
       this.setState(Object.assign({},this.state,{menuPressed:!this.state.menuPressed}));
+  }
+  logout(){
+
+    genericUtil.saveCred("","");
+    appdata.setCredentials(null,null);
   }
   render() {
     var responsiveMenuClass="topnav";
@@ -33,6 +40,12 @@ export  default class TopMenu extends Component {
                     </Link>
                     <Link to={textValues.imageSets.list.link} className={this.props.selected==="imagesets"?"selected":"notSelected"}>
                           {textValues.imageSets.list.linkText}
+                    </Link>
+
+                    <Link to={textValues.logout.link} className="notSelected" onClick={(evt) => {
+                             this.logout();
+                         }}>
+                          {textValues.logout.linkText}
                     </Link>
 
                     <a className="icon" onClick={this.menuPressed.bind(this)}>&#9776;</a>
