@@ -19,7 +19,7 @@ export default class SelectImageStatus extends Component{
                 <label>
                   <input type="radio" value="WAITING_APPROVE" checked={this.state.imageStatus === 'WAITING_APPROVE'}
                   onChange={this.handleOptionChange.bind(this)}  />
-                  Waiting Approve
+                Awaiting Approval
                 </label>
               </div>
               <div className="radio">

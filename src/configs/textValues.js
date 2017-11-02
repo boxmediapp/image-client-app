@@ -3,7 +3,7 @@ const textValues={
     episode:{
        list:{
          link:"/image-app/missing-images",
-         linkText:"Missing Images"
+         linkText:"Assign Images"
        }
     },
     addImageView:{

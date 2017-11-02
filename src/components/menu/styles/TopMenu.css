@@ -49,9 +49,13 @@
    background-color: #617fde;
    color:white;
 
+
  }
  .topnav a.notSelected {
-   
    color:white;
-
+   border: 1px solid #AA4444;
+ }
+ .topnav a.notSelected:hover {
+   color: #0057ff;
+   border: 1px solid #AA4444;
  }
