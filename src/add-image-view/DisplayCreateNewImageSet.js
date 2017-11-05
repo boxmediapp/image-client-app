@@ -18,6 +18,30 @@ constructor(props){
   resizeWidth:0, resizeHeight:0, resizeType:""};
   this.process=new ResizeProcess(this, this.props);
 }
+onDropFailed(errorMessage){
+      this.setErrorMessage(errorMessage);
+}
+onDropSucess(imageInfo){
+  if(this.process.isMainImageSizeCorrect(imageInfo.width,imageInfo.height)){
+        return true;
+  }
+  else{
+    this.setErrorMessage("the image is in the correct")
+    return false;
+  }
+}
+onUploadError(result){
+  console.log("error:"+JSON.stringify(result));
+  this.setErrorMessage(textValues.upload.failed);
+}
+
+onClearMessage(){
+  this.setState(Object.assign({}, this.state,{modalMessage:null}));
+}
+setErrorMessage(modalMessage){
+   this.setState(Object.assign({}, this.state,{modalMessage}));
+}
+
 setResizeProperty(resizeWidth,resizeHeight, resizeType){
   this.setState(Object.assign({}, this.state,{resizeWidth,resizeHeight,resizeType}));
 
@@ -110,8 +134,11 @@ setTags(tags){
                            onComplete={this.process.onMainAssetUploaded.bind(this.process)}
                            buildFileName={this.process.buildFileName.bind(this.process)}
                            isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
-                           bucket={appconfig.imageBucket}/>
+                           bucket={appconfig.imageBucket} onDropFailed={this.onDropFailed.bind(this)}
+                           onDropSucess={this.onDropSucess.bind(this)}
+                           onUploadError={this.onUploadError.bind(this)}/>
                      </div>
+                     <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
                    </div>
 
 

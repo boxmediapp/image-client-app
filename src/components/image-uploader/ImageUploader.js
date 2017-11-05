@@ -7,7 +7,6 @@ import {imageUtil,genericUtil} from "../../utils";
 
 import {api} from "../../api";
 import {textValues} from "../../configs";
-import {ModalDialog} from "../index";
 import {styles} from "./styles";
 
 
@@ -27,7 +26,7 @@ export  default class ImageUploader extends Component {
 
 
      this.state={file:null,imagePreviewUrl:null,
-       imageType:null,width:0,height:0, modalMessage:null, progressValue:0, progressTotal:0,
+       imageType:null,width:0,height:0, progressValue:0, progressTotal:0,
         filepath:null,baseURL:null};
 
 
@@ -41,18 +40,11 @@ export  default class ImageUploader extends Component {
    onDrop(acceptedFiles, rejectedFiles){
       if(acceptedFiles && acceptedFiles.length>0){
         imageUtil.getImagePreviewAndInfo(acceptedFiles[0],data=>{
-              var modalMessage=this.state.modalMessage;
-              if(!this.props.isUploadImageSizeCorrect(data.width,data.height)){
-                      modalMessage="the image is not the required size";
-                      this.setState(Object.assign({},this.state,{modalMessage}));
-              }
-              else{
+              if(this.props.onDropSucess(data)){
                 this.setState(Object.assign({},this.state,data));
               }
-
-
-        }, modalMessage =>{
-          this.setErrorMessage(modalMessage);
+        }, errorMessage =>{
+            this.props.onDropFailed(errorMessage);
         });
 
       }
@@ -60,12 +52,7 @@ export  default class ImageUploader extends Component {
 
    }
 
-   onClearMessage(){
-     this.setState(Object.assign({}, this.state,{modalMessage:null}));
-   }
-   setErrorMessage(modalMessage){
-      this.setState(Object.assign({}, this.state,{modalMessage}));
-   }
+
 
 
   startUpload(s3){
@@ -99,13 +86,14 @@ export  default class ImageUploader extends Component {
 
   }
   onUploadError(result){
-    console.log("error:"+JSON.stringify(result));
 
-    this.setErrorMessage(textValues.upload.failed);
+    this.clearProgress();
+
+    this.props.onUploadError(textValues.upload.failed);
   }
   onUploadAborted(){
     this.clearProgress();
-    this.setErrorMessage(textValues.upload.aborted);
+    this.props.onUploadError(textValues.upload.aborted);
   }
 
   setFilePath(filepath, baseURL){
@@ -124,7 +112,7 @@ export  default class ImageUploader extends Component {
          console.log("presign response:"+JSON.stringify(data));
          that.startUpload(data);
       }).catch(error=>{
-          this.setErrorMessage("Failed upload the file:"+error);
+          this.props.onUploadError("Failed upload the file:"+error);
       });
   }
 
@@ -133,7 +121,6 @@ export  default class ImageUploader extends Component {
            <div>
               <RenderImage {...this.props} {...this.state} onDrop={this.onDrop.bind(this)}
                 onUpload={this.onUpload.bind(this)} />
-              <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
            </div>
         );
 

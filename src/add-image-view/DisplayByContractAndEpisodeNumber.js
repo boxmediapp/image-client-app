@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader,ModalDialog} from "../components";
+import {ListEpisodes,ModalDialog} from "../components";
 import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";

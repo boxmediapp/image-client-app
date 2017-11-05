@@ -7,21 +7,32 @@ export const styles={
      left: 0,
      right: 0,
      backgroundColor: 'rgba(0,0,0,0.3)',
-     padding: 50
+     display:"flex",
+     flexDirection:"column",
+     justifyContent:"center",
+     alignItems:"center"
   },
-  modalStyle:{
+  dialogwindow:{
     backgroundColor: '#fff',
     borderRadius: 5,
-    top:50,
     width: "50%",
     height: "50%",
-    margin: '0 auto',
-    padding: 30,
-    border:"1px solid black",
-    zIndex:2050,
     display:"flex",
     flexDirection:"column",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+    boxShadow: "10px 10px 5px #888888"
+  },
+  title:{
+
+  },
+  content:{
+
+  },
+  footer:{
+
+      display: "flex",
+      flexDirection:"row",
+      justifyContent:"center"
   },
   imageBackdropStyle:{
     position: 'absolute',
@@ -53,7 +64,7 @@ export const styles={
     fontFamily: "'Roboto', sans-serif",
     fontWeight: 500,
     fontSize: 20,
-    color: "#FFFFFF",    
+    color: "#FFFFFF",
   }
 
 

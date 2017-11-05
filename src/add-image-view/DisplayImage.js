@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader} from "../components";
+import {ListEpisodes,ImageUploader,ModalDialog} from "../components";
 import {genericUtil} from "../utils";
 
 import {episodedata,store,appdata} from "../store";
@@ -13,8 +13,16 @@ export default class DisplayImage extends Component{
       constructor(props){
             super(props);
 
-            this.state={...this.props.image, image:this.props.image, mql:styles.msql};
+            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null};
+
       }
+      onClearMessage(){
+        this.setState(Object.assign({}, this.state,{modalMessage:null}));
+      }
+      setErrorMessage(modalMessage){
+         this.setState(Object.assign({}, this.state,{modalMessage}));
+      }
+
       componentWillMount(){
         this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
         styles.mql.addListener(this.mediaQueryChanged);
@@ -50,6 +58,23 @@ export default class DisplayImage extends Component{
             this.setState(Object.assign({},this.state,{imageStatus}));
             api.updateImage(image);
       }
+      onDropFailed(errorMessage){
+            this.setErrorMessage(errorMessage);
+      }
+      onDropSucess(imageInfo){
+        if(this.isUploadImageSizeCorrect(imageInfo.width,imageInfo.height)){
+              return true;
+        }
+        else{
+          this.setErrorMessage("the image is in the correct")
+          return false;
+        }
+      }
+      onUploadError(result){
+        console.log("error:"+JSON.stringify(result));
+        this.setErrorMessage(textValues.upload.failed);
+      }
+
       render(){
               var appconfig=appdata.getAppConfig();
               return(
@@ -60,7 +85,10 @@ export default class DisplayImage extends Component{
                                     imageTags={this.props.image.tags}
                                     buildFileName={this.buildFileName.bind(this)}
                                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
-                                    bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}/>
+                                    bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}
+                                    onDropFailed={this.onDropFailed.bind(this)}
+                                    onDropSucess={this.onDropSucess.bind(this)}
+                                    onUploadError={this.onUploadError.bind(this)}/>
                                   <div style={styles.imageRightProperty}>
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
                                          updateTags={this.updateTags.bind(this)} updateImageStatus={this.updateImageStatus.bind(this)}/>
@@ -68,6 +96,7 @@ export default class DisplayImage extends Component{
                                                  this.props.deleteImage(this.props.image);
                                              }}>Delete</button>
                                 </div>
+                                <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
 
                     </div>
                   );

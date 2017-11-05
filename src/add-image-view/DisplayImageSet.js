@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader} from "../components";
+import {ListEpisodes} from "../components";
 import {genericUtil} from "../utils";
 
 import {episodedata,store} from "../store";
@@ -17,7 +17,7 @@ export default class DisplayImageSet extends Component{
   deleteImage(image){
       this.props.deleteImage(image,this.props.imageSet);
   }
- 
+
 
   render(){
 
