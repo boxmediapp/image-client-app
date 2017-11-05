@@ -19,7 +19,13 @@ export default class DisplayImage extends Component{
       onClearMessage(){
         this.setState(Object.assign({}, this.state,{modalMessage:null}));
       }
-      setErrorMessage(modalMessage){
+      setErrorMessage(content){
+         var modalMessage={
+                title:"Error",
+                content,
+                onConfirm:this.onClearMessage.bind(this),
+                confirmButton:"OK"
+         }
          this.setState(Object.assign({}, this.state,{modalMessage}));
       }
 
@@ -96,7 +102,7 @@ export default class DisplayImage extends Component{
                                                  this.props.deleteImage(this.props.image);
                                              }}>Delete</button>
                                 </div>
-                                <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
+                                <ModalDialog message={this.state.modalMessage}/>
 
                     </div>
                   );

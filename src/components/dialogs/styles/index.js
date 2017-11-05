@@ -14,7 +14,7 @@ export const styles={
   },
   dialogwindow:{
     backgroundColor: '#fff',
-    borderRadius: 5,
+    borderRadius: 15,
     width: "50%",
     height: "50%",
     display:"flex",
@@ -23,16 +23,25 @@ export const styles={
     boxShadow: "10px 10px 5px #888888"
   },
   title:{
-
+    fontFamily: "'Roboto', sans-serif",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    textTransform: "uppercase",
+    fontWeight: 500,
+    fontSize: 20,
+    color: "#FFFFFF",
+    backgroundColor:"#1a0dab",
+    paddingLeft:10
   },
   content:{
-
+    textAlign:"center",
+    fontSize: 16,
   },
   footer:{
-
       display: "flex",
       flexDirection:"row",
-      justifyContent:"center"
+      justifyContent:"center",
+      paddingBottom:10
   },
   imageBackdropStyle:{
     position: 'absolute',

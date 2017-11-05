@@ -28,11 +28,13 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
   onClearMessage(){
     this.setState(Object.assign({}, this.state,{modalMessage:null}));
   }
-  setErrorMessage(modalMessage){
-    if(modalMessage && typeof modalMessage==="object"){
-        modalMessage=JSON.stringify(modalMessage);
-    }
-
+  setErrorMessage(content){
+     var modalMessage={
+            title:"Error",
+            content,
+            onConfirm:this.onClearMessage.bind(this),
+            confirmButton:"OK"
+     }
      this.setState(Object.assign({}, this.state,{modalMessage}));
   }
   setImageSets(imageSets){
@@ -77,7 +79,7 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
                <div className="content">
                     <CreateNewImageSetInEpisode imageSets={this.state.imageSets} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
               </div>
-              <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
+              <ModalDialog message={this.state.modalMessage}/>
           </div>
           );
       }

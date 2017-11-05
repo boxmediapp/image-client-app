@@ -38,7 +38,13 @@ onUploadError(result){
 onClearMessage(){
   this.setState(Object.assign({}, this.state,{modalMessage:null}));
 }
-setErrorMessage(modalMessage){
+setErrorMessage(content){
+   var modalMessage={
+          title:"Error",
+          content,
+          onConfirm:this.onClearMessage.bind(this),
+          confirmButton:"OK"
+   }
    this.setState(Object.assign({}, this.state,{modalMessage}));
 }
 
@@ -138,7 +144,7 @@ setTags(tags){
                            onDropSucess={this.onDropSucess.bind(this)}
                            onUploadError={this.onUploadError.bind(this)}/>
                      </div>
-                     <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
+                     <ModalDialog message={this.state.modalMessage}/>
                    </div>
 
 
