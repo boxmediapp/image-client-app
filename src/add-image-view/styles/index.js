@@ -1,10 +1,10 @@
 
-export const styles={
 
-    imageSetContainer:{
+export const styles={
+   mql:window.matchMedia(`(min-width: 800px)`),
+   imageSetContainer:{
         margin:50,
         backgroundColor:"#CCDDEE"
-
 
     },
     newImageSetContainer:{
@@ -51,8 +51,33 @@ export const styles={
           justifyContent:"flex-start",
           alignItems:"flex-start"
 
-    }
-    
+    },
+    imageRightProperty:{
+      paddingLeft:20,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop:20
+    },
+
+
+    imageRecord:function(){
+      var st={
+      backgroundColor: "#EEEEEE",
+      marginBottom: 10,
+      marginTop: 10,
+      display:"flex",
+      flexDirection:"column"
+
+      };
+      if(this.mql.matches){
+          st.flexDirection="row"
+      }
+      return st;
+  }
+
+
 
 
 };

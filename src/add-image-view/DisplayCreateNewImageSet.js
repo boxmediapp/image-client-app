@@ -85,7 +85,7 @@ setTags(tags){
                           <input type="text" className="form-control" id="contractNumber" placeholder="Contract number" name="contractNumber" value={contractNumber} readOnly={true}/>
                         </div>
                         <div className="col-sm-6 formFieldWithLabel">
-                          <label htmlFor="episodeNumber">Episde Number:</label>
+                          <label htmlFor="episodeNumber">Episode Number:</label>
                         <input type="text" className="form-control" id="episodeNumber" placeholder="Episode Number" name="episodeNumber" readOnly={true} value={episodeNumber}/>
                       </div>
                   </div>

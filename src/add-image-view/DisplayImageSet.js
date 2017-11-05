@@ -17,7 +17,7 @@ export default class DisplayImageSet extends Component{
   deleteImage(image){
       this.props.deleteImage(image,this.props.imageSet);
   }
-
+ 
 
   render(){
 

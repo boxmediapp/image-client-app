@@ -49,9 +49,11 @@ export default class NotProcessedEpisodeView extends Component{
   render(){
        return (
            <div>
-             <AppHeader selected="episodelink"/>
-             <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
-             <ListEpisodes data={this.state}/>
+             <AppHeader selected="episodeList"/>
+             <div style={AppHeader.styles.content}>
+               <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
+               <ListEpisodes data={this.state}/>
+            </div>
            </div>
          );
   }

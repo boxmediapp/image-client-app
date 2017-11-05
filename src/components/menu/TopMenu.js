@@ -6,55 +6,142 @@ import {
 
 } from 'react-router-dom'
 
-import './styles/TopMenu.css';
-import {appdata} from "../../store";
 
+import {appdata} from "../../store";
+import {styles} from "./styles";
 export  default class TopMenu extends Component {
   constructor(props){
       super(props);
-      this.state={menuPressed:false};
+      this.state={menuPressed:false, mql:styles.mql};
+  }
+  componentWillMount(){
+    this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
+    styles.mql.addListener(this.mediaQueryChanged);
+  }
+  componentWillUnmount() {
+    styles.mql.removeListener(this.mediaQueryChanged);
+  }
+  mediaQueryChanged(){
+    this.setState(Object.assign({}, this.state, {mql:styles.msql}));
   }
 
+
   menuPressed(){
-      console.log("pressed");
       this.setState(Object.assign({},this.state,{menuPressed:!this.state.menuPressed}));
+  }
+
+
+  render() {
+
+
+    return (
+               <div style={styles.topnav}>
+                    <MobileMenuIcon menuPressed={this.menuPressed.bind(this)}/>
+                    <ListMenuItems {...this.props} menuPressed={this.state.menuPressed}/>
+
+
+
+               </div>
+            );
+
+
+    }
+
+
+}
+
+class MobileMenuIcon extends Component{
+  render(){
+      if(styles.mql.matches){
+        return null;
+      }
+      else{
+          return (
+              <a className="icon" onClick={this.props.menuPressed}>&#9776;</a>
+          );
+      }
+  }
+}
+class ListMenuItems extends Component{
+
+  render(){
+     if(styles.mql.matches || this.props.menuPressed){
+       return(
+           <div style={styles.menuItems(!styles.mql.matches)}>
+
+             <MenuItem {...this.props} displayItem="home" selected={this.props.selected}/>
+             <MenuItem  {...this.props} displayItem="episodeList" selected={this.props.selected}/>
+             <MenuItem  {...this.props} displayItem="imagesets" selected={this.props.selected}/>
+             <MenuItem  {...this.props} displayItem="clients" selected={this.props.selected}/>
+             <LogoutMenuItem/>
+
+
+
+           </div>
+           );
+     }
+     else{
+       return null;
+     }
+
+
+  }
+}
+
+class MenuItem extends Component{
+  constructor(props){
+    super(props);
+    this.state={hover:false}
+  }
+  onHover(){
+    this.setState({hover: true})
+  }
+  offHover(){
+    this.setState({hover: false})
+  }
+  render(){
+    var link=textValues[this.props.displayItem].link;
+    if(!link){
+      link="/";
+    }
+    var linkText=textValues[this.props.displayItem].linkText;
+    console.log("***this.props.displayItem:"+this.props.displayItem);
+      return(
+        <Link to={link} style={styles.menuItem(this.props.selected===this.props.displayItem, this.state.hover)}
+          onMouseEnter={this.onHover.bind(this)} onMouseLeave={this.offHover.bind(this)}>
+              {linkText}
+        </Link>
+      );
+
+  }
+}
+
+
+class LogoutMenuItem extends Component{
+  constructor(props){
+    super(props);
+    this.state={hover:false}
   }
   logout(){
 
     genericUtil.saveCred("","");
     appdata.setCredentials(null,null);
   }
-  render() {
-    var responsiveMenuClass="topnav";
-    if(this.state.menuPressed){
-       responsiveMenuClass="topnav responsive";
-    }
-
-    return (
-               <div className={responsiveMenuClass} id="myTopnav">
-                    <Link to={textValues.home.link} className={this.props.selected==="home"?"selected":"notSelected"}>
-                          {textValues.home.linkText}
-                    </Link>
-                    <Link to={textValues.episode.list.link} className={this.props.selected==="episodelink"?"selected":"notSelected"}>
-                          {textValues.episode.list.linkText}
-                    </Link>
-                    <Link to={textValues.imageSets.list.link} className={this.props.selected==="imagesets"?"selected":"notSelected"}>
-                          {textValues.imageSets.list.linkText}
-                    </Link>
-
-                    <Link to={textValues.clients.link} className={this.props.selected==="clients"?"selected":"notSelected"}>
-                          {textValues.clients.linkText}
-                    </Link>
-
-
-                    <Link to={textValues.logout.link} className="notSelected" onClick={(evt) => {
-                             this.logout();
-                         }}>
-                          {textValues.logout.linkText}
-                    </Link>
-
-                    <a className="icon" onClick={this.menuPressed.bind(this)}>&#9776;</a>
-               </div>
-            );
+  onHover(){
+    this.setState({hover: true})
+  }
+  offHover(){
+    this.setState({hover: false})
+  }
+  render(){
+    var linkText=textValues.logout.linkText;
+    return(
+        <a href="#" style={styles.menuItem(false, this.state.hover)}
+          onMouseEnter={this.onHover.bind(this)} onMouseLeave={this.offHover.bind(this)}  onClick={(evt) => {
+                   this.logout();
+               }}>
+              {linkText}
+        </a>
+      );
   }
 }

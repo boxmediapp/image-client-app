@@ -51,8 +51,11 @@ export default class ListImageSetView extends Component{
        return (
            <div>
              <AppHeader selected="imagesets"/>
-             <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
-             <ListImageSets imageSets={this.state.imageSets}/>
+             <div style={AppHeader.styles.content}>
+               <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
+               <ListImageSets imageSets={this.state.imageSets}/>
+             </div>
+
            </div>
          );
   }

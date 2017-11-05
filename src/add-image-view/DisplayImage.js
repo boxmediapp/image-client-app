@@ -13,9 +13,18 @@ export default class DisplayImage extends Component{
       constructor(props){
             super(props);
 
-            this.state={...this.props.image, image:this.props.image};
+            this.state={...this.props.image, image:this.props.image, mql:styles.msql};
       }
-
+      componentWillMount(){
+        this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
+        styles.mql.addListener(this.mediaQueryChanged);
+      }
+      componentWillUnmount() {
+        styles.mql.removeListener(this.mediaQueryChanged);
+      }
+      mediaQueryChanged(){
+        this.setState(Object.assign({}, this.state, {mql:styles.msql}));
+      }
 
       buildFileName(width, height, filetype){
         return this.state.filename;
@@ -44,24 +53,22 @@ export default class DisplayImage extends Component{
       render(){
               var appconfig=appdata.getAppConfig();
               return(
-                     <div className=" content imageRecord">
-                       <div className="row">
-                               <div className="col-sm-6">
+                     <div style={styles.imageRecord()}>
+
                                     <ImageUploader onComplete={this.onUploadComplete.bind(this)}
                                     image={this.props.image}
                                     imageTags={this.props.image.tags}
                                     buildFileName={this.buildFileName.bind(this)}
                                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
                                     bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}/>
-                                </div>
-                                <div className="col-sm-6 imageRightProperty">
+                                  <div style={styles.imageRightProperty}>
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
                                          updateTags={this.updateTags.bind(this)} updateImageStatus={this.updateImageStatus.bind(this)}/>
                                          <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
                                                  this.props.deleteImage(this.props.image);
                                              }}>Delete</button>
                                 </div>
-                       </div>
+
                     </div>
                   );
 
