@@ -55,12 +55,8 @@ setResizeProperty(resizeWidth,resizeHeight, resizeType){
 onClearMessage(){
   this.setState(Object.assign({}, this.state,{modalMessage:null}));
 }
-setErrorMessage(modalMessage){
-   this.setState(Object.assign({}, this.state,{modalMessage}));
-}
-onClearState(){
-  this.setState({progressValue:0,progressTotal:0,modalMessage:null,process:false});
-}
+
+
 onProcessCompleted(){
     this.props.onNewImageCreated();
     this.onClearState();

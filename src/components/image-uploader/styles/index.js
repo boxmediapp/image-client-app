@@ -2,16 +2,11 @@ import {config} from "../../../configs"
 export const styles={
 
   dropzone:function(imgwidth, imgheight){
-    var width=config.normalImageWidth;
-    var height=config.normalImageHeight;
-    if(imgwidth && imgheight){
-           if(imgheight<=height){
-             width=imgwidth;
-             height=imgheight;
-           }
-           else{
-                 width=imgwidth*height/imgheight;
-           }
+    var width=imgwidth;
+    var height=imgheight;
+    if(imgwidth>config.normalImageWidth){
+      width=config.normalImageWidth;
+      height=imgheight*width/imgwidth;
     }
     return {
       width: width,
