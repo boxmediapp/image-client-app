@@ -25,10 +25,10 @@ const textValues={
          link:"/image-app/add-image/contract-episode-images",
          text:"Edit"
       },
-      uploadText:"Click or drag and drop the image to here. Only the image with 1920 x 1080 resolution is accepted."
+      uploadText:["You can drag and drop the image you would like to upload",
+                  "or you can click to select the image you would like to upload",
+                  "Note that only the images with 1920 x 1080 resolution is acceptable."]
     },
-
-
     upload:{
       failed:"Failed to upload the file to the s3 bucket",
       aborted:"Upload aborted"

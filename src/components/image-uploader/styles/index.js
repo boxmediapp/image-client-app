@@ -4,6 +4,12 @@ export const styles={
   dropzone:function(imgwidth, imgheight){
     var width=imgwidth;
     var height=imgheight;
+
+    if((!width) || (!height)){
+      width=config.normalImageWidth;
+      height=config.normalImageHeight;
+    }
+
     if(imgwidth>config.normalImageWidth){
       width=config.normalImageWidth;
       height=imgheight*width/imgwidth;
