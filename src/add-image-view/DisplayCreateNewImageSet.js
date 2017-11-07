@@ -18,6 +18,36 @@ constructor(props){
   resizeWidth:0, resizeHeight:0, resizeType:""};
   this.process=new ResizeProcess(this, this.props);
 }
+onDropFailed(errorMessage){
+      this.setErrorMessage(errorMessage);
+}
+onDropSucess(imageInfo){
+  if(this.process.isMainImageSizeCorrect(imageInfo.width,imageInfo.height)){
+        return true;
+  }
+  else{
+    this.setErrorMessage("the image is in the correct")
+    return false;
+  }
+}
+onUploadError(result){
+  console.log("error:"+JSON.stringify(result));
+  this.setErrorMessage(textValues.upload.failed);
+}
+
+onClearMessage(){
+  this.setState(Object.assign({}, this.state,{modalMessage:null}));
+}
+setErrorMessage(content){
+   var modalMessage={
+          title:"Error",
+          content,
+          onConfirm:this.onClearMessage.bind(this),
+          confirmButton:"OK"
+   }
+   this.setState(Object.assign({}, this.state,{modalMessage}));
+}
+
 setResizeProperty(resizeWidth,resizeHeight, resizeType){
   this.setState(Object.assign({}, this.state,{resizeWidth,resizeHeight,resizeType}));
 
@@ -25,15 +55,11 @@ setResizeProperty(resizeWidth,resizeHeight, resizeType){
 onClearMessage(){
   this.setState(Object.assign({}, this.state,{modalMessage:null}));
 }
-setErrorMessage(modalMessage){
-   this.setState(Object.assign({}, this.state,{modalMessage}));
-}
-onClearState(){
-  this.setState({progressValue:0,progressTotal:0,modalMessage:null,process:false});
-}
+
+
 onProcessCompleted(){
     this.props.onNewImageCreated();
-    this.onClearState();
+    
 }
 startResize(step,imageSet,image){
     var process=true;
@@ -85,7 +111,7 @@ setTags(tags){
                           <input type="text" className="form-control" id="contractNumber" placeholder="Contract number" name="contractNumber" value={contractNumber} readOnly={true}/>
                         </div>
                         <div className="col-sm-6 formFieldWithLabel">
-                          <label htmlFor="episodeNumber">Episde Number:</label>
+                          <label htmlFor="episodeNumber">Episode Number:</label>
                         <input type="text" className="form-control" id="episodeNumber" placeholder="Episode Number" name="episodeNumber" readOnly={true} value={episodeNumber}/>
                       </div>
                   </div>
@@ -110,8 +136,11 @@ setTags(tags){
                            onComplete={this.process.onMainAssetUploaded.bind(this.process)}
                            buildFileName={this.process.buildFileName.bind(this.process)}
                            isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
-                           bucket={appconfig.imageBucket}/>
+                           bucket={appconfig.imageBucket} onDropFailed={this.onDropFailed.bind(this)}
+                           onDropSucess={this.onDropSucess.bind(this)}
+                           onUploadError={this.onUploadError.bind(this)}/>
                      </div>
+                     <ModalDialog message={this.state.modalMessage}/>
                    </div>
 
 

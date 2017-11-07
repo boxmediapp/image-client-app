@@ -1,21 +1,21 @@
 import React, {Component} from 'react'
-import  "./styles/AppHeader.css";
+
 import {localImages,textValues} from "../../configs";
 import TopMenu from "./TopMenu";
+import {styles} from "./styles";
 export  default class AppHeader extends Component {
 
     render(){
+      
         return (
-            <div className="header">
-
-
-                    <div className="titleContainer">
+            <div style={styles.header}>
+                    <div style={styles.titleContainer}>
                             <img src={localImages.logo} className="logo"/>
                     </div>
 
                       <TopMenu selected={this.props.selected}/>
 
-                      <div id="appTitle">{textValues.title}</div>
+                      <div style={styles.appTitle}>{textValues.title}</div>
 
               </div>
 
@@ -26,3 +26,5 @@ export  default class AppHeader extends Component {
     }
 
 }
+
+AppHeader.styles=styles;

@@ -1,27 +1,33 @@
 const textValues={
     title:"Box Plus Image Application",
-    episode:{
-       list:{
-         link:"/image-app/missing-images",
-         linkText:"Assign Images"
-       }
+    episodeList:{
+      link:"/image-app/missing-images",
+      linkText:"Assign Images"
+    },
+    imagesets:{
+       link:"/image-app/contract-episode-images",
+        linkText:"Image Sets"
+    },
+    clients:{
+      link:"/image-app/clients",
+      linkText:"Clients"
+    },
+    logout:{
+      link:"/image-app/logout",
+      linkText:"Sign out"
     },
     addImageView:{
       episode:{
-          link:"/image-app/episode-images",
+          link:"/image-app/add-image/episode-images",
           text:"Add Image"
       },
       contractEpisode:{
-         link:"/image-app/contract-episode-images",
+         link:"/image-app/add-image/contract-episode-images",
          text:"Edit"
-      }
-
-    },
-    imageSets:{
-        list:{
-          link:"/image-app/list-image-sets",
-          linkText:"Image Sets"
-        }
+      },
+      uploadText:["You can drag and drop the image you would like to upload",
+                  "or you can click to select the image you would like to upload",
+                  "Note that only the images with 1920 x 1080 resolution is acceptable."]
     },
     upload:{
       failed:"Failed to upload the file to the s3 bucket",
@@ -35,10 +41,7 @@ const textValues={
       link:"/",
       linkText:"Sign out"
     },
-    clients:{
-      link:"/image-app/clients",
-      linkText:"Clients"
-    }
+
 
 
   };

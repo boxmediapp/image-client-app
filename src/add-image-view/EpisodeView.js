@@ -56,8 +56,10 @@ export default class EpisodeView extends Component{
           return (
                 <div>
                       <AppHeader selected="episodelink"/>
+                      <div style={AppHeader.styles.content}>
+                            <CreateNewImageSetInEpisode {...this.state} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
+                      </div>
 
-                      <CreateNewImageSetInEpisode {...this.state} onNewImageCreated={this.onNewImageCreated.bind(this)}/>
                 </div>
                 );
 
@@ -66,7 +68,10 @@ export default class EpisodeView extends Component{
            return (
              <div>
                    <AppHeader selected="episodelink"/>
-                   <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+                   <div style={AppHeader.styles.content}>
+                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+                   </div>
+
             </div>
            )
       }

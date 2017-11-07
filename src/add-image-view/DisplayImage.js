@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader} from "../components";
+import {ListEpisodes,ImageUploader,ModalDialog} from "../components";
 import {genericUtil} from "../utils";
 
 import {episodedata,store,appdata} from "../store";
@@ -13,9 +13,50 @@ export default class DisplayImage extends Component{
       constructor(props){
             super(props);
 
-            this.state={...this.props.image, image:this.props.image};
-      }
+            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null};
 
+      }
+      onClearMessage(){
+        this.setState(Object.assign({}, this.state,{modalMessage:null}));
+      }
+      setErrorMessage(content){
+         var modalMessage={
+                title:"Error",
+                content,
+                onConfirm:this.onClearMessage.bind(this),
+                confirmButton:"OK"
+         }
+         this.setState(Object.assign({}, this.state,{modalMessage}));
+      }
+      onConfirmDeleteImage(){
+        this.onClearMessage();
+        this.props.deleteImage(this.props.image);
+      }
+      onCancelDeleteImage(){
+        this.onClearMessage();
+      }
+      displayConfirmDeleteDialog(){
+        var modalMessage={
+               title:"Warning",
+               content:"The image and its associated metadat record will be deleted  permanently",
+               onConfirm:this.onConfirmDeleteImage.bind(this),
+               confirmButton:"Delete",
+               cancelButton:"Cancel",
+               onCancel:this.onCancelDeleteImage.bind(this)
+        }
+        this.setState(Object.assign({}, this.state,{modalMessage}));
+
+      }
+      componentWillMount(){
+        this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
+        styles.mql.addListener(this.mediaQueryChanged);
+      }
+      componentWillUnmount() {
+        styles.mql.removeListener(this.mediaQueryChanged);
+      }
+      mediaQueryChanged(){
+        this.setState(Object.assign({}, this.state, {mql:styles.msql}));
+      }
 
       buildFileName(width, height, filetype){
         return this.state.filename;
@@ -41,27 +82,47 @@ export default class DisplayImage extends Component{
             this.setState(Object.assign({},this.state,{imageStatus}));
             api.updateImage(image);
       }
+      onDropFailed(errorMessage){
+            this.setErrorMessage(errorMessage);
+      }
+      onDropSucess(imageInfo){
+        if(this.isUploadImageSizeCorrect(imageInfo.width,imageInfo.height)){
+              return true;
+        }
+        else{
+          this.setErrorMessage("the image is in the correct")
+          return false;
+        }
+      }
+      onUploadError(result){
+        console.log("error:"+JSON.stringify(result));
+        this.setErrorMessage(textValues.upload.failed);
+      }
+
+
       render(){
               var appconfig=appdata.getAppConfig();
               return(
-                     <div className=" content imageRecord">
-                       <div className="row">
-                               <div className="col-sm-6">
+                     <div style={styles.imageRecord()}>
+
                                     <ImageUploader onComplete={this.onUploadComplete.bind(this)}
                                     image={this.props.image}
                                     imageTags={this.props.image.tags}
                                     buildFileName={this.buildFileName.bind(this)}
                                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
-                                    bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}/>
-                                </div>
-                                <div className="col-sm-6 imageRightProperty">
+                                    bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}
+                                    onDropFailed={this.onDropFailed.bind(this)}
+                                    onDropSucess={this.onDropSucess.bind(this)}
+                                    onUploadError={this.onUploadError.bind(this)}/>
+                                  <div style={styles.imageRightProperty}>
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
                                          updateTags={this.updateTags.bind(this)} updateImageStatus={this.updateImageStatus.bind(this)}/>
                                          <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
-                                                 this.props.deleteImage(this.props.image);
+                                                 this.displayConfirmDeleteDialog();
                                              }}>Delete</button>
                                 </div>
-                       </div>
+                                <ModalDialog message={this.state.modalMessage}/>
+
                     </div>
                   );
 

@@ -7,21 +7,45 @@ export const styles={
      left: 0,
      right: 0,
      backgroundColor: 'rgba(0,0,0,0.3)',
-     padding: 50
+     display:"flex",
+     flexDirection:"column",
+     justifyContent:"center",
+     alignItems:"center",
+     zIndex:100
   },
-  modalStyle:{
+  dialogwindow:{
     backgroundColor: '#fff',
-    borderRadius: 5,
-    top:50,
+    borderRadius: 15,
     width: "50%",
     height: "50%",
-    margin: '0 auto',
-    padding: 30,
-    border:"1px solid black",
-    zIndex:2050,
     display:"flex",
     flexDirection:"column",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+    boxShadow: "10px 10px 5px #888888"
+  },
+  title:{
+    fontFamily: "'Roboto', sans-serif",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    textTransform: "uppercase",
+    fontWeight: 500,
+    fontSize: 20,
+    color: "#FFFFFF",
+    backgroundColor:"#1a0dab",
+    paddingLeft:10
+  },
+  content:{
+    textAlign:"center",
+    fontSize: 16,
+  },
+  footer:{
+      display: "flex",
+      flexDirection:"row",
+      justifyContent:"center",
+      paddingBottom:10,
+  },
+  buttonContainer:{
+    marginRight:20
   },
   imageBackdropStyle:{
     position: 'absolute',
@@ -53,7 +77,7 @@ export const styles={
     fontFamily: "'Roboto', sans-serif",
     fontWeight: 500,
     fontSize: 20,
-    color: "#FFFFFF",    
+    color: "#FFFFFF",
   }
 
 

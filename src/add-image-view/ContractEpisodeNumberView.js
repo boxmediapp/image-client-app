@@ -16,11 +16,14 @@ export default class ContractEpisodeNumberView extends Component{
         super(props);
          var contractNumber=genericUtil.getQueryParam(this.props.location.search, "contractNumber");
          var episodeNumber=genericUtil.getQueryParam(this.props.location.search, "episodeNumber");
+
+         this.state={imageSets:[], contractNumber,episodeNumber};
          if(contractNumber){
-              this.state={imageSets:[], contractNumber,episodeNumber};
+
               this.loadImageSets();
 
         }
+
   }
   loadImageSets(){
     api.findImageSetsByContractAndEpisode(this.state.contractNumber,this.state.episodeNumber).then(imageSets =>{
@@ -36,10 +39,14 @@ export default class ContractEpisodeNumberView extends Component{
   }
   render(){
 
+
            return (
              <div>
                    <AppHeader selected="imagesets"/>
-                   <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+                   <div style={AppHeader.styles.content}>
+                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+                   </div>
+
             </div>
            )
 

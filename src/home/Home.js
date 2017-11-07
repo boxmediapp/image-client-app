@@ -9,6 +9,8 @@ import {
 import  "./styles/index.css";
 import {textValues} from "../configs";
 import {AppHeader} from "../components";
+
+
 export  default class Home extends Component {
     constructor(props){
       super(props);
@@ -30,7 +32,7 @@ export  default class Home extends Component {
           <div>
             <AppHeader selected="home"/>
 
-              <div className="container">
+              <div style={AppHeader.styles.content}>
                   <div className="dataContainer">
                       <div className="datarow">
                           <div className="datalabel">

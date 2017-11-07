@@ -38,8 +38,11 @@ export default class ClientImagesView extends Component{
          return (
              <div>
                <AppHeader selected="clients"/>
-               <SearchBox search={this.state.programmeNumber} startSearch={this.searchByProgrammeNumber.bind(this)}/>
-               <ListImages images={this.state.images}/>
+               <div style={AppHeader.styles.content}>
+                 <SearchBox search={this.state.programmeNumber} startSearch={this.searchByProgrammeNumber.bind(this)}/>
+                 <ListImages images={this.state.images}/>
+               </div>
+
              </div>
            );
     }

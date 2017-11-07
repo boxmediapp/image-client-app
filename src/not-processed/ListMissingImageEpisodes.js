@@ -21,6 +21,7 @@ export  default class ListMissingImageEpisodes extends Component {
     }
 
   renderEpisodes(episodes){
+    var data={episodes, lastRecordsDisplayed:this.props.lastRecordsDisplayed}
     return(
       <div className="content">
                <Table
@@ -32,21 +33,21 @@ export  default class ListMissingImageEpisodes extends Component {
                        <Column
                         columnKey="id"
                         header={<Cell></Cell>}
-                        cell={<ActionCell data={episodes}/>}
+                        cell={<ActionCell data={data}/>}
                         fixed={true}
                         width={100}
                         />
                          <Column
                            columnKey="contractNumber"
                            header={<Cell>Contract</Cell>}
-                           cell={<TextCell data={episodes}/>}
+                           cell={<TextCell data={data}/>}
                            fixed={true}
                            width={100}
                            />
                           <Column
                                columnKey="episodeNumber"
                                header={<Cell>Episode</Cell>}
-                               cell={<TextCell data={episodes}/>}
+                               cell={<TextCell data={data}/>}
                                fixed={true}
                                width={100}
                                />
@@ -56,9 +57,9 @@ export  default class ListMissingImageEpisodes extends Component {
                                   <Column
                                            columnKey="title"
                                            header={<Cell>Title</Cell>}
-                                           cell={<TextCell data={episodes}/>}
+                                           cell={<TextCell data={data}/>}
                                            width={700}
-                                           />
+                                          />
 
         </Table>
     </div>
@@ -73,10 +74,14 @@ export  default class ListMissingImageEpisodes extends Component {
 
 class TextCell extends Component {
   render() {
+
     const {data, rowIndex, columnKey, ...props} = this.props;
+    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){        
+        this.props.data.lastRecordsDisplayed();
+    }
     return (
       <Cell {...props}>
-        {data[rowIndex][columnKey]}
+        {data.episodes[rowIndex][columnKey]}
       </Cell>
     );
   }
@@ -86,8 +91,9 @@ class TextCell extends Component {
 class ActionCell extends Component {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    var link=textValues.addImageView.episode.link+"/?episodeid="+data[rowIndex][columnKey];
+    var link=textValues.addImageView.episode.link+"/?episodeid="+data.episodes[rowIndex][columnKey];
     var linkText=textValues.addImageView.episode.text;
+
     return (
       <Cell {...props}>
         <Link to={link}>

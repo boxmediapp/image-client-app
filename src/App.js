@@ -69,9 +69,9 @@ export default class App extends Component{
                             <Router>
                               <div className="topContainer">
                                   <Route  path={textValues.home.link} exact component={Home}/>
-                                  <Route  path={textValues.episode.list.link}  component={NotProcessedEpisodeView}/>
+                                  <Route  path={textValues.episodeList.link}  component={NotProcessedEpisodeView}/>
                                   <Route path={textValues.addImageView.episode.link} component={EpisodeView}/>
-                                  <Route path={textValues.imageSets.list.link} component={ListImageSetView}/>
+                                  <Route path={textValues.imagesets.link} component={ListImageSetView}/>
                                   <Route path={textValues.addImageView.contractEpisode.link} component={ContractEpisodeNumberView}/>
                                   <Route path={textValues.clients.link} component={ClientImagesView}/>
 

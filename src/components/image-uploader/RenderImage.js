@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import {styles} from "./styles";
 import {ProgressBar,ModalDisplayImage} from "../index";
 import RenderDimension from "./RenderDimension";
+import {textValues} from "../../configs";
 
 import RenderUploadButton from "./RenderUploadButton";
 export default class RenderImage extends Component{
@@ -25,7 +26,11 @@ export default class RenderImage extends Component{
       return (
         <div className="dropzone">
             <Dropzone onDrop={this.props.onDrop.bind(this)} style={styles.dropzone()}>
-                <div style={styles.previewText}>Click or drag and drop the image to  here</div>
+              {
+                textValues.addImageView.uploadText.map((txt,ind)=>{
+                  return(<div style={styles.previewText} key={ind}>{txt}</div>);
+                })
+              }
             </Dropzone>
         </div>
 
