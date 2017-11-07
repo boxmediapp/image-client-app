@@ -6,7 +6,7 @@ import {styles} from "./styles";
 export  default class AppHeader extends Component {
 
     render(){
-      console.log("*******Apheader:"+this.props.selected);
+      
         return (
             <div style={styles.header}>
                     <div style={styles.titleContainer}>

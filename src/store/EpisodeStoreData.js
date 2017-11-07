@@ -6,6 +6,12 @@ export default class EpisodeStoreData{
       setEpisodeList(listdata){
           this.store.dispatch(episodeList.actions.setEpisodes(listdata));
       }
+      nextPageEpisodes(listdata){
+          this.store.dispatch(episodeList.actions.nextPageEpisodes(listdata));
+      }
+      getNextBatchState(){
+        return this.store.getState().episodeList.nextBatchStart;
+      }
       getEpisodeList(){
         return {episodes:this.store.getState().episodeList.episodes, search:this.store.getState().episodeList.search};
       }

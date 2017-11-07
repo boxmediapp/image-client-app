@@ -4,6 +4,8 @@ import {config} from "../configs";
 import {appdata} from "../store";
 
 
+var appconfig=appdata.getAppConfig();
+
 
 const pHTTPGetRequest=function(path, headers){
   return fetch(config.api.getUrl(path),{headers})
@@ -97,13 +99,12 @@ class ServiceAPI {
          requestS3UploadURL(request){
            return httpPostRequest("presigned", JSON.stringify(request));
          }
-         findNotProcessedEpisodes(search){
+         findNotProcessedEpisodes(search, start=0){
+               var queryurl="image-service/not-processed-episodes?start="+start;
                if(search){
-                      return httpGetRequest("image-service/not-processed-episodes?search="+search);
+                 queryurl+="&search="+search;
                }
-               else{
-                 return httpGetRequest("image-service/not-processed-episodes");
-               }
+               return httpGetRequest(queryurl);
          }
          getEpisodeById(id){
             return httpGetRequest("image-service/not-processed-episodes/"+id);

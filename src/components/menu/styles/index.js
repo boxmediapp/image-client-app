@@ -48,7 +48,7 @@ export const styles={
       ret.backgroundColor="#BFBFBF";
       ret.color="#5C5A5B";
     }
-    console.log("*****isSelected:"+isSelected+":hover:"+hover);
+    
     return ret;
   },
   appTitle:{

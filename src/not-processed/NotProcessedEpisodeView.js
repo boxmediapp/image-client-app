@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import ListEpisodes from "./ListEpisodes";
+import ListMissingImageEpisodes from "./ListMissingImageEpisodes";
 import {genericUtil} from "../utils";
 
-import {episodedata,store} from "../store";
+import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 import "./styles/index.css";
@@ -15,7 +15,9 @@ export default class NotProcessedEpisodeView extends Component{
         super(props);
         this.bindToStore();
         this.bindToQueryParameters();
+
   }
+
   bindToStore(){
     this.state=episodedata.getEpisodeList();
     this.ubsubsribe=store.subscribe(()=>{
@@ -33,9 +35,34 @@ export default class NotProcessedEpisodeView extends Component{
        this.startSearch(search);
   }
   startSearch(search){
+
     api.findNotProcessedEpisodes(search).then(episodes =>{
-       episodedata.setEpisodeList({episodes,search});
+       var recordLimit=appdata.getAppConfig().recordLimit;
+       episodedata.setEpisodeList({episodes,search,recordLimit});
    });
+  }
+  lastRecordsDisplayed(){
+      this.loadNextPage();
+  }
+  loadNextPage(){
+      if(episodedata.getNextBatchState()<0){
+        console.log("nore more data on the server");
+        return;
+      }
+      else{
+            
+            if(this.loadingNextPage){
+              return;
+            }
+            this.loadingNextPage=true;
+            console.log("loading the next page......");
+            api.findNotProcessedEpisodes(this.state.search,episodedata.getNextBatchState()).then(episodes =>{
+               var recordLimit=appdata.getAppConfig().recordLimit;
+               console.log("Next batch of data is loaded");
+               episodedata.nextPageEpisodes({episodes,recordLimit});
+           });
+      }
+
   }
   setEpisodes(episodelistdata){
 
@@ -47,12 +74,13 @@ export default class NotProcessedEpisodeView extends Component{
 
 
   render(){
+      this.loadingNextPage=false;
        return (
            <div>
              <AppHeader selected="episodeList"/>
              <div style={AppHeader.styles.content}>
                <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
-               <ListEpisodes data={this.state}/>
+               <ListMissingImageEpisodes data={this.state} lastRecordsDisplayed={this.lastRecordsDisplayed.bind(this)} />
             </div>
            </div>
          );

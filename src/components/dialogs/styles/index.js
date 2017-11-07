@@ -10,7 +10,8 @@ export const styles={
      display:"flex",
      flexDirection:"column",
      justifyContent:"center",
-     alignItems:"center"
+     alignItems:"center",
+     zIndex:100
   },
   dialogwindow:{
     backgroundColor: '#fff',
@@ -41,7 +42,10 @@ export const styles={
       display: "flex",
       flexDirection:"row",
       justifyContent:"center",
-      paddingBottom:10
+      paddingBottom:10,
+  },
+  buttonContainer:{
+    marginRight:20
   },
   imageBackdropStyle:{
     position: 'absolute',

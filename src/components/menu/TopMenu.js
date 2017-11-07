@@ -104,8 +104,7 @@ class MenuItem extends Component{
     if(!link){
       link="/";
     }
-    var linkText=textValues[this.props.displayItem].linkText;
-    console.log("***this.props.displayItem:"+this.props.displayItem);
+    var linkText=textValues[this.props.displayItem].linkText;    
       return(
         <Link to={link} style={styles.menuItem(this.props.selected===this.props.displayItem, this.state.hover)}
           onMouseEnter={this.onHover.bind(this)} onMouseLeave={this.offHover.bind(this)}>

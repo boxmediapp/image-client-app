@@ -59,7 +59,7 @@ onClearMessage(){
 
 onProcessCompleted(){
     this.props.onNewImageCreated();
-    this.onClearState();
+    
 }
 startResize(step,imageSet,image){
     var process=true;

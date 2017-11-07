@@ -28,7 +28,25 @@ export default class DisplayImage extends Component{
          }
          this.setState(Object.assign({}, this.state,{modalMessage}));
       }
+      onConfirmDeleteImage(){
+        this.onClearMessage();
+        this.props.deleteImage(this.props.image);
+      }
+      onCancelDeleteImage(){
+        this.onClearMessage();
+      }
+      displayConfirmDeleteDialog(){
+        var modalMessage={
+               title:"Warning",
+               content:"The image and its associated metadat record will be deleted  permanently",
+               onConfirm:this.onConfirmDeleteImage.bind(this),
+               confirmButton:"Delete",
+               cancelButton:"Cancel",
+               onCancel:this.onCancelDeleteImage.bind(this)
+        }
+        this.setState(Object.assign({}, this.state,{modalMessage}));
 
+      }
       componentWillMount(){
         this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
         styles.mql.addListener(this.mediaQueryChanged);
@@ -81,6 +99,7 @@ export default class DisplayImage extends Component{
         this.setErrorMessage(textValues.upload.failed);
       }
 
+
       render(){
               var appconfig=appdata.getAppConfig();
               return(
@@ -99,7 +118,7 @@ export default class DisplayImage extends Component{
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
                                          updateTags={this.updateTags.bind(this)} updateImageStatus={this.updateImageStatus.bind(this)}/>
                                          <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
-                                                 this.props.deleteImage(this.props.image);
+                                                 this.displayConfirmDeleteDialog();
                                              }}>Delete</button>
                                 </div>
                                 <ModalDialog message={this.state.modalMessage}/>
