@@ -4,9 +4,9 @@ import {localImages,textValues} from "../../configs";
 import TopMenu from "./TopMenu";
 import {styles} from "./styles";
 export  default class AppHeader extends Component {
-
+/*
     render(){
-      
+
         return (
             <div style={styles.header}>
                     <div style={styles.titleContainer}>
@@ -19,9 +19,13 @@ export  default class AppHeader extends Component {
 
               </div>
 
-
-
         );
+
+    }*/
+    render(){
+      return(
+        <TopMenu selected={this.props.selected}/>
+      );
 
     }
 

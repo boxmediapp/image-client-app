@@ -100,14 +100,14 @@ class ServiceAPI {
            return httpPostRequest("presigned", JSON.stringify(request));
          }
          findNotProcessedEpisodes(search, start=0){
-               var queryurl="image-service/not-processed-episodes?start="+start;
+               var queryurl="image-service/new-episodes?start="+start;
                if(search){
                  queryurl+="&search="+search;
                }
                return httpGetRequest(queryurl);
          }
          getEpisodeById(id){
-            return httpGetRequest("image-service/not-processed-episodes/"+id);
+            return httpGetRequest("image-service/new-episodes/"+id);
          }
          createImageSet(imageset){
             return httpPostRequest("image-service/image-sets", JSON.stringify(imageset));

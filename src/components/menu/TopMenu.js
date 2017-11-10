@@ -70,7 +70,7 @@ class ListMenuItems extends Component{
            <div style={styles.menuItems(!styles.mql.matches)}>
 
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected}/>
-             <MenuItem  {...this.props} displayItem="episodeList" selected={this.props.selected}/>
+             <MenuItem  {...this.props} displayItem="newEpisodes" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="imagesets" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="clients" selected={this.props.selected}/>
              <LogoutMenuItem/>
@@ -104,7 +104,7 @@ class MenuItem extends Component{
     if(!link){
       link="/";
     }
-    var linkText=textValues[this.props.displayItem].linkText;    
+    var linkText=textValues[this.props.displayItem].linkText;
       return(
         <Link to={link} style={styles.menuItem(this.props.selected===this.props.displayItem, this.state.hover)}
           onMouseEnter={this.onHover.bind(this)} onMouseLeave={this.offHover.bind(this)}>

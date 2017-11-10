@@ -76,8 +76,8 @@ class TextCell extends Component {
   render() {
 
     const {data, rowIndex, columnKey, ...props} = this.props;
-    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){        
-        this.props.data.lastRecordsDisplayed();
+    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
+      this.props.data.lastRecordsDisplayed();
     }
     return (
       <Cell {...props}>

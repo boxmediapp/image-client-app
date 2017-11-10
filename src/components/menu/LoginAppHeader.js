@@ -4,6 +4,7 @@ import TopMenu from "./TopMenu";
 export  default class LoginAppHeader extends Component {
 
     render(){
+      return null;
         return (
             <div className="header">
 

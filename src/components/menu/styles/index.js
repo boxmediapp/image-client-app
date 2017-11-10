@@ -48,7 +48,7 @@ export const styles={
       ret.backgroundColor="#BFBFBF";
       ret.color="#5C5A5B";
     }
-    
+
     return ret;
   },
   appTitle:{

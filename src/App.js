@@ -16,7 +16,7 @@ import {api} from "./api";
 
 import {DisplayLogin} from "./display-login";
 import {EpisodeView,ContractEpisodeNumberView} from "./add-image-view";
-import {NotProcessedEpisodeView} from "./not-processed";
+import {NotProcessedEpisodeView} from "./new-episodes";
 import {ClientImagesView} from "./clients";
 import {Home} from "./home";
 
@@ -69,7 +69,7 @@ export default class App extends Component{
                             <Router>
                               <div className="topContainer">
                                   <Route  path={textValues.home.link} exact component={Home}/>
-                                  <Route  path={textValues.episodeList.link}  component={NotProcessedEpisodeView}/>
+                                  <Route  path={textValues.newEpisodes.link}  component={NotProcessedEpisodeView}/>
                                   <Route path={textValues.addImageView.episode.link} component={EpisodeView}/>
                                   <Route path={textValues.imagesets.link} component={ListImageSetView}/>
                                   <Route path={textValues.addImageView.contractEpisode.link} component={ContractEpisodeNumberView}/>

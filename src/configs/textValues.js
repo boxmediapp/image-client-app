@@ -1,8 +1,8 @@
 const textValues={
     title:"Box Plus Image Application",
-    episodeList:{
+    newEpisodes:{
       link:"/image-app/missing-images",
-      linkText:"Assign Images"
+      linkText:"New Episodes"
     },
     imagesets:{
        link:"/image-app/contract-episode-images",
@@ -41,7 +41,13 @@ const textValues={
       link:"/",
       linkText:"Sign out"
     },
+    deleteImageDialog:{
+      title:"Warning",
+      content:"The image and its associated metadata will be deleted permanently",
+      confirm:"Delete",
+      cancel:"Cancel"
 
+    }
 
 
   };

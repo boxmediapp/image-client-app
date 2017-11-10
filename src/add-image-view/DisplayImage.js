@@ -37,11 +37,11 @@ export default class DisplayImage extends Component{
       }
       displayConfirmDeleteDialog(){
         var modalMessage={
-               title:"Warning",
-               content:"The image and its associated metadat record will be deleted  permanently",
+               title:textValues.deleteImageDialog.title,
+               content:textValues.deleteImageDialog.content,
                onConfirm:this.onConfirmDeleteImage.bind(this),
-               confirmButton:"Delete",
-               cancelButton:"Cancel",
+               confirmButton:textValues.deleteImageDialog.confirm,
+               cancelButton:textValues.deleteImageDialog.cancel,
                onCancel:this.onCancelDeleteImage.bind(this)
         }
         this.setState(Object.assign({}, this.state,{modalMessage}));
