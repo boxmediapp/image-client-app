@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import ListMissingImageEpisodes from "./ListMissingImageEpisodes";
+import ListNewEpisodes from "./ListNewEpisodes";
 import {genericUtil} from "../utils";
 
 import {episodedata,store,appdata} from "../store";
@@ -10,7 +10,7 @@ import {AppHeader,SearchBox} from "../components";
 
 
 
-export default class NotProcessedEpisodeView extends Component{
+export default class NewEpisodesView extends Component{
   constructor(props){
         super(props);
         this.bindToStore();
@@ -50,7 +50,7 @@ export default class NotProcessedEpisodeView extends Component{
         return;
       }
       else{
-            
+
             if(this.loadingNextPage){
               return;
             }
@@ -77,10 +77,10 @@ export default class NotProcessedEpisodeView extends Component{
       this.loadingNextPage=false;
        return (
            <div>
-             <AppHeader selected="episodeList"/>
+             <AppHeader selected="newepisodes"/>
              <div style={AppHeader.styles.content}>
                <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
-               <ListMissingImageEpisodes data={this.state} lastRecordsDisplayed={this.lastRecordsDisplayed.bind(this)} />
+               <ListNewEpisodes data={this.state} lastRecordsDisplayed={this.lastRecordsDisplayed.bind(this)} />
             </div>
            </div>
          );

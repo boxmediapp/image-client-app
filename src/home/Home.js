@@ -36,7 +36,15 @@ export  default class Home extends Component {
               <div style={AppHeader.styles.content}>
 
                   <div className="dataContainer">
-                      <NewEpisodes numberOfEpsiodes={this.state.numberOfEpisodesMissingImages}/>
+                      <BigIcon label={textValues.newepisodes.linkText}
+                               content={"New episodes:"+this.state.numberOfEpisodesMissingImages}
+                               link={textValues.newepisodes.link}/>
+
+                    <BigIcon label={textValues.imagesets.linkText}
+                                        content={"sets:"+this.state.numberOfImageSets}
+                                        link={textValues.imagesets.link}/>
+
+
 {/*
                     <div className="datarow">
                           <div className="datalabel">
@@ -85,19 +93,6 @@ export  default class Home extends Component {
           </div>
         );
 
-    }
-
-}
-
-class NewEpisodes extends Component{
-    render(){
-          var title=textValues.newEpisodes.linkText;
-          var content="New episodes:"+this.props.numberOfEpsiodes;
-        var link=textValues.newEpisodes.link;
-
-          return(
-              <BigIcon title={title} content={content} link={link}/>
-          );
     }
 
 }

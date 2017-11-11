@@ -12,15 +12,18 @@ export default class BigIcon extends Component {
     render(){
 
         return (
-            <div className="round-button">
-               <div className="round-button-circle">
-                 <Link to={this.props.link} className="round-button">
-                  {this.props.title}
-                    </Link>
-               </div>
-               <div>{this.props.content}</div>
-            </div>
+           <div className="round-button-container">
+                <div className="round-button">
+                   <div className="round-button-circle">
+                     <Link to={this.props.link} className="round-button">
+                      {this.props.label}
+                        </Link>
+                   </div>
+                </div>
+               <div className="rount-button-label">{this.props.content}</div>
+           </div>
         );
+
 
     }
 

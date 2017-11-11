@@ -7,7 +7,7 @@ import {
   Link
 } from 'react-router-dom'
 
-export  default class ListMissingImageEpisodes extends Component {
+export  default class ListNewEpisodes extends Component {
 
     render(){
         var episodes=this.props.data.episodes;

@@ -1,3 +1,3 @@
-import NotProcessedEpisodeView from "./NotProcessedEpisodeView";
+import NewEpisodesView from "./NewEpisodesView";
 
-export {NotProcessedEpisodeView};
+export {NewEpisodesView};

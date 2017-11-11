@@ -23,6 +23,7 @@ export const styles={
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
+    
 
   },
   menuItem:function(isSelected,hover){
@@ -89,6 +90,11 @@ export const styles={
     padding:20
 
 
+  },
+  mobileMenu:{
+     position:"abolute",
+     left:10,
+     border: "1px solid black"
   }
 
 };

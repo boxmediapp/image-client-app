@@ -1,7 +1,7 @@
 const textValues={
-    title:"Box Plus Image Application",
-    newEpisodes:{
-      link:"/image-app/missing-images",
+    title:"Box Media Image",
+    newepisodes:{
+      link:"/image-app/new-episodes",
       linkText:"New Episodes"
     },
     imagesets:{
