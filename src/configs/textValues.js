@@ -6,11 +6,12 @@ const textValues={
     },
     imagesets:{
        link:"/image-app/contract-episode-images",
-        linkText:"Image Sets"
+       linkText:"Assigned Images",
+       norecords:"No assigned images"
     },
-    clients:{
-      link:"/image-app/clients",
-      linkText:"Clients"
+    clientsView:{
+      link:"/image-app/clients-view",
+      linkText:"Clients View"
     },
     logout:{
       link:"/image-app/logout",

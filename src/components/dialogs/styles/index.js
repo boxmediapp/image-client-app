@@ -86,7 +86,13 @@ export const styles={
     alignItems: "flex-end",
     marginRight:10,
     marginTop:10
+  },
+  messageDialogContainer:{
+      height:  300,
+      display: "flex",
+      flexDirection:"column",
+      justifyContent:"center",
+      alignItems:"center",      
   }
-
 
 };

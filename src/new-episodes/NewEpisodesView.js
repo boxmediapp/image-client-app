@@ -6,8 +6,8 @@ import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 
-import {AppHeader,SearchBox} from "../components";
-
+import {AppHeader,SearchBox,LoadingIcon,ModalDialog} from "../components";
+import {styles} from "./styles";
 
 
 export default class NewEpisodesView extends Component{
@@ -17,9 +17,22 @@ export default class NewEpisodesView extends Component{
         this.bindToQueryParameters();
 
   }
+  onClearMessage(){
+    this.setState(Object.assign({}, this.state,{modalMessage:null}));
+  }
+  setErrorMessage(content){
+     var modalMessage={
+            title:"Error",
+            content,
+            onConfirm:this.onClearMessage.bind(this),
+            confirmButton:"OK"
+     }
+     this.setState(Object.assign({}, this.state,{modalMessage}));
+  }
 
   bindToStore(){
-    this.state=episodedata.getEpisodeList();
+    this.state=Object.assign({loading:true,modalMessage:null},episodedata.getEpisodeList());
+
     this.ubsubsribe=store.subscribe(()=>{
             this.setEpisodes(episodedata.getEpisodeList());
     });
@@ -34,11 +47,19 @@ export default class NewEpisodesView extends Component{
        }
        this.startSearch(search);
   }
+  setLoading(loading){
+    this.setState(Object.assign({}, this.state,{loading}));
+  }
   startSearch(search){
-
+    this.setLoading(true);
     api.findNotProcessedEpisodes(search).then(episodes =>{
+      this.setLoading(false);
        var recordLimit=appdata.getAppConfig().recordLimit;
        episodedata.setEpisodeList({episodes,search,recordLimit});
+   }).catch(error=>{
+
+       this.setLoading(false);
+       this.setErrorMessage("Error loading data from the server");
    });
   }
   lastRecordsDisplayed(){
@@ -79,9 +100,13 @@ export default class NewEpisodesView extends Component{
            <div>
              <AppHeader selected="newepisodes"/>
              <div style={AppHeader.styles.content}>
-               <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
+               <div style={styles.listHeader}>
+                 <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
+                 <LoadingIcon loading={this.state.loading}/>
+               </div>
                <ListNewEpisodes data={this.state} lastRecordsDisplayed={this.lastRecordsDisplayed.bind(this)} />
             </div>
+            <ModalDialog message={this.state.modalMessage}/>
            </div>
          );
   }

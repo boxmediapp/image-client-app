@@ -17,7 +17,7 @@ import {api} from "./api";
 import {DisplayLogin} from "./display-login";
 import {EpisodeView,ContractEpisodeNumberView} from "./add-image-view";
 import {NewEpisodesView} from "./new-episodes";
-import {ClientImagesView} from "./clients";
+import {ClientImagesView} from "./clients-view";
 import {Home} from "./home";
 
 import {ListImageSetView} from "./list-image-sets";
@@ -73,7 +73,7 @@ export default class App extends Component{
                                   <Route path={textValues.assignImageByEpisode.link} component={EpisodeView}/>
                                   <Route path={textValues.imagesets.link} component={ListImageSetView}/>
                                   <Route path={textValues.addImageView.contractEpisode.link} component={ContractEpisodeNumberView}/>
-                                  <Route path={textValues.clients.link} component={ClientImagesView}/>
+                                  <Route path={textValues.clientsView.link} component={ClientImagesView}/>
 
                               </div>
                             </Router>
