@@ -1,24 +1,14 @@
 import {config} from "../../../configs"
+import {imageUtil} from "../../../utils"
 export const styles={
-
-  dropzone:function(imgwidth, imgheight){
-    var width=imgwidth;
-    var height=imgheight;
-
-    if((!width) || (!height)){
-      width=config.normalImageWidth;
-      height=config.normalImageHeight;
-    }
-
-    if(imgwidth>config.normalImageWidth){
-      width=config.normalImageWidth;
-      height=imgheight*width/imgwidth;
-    }
+  mql:window.matchMedia(`(min-width: 700px)`),
+  dropzone:function(width, height){
+    var fitResolution=imageUtil.calculateFitImageWidth({width,height});
     return {
-      width: width,
-      height: height,
+      width: fitResolution.width,
+      height: fitResolution.height,
       borderWidth: 2,
-      borderColor: 'rgb(102, 102, 102)',
+      borderColor: 'rgb(102, 102, 0)',
       borderStyle: 'dashed',
       borderRadius: 15,
       display:"flex",
@@ -31,7 +21,8 @@ export const styles={
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "flex-end",
-    marginRight:10
+    marginRight:10,
+    marginTop:10
   },
   tagContainer:{
     display:"flex",

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {styles} from "./styles";
 import {config} from "../../configs"
+import {imageUtil} from "../../utils";
 export default class ModalDisplayImage extends Component {
   constructor(props){
     super(props);
@@ -10,10 +11,10 @@ export default class ModalDisplayImage extends Component {
     this.setState(Object.assign({}, this.state,{showImage}));
   }
   render(){
-      if(this.props.width<=config.normalImageWidth && this.props.height<=config.normalImageHeight){
+      var fitImageWidth=imageUtil.calculateFitImageWidth(this.props);
+      if((!this.props.imageURL)||  this.props.width<=fitImageWidth.width){
           return null;
       }
-
       if(this.state.showImage){
             return(
                       <div  style={styles.imageBackdropStyle}>
@@ -24,7 +25,7 @@ export default class ModalDisplayImage extends Component {
                     <div className="footer">
                       <button onClick={(evt) => {
                                this.setShowImage(false);
-                           }}  className="btn btn-primary btn-normal">Hide</button>
+                           }}  className="btn btn-primary btn-normal">Back</button>
                     </div>
                   </div>
                   </div>
@@ -32,10 +33,10 @@ export default class ModalDisplayImage extends Component {
         }
         else{
           return (
-            <div>
+            <div style={styles.showOriginSizeButtonContainer}>
             <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
                      this.setShowImage(true);
-                 }}>Original Size</button>
+                 }}>View {this.props.width} x {this.props.height}</button>
             </div>
           );
         }

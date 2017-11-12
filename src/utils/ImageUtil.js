@@ -1,4 +1,13 @@
 
+
+var normalImageWidth=533;
+var normalImageHeight=300;
+
+var mobileImageWidth=190;
+var mobileImageHeight=108;
+
+
+
 export default class ImageUtil{
 
   getImageType(content){
@@ -95,6 +104,26 @@ export default class ImageUtil{
   }
   getS3ImageURL(image){
     return image.s3BaseURL+"/"+image.filename;
+  }
+  
+  calculateFitImageWidth(resolution){
+      var width=mobileImageWidth;
+      var height=mobileImageHeight;
+      var windowMedia=window.matchMedia(`(min-width: 700px)`);
+      if(windowMedia.matches){
+            width=normalImageWidth;
+            height=normalImageHeight;
+      }
+      if(resolution &&  resolution.width && resolution.height){
+          if(resolution.width<=width){
+                width=resolution.width;
+                height=resolution.height;
+          }
+           else{
+                  height=resolution.height*width/resolution.width;
+           }
+      }
+      return {width, height};
   }
 
 }

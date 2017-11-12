@@ -13,9 +13,10 @@ export  default class TopMenu extends Component {
   constructor(props){
       super(props);
       this.state={menuPressed:false, mql:styles.mql};
+      this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
   }
   componentWillMount(){
-    this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
+
     styles.mql.addListener(this.mediaQueryChanged);
   }
   componentWillUnmount() {
@@ -57,7 +58,9 @@ class MobileMenuIcon extends Component{
       }
       else{
           return (
-              <a className="icon" onClick={this.props.menuPressed}>&#9776;</a>
+             <div style={styles.mobileMenu}>
+                <a className="icon" onClick={this.props.menuPressed}>&#9776;</a>
+            </div>
           );
       }
   }
@@ -67,10 +70,10 @@ class ListMenuItems extends Component{
   render(){
      if(styles.mql.matches || this.props.menuPressed){
        return(
-           <div style={styles.menuItems(!styles.mql.matches)}>
+           <div style={styles.menuItems()}>
 
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected}/>
-             <MenuItem  {...this.props} displayItem="episodeList" selected={this.props.selected}/>
+             <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="imagesets" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="clients" selected={this.props.selected}/>
              <LogoutMenuItem/>
@@ -104,7 +107,7 @@ class MenuItem extends Component{
     if(!link){
       link="/";
     }
-    var linkText=textValues[this.props.displayItem].linkText;    
+    var linkText=textValues[this.props.displayItem].linkText;
       return(
         <Link to={link} style={styles.menuItem(this.props.selected===this.props.displayItem, this.state.hover)}
           onMouseEnter={this.onHover.bind(this)} onMouseLeave={this.offHover.bind(this)}>

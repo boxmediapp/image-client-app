@@ -6,8 +6,8 @@ import "fixed-data-table-2/dist/fixed-data-table.min.css";
 import {
   Link
 } from 'react-router-dom'
-
-export  default class ListMissingImageEpisodes extends Component {
+import {styles} from "./styles";
+export  default class ListNewEpisodes extends Component {
 
     render(){
         var episodes=this.props.data.episodes;
@@ -35,7 +35,7 @@ export  default class ListMissingImageEpisodes extends Component {
                         header={<Cell></Cell>}
                         cell={<ActionCell data={data}/>}
                         fixed={true}
-                        width={100}
+                        width={120}
                         />
                          <Column
                            columnKey="contractNumber"
@@ -59,6 +59,7 @@ export  default class ListMissingImageEpisodes extends Component {
                                            header={<Cell>Title</Cell>}
                                            cell={<TextCell data={data}/>}
                                            width={700}
+                                           fixed={true}
                                           />
 
         </Table>
@@ -76,8 +77,8 @@ class TextCell extends Component {
   render() {
 
     const {data, rowIndex, columnKey, ...props} = this.props;
-    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){        
-        this.props.data.lastRecordsDisplayed();
+    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
+      this.props.data.lastRecordsDisplayed();
     }
     return (
       <Cell {...props}>
@@ -91,12 +92,12 @@ class TextCell extends Component {
 class ActionCell extends Component {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    var link=textValues.addImageView.episode.link+"/?episodeid="+data.episodes[rowIndex][columnKey];
-    var linkText=textValues.addImageView.episode.text;
+    var link=textValues.assignImageByEpisode.link+"/?episodeid="+data.episodes[rowIndex][columnKey];
+    var linkText=textValues.assignImageByEpisode.linkText;
 
     return (
-      <Cell {...props}>
-        <Link to={link}>
+      <Cell {...props} >
+        <Link to={link} style={styles.dataCell}>
               {linkText}
         </Link>
       </Cell>

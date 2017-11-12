@@ -1,8 +1,8 @@
 const textValues={
-    title:"Box Plus Image Application",
-    episodeList:{
-      link:"/image-app/missing-images",
-      linkText:"Assign Images"
+    title:"Box Media Image",
+    newepisodes:{
+      link:"/image-app/new-episodes",
+      linkText:"New Episodes"
     },
     imagesets:{
        link:"/image-app/contract-episode-images",
@@ -16,6 +16,11 @@ const textValues={
       link:"/image-app/logout",
       linkText:"Sign out"
     },
+    assignImageByEpisode:{
+        link:"/image-app/assign-image/new-episodes",
+        linkText:"Assign Image"
+    },
+
     addImageView:{
       episode:{
           link:"/image-app/add-image/episode-images",
@@ -25,9 +30,9 @@ const textValues={
          link:"/image-app/add-image/contract-episode-images",
          text:"Edit"
       },
-      uploadText:["You can drag and drop the image you would like to upload",
-                  "or you can click to select the image you would like to upload",
-                  "Note that only the images with 1920 x 1080 resolution is acceptable."]
+      uploadText:["Drop an image here",
+                  "Requires: 1920 x 1080"]
+
     },
     upload:{
       failed:"Failed to upload the file to the s3 bucket",
@@ -41,7 +46,13 @@ const textValues={
       link:"/",
       linkText:"Sign out"
     },
+    deleteImageDialog:{
+      title:"Warning",
+      content:"The image and its associated metadata will be deleted permanently",
+      confirm:"Delete",
+      cancel:"Cancel"
 
+    }
 
 
   };

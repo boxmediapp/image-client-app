@@ -45,8 +45,6 @@ export default class RenderImage extends Component{
                      </Dropzone>
                  </div>
                  <div  style={styles.imageFooter}>
-                          <RenderDimension {...this.props}/>
-
                           <RenderUploadButton {...this.props}/>
                           <ModalDisplayImage imageURL={imageURL} width={width} height={height}/>
                  </div>

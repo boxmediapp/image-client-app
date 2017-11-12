@@ -26,7 +26,7 @@ onDropSucess(imageInfo){
         return true;
   }
   else{
-    this.setErrorMessage("the image is in the correct")
+    this.setErrorMessage("The image is not in the required size")
     return false;
   }
 }
@@ -59,7 +59,7 @@ onClearMessage(){
 
 onProcessCompleted(){
     this.props.onNewImageCreated();
-    
+
 }
 startResize(step,imageSet,image){
     var process=true;
@@ -101,10 +101,9 @@ setTags(tags){
     var {tags,title}=this.state;
 
     return (
-      <div>
+      <div style={styles.newImageSetContainer}>
             <div className="imageSetHeader">New Image Set</div>
             <div className="container">
-
                     <div className="row">
                        <div className="col-sm-6 formFieldWithLabel">
                           <label htmlFor="contractNumber">Contract Number:</label>
