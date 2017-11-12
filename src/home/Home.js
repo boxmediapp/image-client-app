@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import  "./styles/index.css";
 import {textValues} from "../configs";
-import {AppHeader,BigIcon} from "../components";
+import {AppHeader,BigButton} from "../components";
 
 
 export  default class Home extends Component {
@@ -36,53 +36,16 @@ export  default class Home extends Component {
               <div style={AppHeader.styles.content}>
 
                   <div className="dataContainer">
-                      <BigIcon label={textValues.newepisodes.linkText}
-                               content={"New episodes:"+this.state.numberOfEpisodesMissingImages}
+                      <BigButton label={textValues.newepisodes.linkText}
+                               content={"Assign Images"}
                                link={textValues.newepisodes.link}/>
 
-                    <BigIcon label={textValues.imagesets.linkText}
-                                        content={"sets:"+this.state.numberOfImageSets}
+                    <BigButton label={textValues.imagesets.linkText}
+                                        content={"Edit Assigned Images"}
                                         link={textValues.imagesets.link}/>
 
 
-{/*
-                    <div className="datarow">
-                          <div className="datalabel">
-                             Number of images:
-                           </div>
-                           <div className="dataValue">{this.state.nunberOfImages}</div>
-                      </div>
 
-
-                      <div className="datarow">
-                          <div className="datalabel">
-                             Number of image sets:
-                           </div>
-                           <div className="dataValue">{this.state.numberOfImageSets}</div>
-                      </div>
-
-
-                      <div className="datarow">
-                          <div className="datalabel">
-                             Episodes missing images:
-                           </div>
-                           <div className="dataValue">{this.state.numberOfEpisodesMissingImages}</div>
-                      </div>
-
-                      <div className="datarow">
-                          <div className="datalabel">
-                             Images waiting approved:
-                           </div>
-                           <div className="dataValue">{this.state.numberOfImageWaitingApproved}</div>
-                      </div>
-
-                      <div className="datarow">
-                          <div className="datalabel">
-                             Images approved:
-                           </div>
-                           <div className="dataValue">{this.state.numberOfImageApproved}</div>
-                      </div>
-*/}
 
                   </div>
              </div>

@@ -1,13 +1,13 @@
 
 import React, {Component} from "react";
 import {styles} from './styles';
-import "./styles/BigIcon.css";
+import "./styles/RoundButton.css";
 import {
   Link
 
 } from 'react-router-dom'
 
-export default class BigIcon extends Component {
+export default class RoundButton extends Component {
 
     render(){
 
