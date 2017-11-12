@@ -40,6 +40,8 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .labelContainer{
     margin-right: 3px;
@@ -62,7 +64,6 @@
 
 .imageSetHeader{
   font-family: 'Roboto', sans-serif;
-  text-transform: uppercase;
   font-weight: 500;
   font-size: 20px;
   color: #FFFFFF;

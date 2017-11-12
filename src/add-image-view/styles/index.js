@@ -9,7 +9,9 @@ export const styles={
     },
     newImageSetContainer:{
       margin:50,
-      backgroundColor:"#CCDDEE"
+      backgroundColor:"#CCDDEE",
+      border: "1px solid blue",
+      paddingBottom:20
     },
     previewImageContainer: {
       display:"flex",

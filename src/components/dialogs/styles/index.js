@@ -78,6 +78,14 @@ export const styles={
     fontWeight: 500,
     fontSize: 20,
     color: "#FFFFFF",
+  },
+  showOriginSizeButtonContainer:{
+    display:"flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    marginRight:10,
+    marginTop:10
   }
 
 

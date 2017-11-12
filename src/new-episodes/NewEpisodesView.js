@@ -5,7 +5,7 @@ import {genericUtil} from "../utils";
 import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
-import "./styles/index.css";
+
 import {AppHeader,SearchBox} from "../components";
 
 

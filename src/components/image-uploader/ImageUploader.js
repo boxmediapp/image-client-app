@@ -21,21 +21,26 @@ import  RenderImage from "./RenderImage";
 export  default class ImageUploader extends Component {
    constructor(props){
      super(props);
-
-
-
-
      this.state={file:null,imagePreviewUrl:null,
        imageType:null,width:0,height:0, progressValue:0, progressTotal:0,
-        filepath:null,baseURL:null};
+        filepath:null,baseURL:null,mql:styles.mql};
 
+     this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
 
    }
 
    setProgressValue(progressValue,progressTotal){
      this.setState(Object.assign({}, this.state,{progressValue,progressTotal}));
    }
-
+   componentWillMount(){
+     styles.mql.addListener(this.mediaQueryChanged);
+   }
+   componentWillUnmount() {
+     styles.mql.removeListener(this.mediaQueryChanged);
+   }
+   mediaQueryChanged(){
+     this.setState(Object.assign({}, this.state, {mql:styles.msql}));
+   }
 
    onDrop(acceptedFiles, rejectedFiles){
       if(acceptedFiles && acceptedFiles.length>0){
@@ -87,12 +92,12 @@ export  default class ImageUploader extends Component {
   }
   onUploadError(result){
 
-    this.clearProgress();
+    this.setProgressValue(0,0);
 
     this.props.onUploadError(textValues.upload.failed);
   }
   onUploadAborted(){
-    this.clearProgress();
+    this.setProgressValue(0,0);
     this.props.onUploadError(textValues.upload.aborted);
   }
 

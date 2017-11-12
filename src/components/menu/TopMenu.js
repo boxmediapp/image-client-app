@@ -70,7 +70,7 @@ class ListMenuItems extends Component{
   render(){
      if(styles.mql.matches || this.props.menuPressed){
        return(
-           <div style={styles.menuItems(!styles.mql.matches)}>
+           <div style={styles.menuItems()}>
 
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}/>

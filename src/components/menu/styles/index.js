@@ -1,13 +1,22 @@
 
+
 export const styles={
-  header: {
-    position:"fixed",
-    width:"100%",
-    height:80,
-    display:"flex",
-    flexDirection: "row",
-    backgroundColor: "#e2277c",
-    zIndex:1000
+  header: function(){
+
+    var ret= {
+        position:"fixed",
+        width:"100%",
+        height:80,
+        display:"flex",
+        flexDirection: "row",
+        backgroundColor: "#e2277c",
+        zIndex:10
+
+    };
+    if(!styles.mql.matches){
+      ret.width="100vw";
+    }
+    return ret;
   },
   titleContainer:{
     display:"flex",
@@ -23,7 +32,7 @@ export const styles={
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    
+
 
   },
   menuItem:function(isSelected,hover){
@@ -63,14 +72,16 @@ export const styles={
     top: 10,
     left: 200
   },
-  menuItems:function(isMobile){
-
+  menuItems:function(){
+    const isMobile=!styles.mql.matches;
     if(isMobile){
         return{
             position:"absolute",
             top:80,
             display:"flex",
-            flexDirection:"column"
+            flexDirection:"column",
+            backgroundColor:"white",
+            border:"1px solid #07C"
         };
 
     }
@@ -94,7 +105,8 @@ export const styles={
   mobileMenu:{
      position:"abolute",
      left:10,
-     border: "1px solid black"
+
+
   }
 
 };
