@@ -150,6 +150,9 @@ class ServiceAPI {
              }
 
          }
+         sendCommand(command){
+            return httpPostRequest("commands", JSON.stringify(command));
+         }
 }
 
 
