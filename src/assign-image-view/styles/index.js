@@ -4,8 +4,8 @@ export const styles={
    mql:window.matchMedia(`(min-width: 800px)`),
    imageSetContainer:{
         margin:50,
-        backgroundColor:"#CCDDEE"
-
+        backgroundColor:"#CCDDEE",
+        border:"1px solid blue"
     },
     newImageSetContainer:{
       margin:50,

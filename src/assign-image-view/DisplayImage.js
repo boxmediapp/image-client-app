@@ -105,15 +105,15 @@ export default class DisplayImage extends Component{
               return(
                      <div style={styles.imageRecord()}>
 
-                                    <ImageUploader onComplete={this.onUploadComplete.bind(this)}
-                                    image={this.props.image}
-                                    imageTags={this.props.image.tags}
-                                    buildFileName={this.buildFileName.bind(this)}
-                                    isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
-                                    bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}
-                                    onDropFailed={this.onDropFailed.bind(this)}
-                                    onDropSucess={this.onDropSucess.bind(this)}
-                                    onUploadError={this.onUploadError.bind(this)}/>
+                     <ImageUploader onComplete={this.onUploadComplete.bind(this)}
+                     image={this.props.image}                     
+                     buildFileName={this.buildFileName.bind(this)}
+                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
+                     bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}
+                     onDropFailed={this.onDropFailed.bind(this)}
+                     onDropSucess={this.onDropSucess.bind(this)}
+                     onUploadError={this.onUploadError.bind(this)}/>
+                     
                                   <div style={styles.imageRightProperty}>
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
                                          updateTags={this.updateTags.bind(this)} updateImageStatus={this.updateImageStatus.bind(this)}/>

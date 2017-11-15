@@ -74,7 +74,7 @@ export  default class ImageUploader extends Component {
    initSate(){
     this.setState({file:null,imagePreviewUrl:null,
       imageType:null,width:0,height:0, modalMessage:null, progressValue:0, progressTotal:0,
-      imageTags:null, filepath:null,baseURL:null});
+      filepath:null,baseURL:null});
 
 
 

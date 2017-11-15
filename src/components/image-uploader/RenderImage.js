@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import {styles} from "./styles";
 import {ProgressBar,ModalDisplayImage} from "../index";
-import RenderDimension from "./RenderDimension";
+
 import {textValues} from "../../configs";
 
-import RenderUploadButton from "./RenderUploadButton";
+
+
 export default class RenderImage extends Component{
   render(){
     var imageURL=null;
@@ -27,7 +28,7 @@ export default class RenderImage extends Component{
         <div className="dropzone">
             <Dropzone onDrop={this.props.onDrop.bind(this)} style={styles.dropzone()}>
               {
-                textValues.addImageView.uploadText.map((txt,ind)=>{
+                textValues.uploadHDImageText.map((txt,ind)=>{
                   return(<div style={styles.previewText} key={ind}>{txt}</div>);
                 })
               }
@@ -54,4 +55,28 @@ export default class RenderImage extends Component{
 
 
 
+}
+
+
+
+class RenderUploadButton extends Component{
+
+      render(){
+         if(!this.props.imagePreviewUrl){
+           return null;
+         }
+
+         if(this.props.isUploadImageSizeCorrect(this.props.width,this.props.height)){
+           return (
+               <div style={styles.uploadButtonContainer}>
+                 <button type="button" className="btn btn-primary btn-normal" onClick={this.props.onUpload}>Upload</button>
+               </div>
+             );
+         }
+         else{
+           return null;
+         }
+
+
+        }
 }
