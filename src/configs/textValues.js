@@ -1,5 +1,7 @@
 const textValues={
     title:"Box Media Image",
+    uploadHDImageText:["Drop an image here",
+                "Requires: 1920 x 1080"],                
     newepisodes:{
       link:"/image-app/new-episodes",
       linkText:"New Episodes",
@@ -22,27 +24,20 @@ const textValues={
     },
     assignImageByEpisode:{
         link:"/image-app/assign-image/new-episodes",
-        linkText:"Assign Image"
+        linkText:"Assign Image"        
     },
+    
     admin:{
       link:"/image-app/admin-view",
       linkText:"Admin",
       actionText:"Purge Image Cache"
     },
-
-    addImageView:{
-      episode:{
-          link:"/image-app/add-image/episode-images",
-          text:"Add Image"
-      },
-      contractEpisode:{
-         link:"/image-app/add-image/contract-episode-images",
-         text:"Edit"
-      },
-      uploadText:["Drop an image here",
-                  "Requires: 1920 x 1080"]
-
+    assignImageByContractAndEpidodeNumber:{      
+         link:"/image-app/assign-image/contract-episode-number",
+         actionText:"Edit"
     },
+    
+    
     upload:{
       failed:"Failed to upload the file to the s3 bucket",
       aborted:"Upload aborted"

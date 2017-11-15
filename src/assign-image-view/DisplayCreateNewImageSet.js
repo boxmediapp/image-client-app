@@ -58,6 +58,7 @@ onClearMessage(){
 
 
 onProcessCompleted(){
+    this.setState(Object.assign({}, this.state,{progressValue:0,progressTotal:0, step:0,process:false}));
     this.props.onNewImageCreated();
 
 }

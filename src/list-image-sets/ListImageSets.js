@@ -89,8 +89,8 @@ class TextCell extends Component {
 class ImageCell extends Component {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    var link=textValues.addImageView.contractEpisode.link+"/?contractNumber="+data[rowIndex].contractNumber+"&episodeNumber="+data[rowIndex].episodeNumber;
-    var linkText=textValues.addImageView.contractEpisode.text;
+    var link=textValues.assignImageByContractAndEpidodeNumber.link+"/?contractNumber="+data[rowIndex].contractNumber+"&episodeNumber="+data[rowIndex].episodeNumber;
+    var linkText=textValues.assignImageByContractAndEpidodeNumber.actionText;
 
 
     var images=data[rowIndex].images;
