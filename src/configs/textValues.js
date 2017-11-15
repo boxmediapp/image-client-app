@@ -2,16 +2,19 @@ const textValues={
     title:"Box Media Image",
     newepisodes:{
       link:"/image-app/new-episodes",
-      linkText:"New Episodes"
+      linkText:"New Episodes",
+      actionText:"Assign Images"
     },
     imagesets:{
        link:"/image-app/contract-episode-images",
        linkText:"Assigned Images",
-       norecords:"No assigned images"
+       norecords:"No assigned images",
+       actionText:"Edit Assigned Images"
     },
     clientsView:{
       link:"/image-app/clients-view",
-      linkText:"Clients View"
+      linkText:"Clients View",
+      actionText:"Approved Images"
     },
     logout:{
       link:"/image-app/logout",
@@ -20,6 +23,11 @@ const textValues={
     assignImageByEpisode:{
         link:"/image-app/assign-image/new-episodes",
         linkText:"Assign Image"
+    },
+    admin:{
+      link:"/image-app/admin-view",
+      linkText:"Admin",
+      actionText:"Purge Image Cache"
     },
 
     addImageView:{

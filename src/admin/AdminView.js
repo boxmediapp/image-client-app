@@ -8,10 +8,10 @@ import {
 } from 'react-router-dom'
 import  "./styles/index.css";
 import {textValues} from "../configs";
-import {AppHeader,BigButton} from "../components";
+import {AppHeader} from "../components";
 
 
-export  default class Home extends Component {
+export  default class AdminView extends Component {
     constructor(props){
       super(props);
       this.state={nunberOfImages:0,numberOfImageSets:0,numberOfEpisodesMissingImages:0,
@@ -27,6 +27,14 @@ export  default class Home extends Component {
       });
     }
 
+    invalidateAllClientImage(){
+      var command={
+                          command:"invalidate-client-image-cdn-cache",
+                          filename:""
+                  };
+      api.sendCommand(command);
+    }
+
     render(){
 
         return (
@@ -36,23 +44,7 @@ export  default class Home extends Component {
               <div style={AppHeader.styles.content}>
 
                   <div className="dataContainer">
-                      <BigButton label={textValues.newepisodes.linkText}
-                               content={textValues.newepisodes.actionText}
-                               link={textValues.newepisodes.link}/>
-
-                    <BigButton label={textValues.imagesets.linkText}
-                                        content={textValues.imagesets.actionText}
-                                        link={textValues.imagesets.link}/>
-
-                      <BigButton label={textValues.clientsView.linkText}
-                                          content={textValues.clientsView.actionText}
-                                          link={textValues.clientsView.link}/>
-
-                                        <BigButton label={textValues.admin.linkText}
-                                                              content={textValues.admin.actionText}
-                                                              link={textValues.admin.link}/>
-
-
+                             <button onClick={evt=>this.invalidateAllClientImage()} className="btn btn-primary btn-normal">Clear CDN Cache</button>
                   </div>
              </div>
 

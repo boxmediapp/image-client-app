@@ -19,6 +19,7 @@ import {EpisodeView,ContractEpisodeNumberView} from "./add-image-view";
 import {NewEpisodesView} from "./new-episodes";
 import {ClientImagesView} from "./clients-view";
 import {Home} from "./home";
+import {AdminView} from "./admin";
 
 import {ListImageSetView} from "./list-image-sets";
 import {genericUtil} from "./utils";
@@ -74,7 +75,7 @@ export default class App extends Component{
                                   <Route path={textValues.imagesets.link} component={ListImageSetView}/>
                                   <Route path={textValues.addImageView.contractEpisode.link} component={ContractEpisodeNumberView}/>
                                   <Route path={textValues.clientsView.link} component={ClientImagesView}/>
-
+                                  <Route path={textValues.admin.link} component={AdminView}/>
                               </div>
                             </Router>
                       )
