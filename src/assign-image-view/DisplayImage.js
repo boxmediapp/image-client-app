@@ -12,9 +12,7 @@ export default class DisplayImage extends Component{
 
       constructor(props){
             super(props);
-
             this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null};
-
       }
       onClearMessage(){
         this.setState(Object.assign({}, this.state,{modalMessage:null}));
@@ -107,8 +105,7 @@ export default class DisplayImage extends Component{
 
                      <ImageUploader onComplete={this.onUploadComplete.bind(this)}
                      image={this.props.image}                     
-                     buildFileName={this.buildFileName.bind(this)}
-                     isUploadImageSizeCorrect={this.isUploadImageSizeCorrect.bind(this)}
+                     buildFileName={this.buildFileName.bind(this)}                     
                      bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}
                      onDropFailed={this.onDropFailed.bind(this)}
                      onDropSucess={this.onDropSucess.bind(this)}

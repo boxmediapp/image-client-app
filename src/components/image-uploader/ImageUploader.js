@@ -10,11 +10,9 @@ import {textValues} from "../../configs";
 import {styles} from "./styles";
 
 
-import  RenderImage from "./RenderImage";
+import Dropzone from 'react-dropzone';
 
-
-
-
+import {ProgressBar,ModalDisplayImage} from "../index";
 
 
 
@@ -122,17 +120,67 @@ export  default class ImageUploader extends Component {
   }
 
   render() {
+        if(this.state.imagePreviewUrl){
+              return this.renderPreviewImage();
+        }
+        else if(this.props.image){
+               return this.renderImage();               
+        }
+        else{
+               return this.renderDropPlaceHolder();
+        }          
+  }
+  renderDropPlaceHolder(){
+    return (
+      <div className="dropzone">
+          <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone()}>
+            {
+              textValues.uploadHDImageText.map((txt,ind)=>{
+                return(<div style={styles.previewText} key={ind}>{txt}</div>);
+              })
+            }
+          </Dropzone>
+      </div>
+    );
+  }
+  renderPreviewImage(){
+        var {width,height,progressValue,progressTotal,imagePreviewUrl}=this.state;    
         return(
-           <div>
-              <RenderImage {...this.props} {...this.state} onDrop={this.onDrop.bind(this)}
-                onUpload={this.onUpload.bind(this)} />
+                <div style={styles.previewImageContainer}>
+                      <div  className="dropzone">
+                          <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(width, height)}>
+                                 <img src={imagePreviewUrl} style={styles.dropzone(width, height)}/>
+                                 <ProgressBar width={width} height={height} progressValue={progressValue} progressTotal={progressTotal}/>
+                          </Dropzone>
+                      </div>
+                      <div  style={styles.imageFooter}>
+                               <button type="button" className="btn btn-primary btn-normal" onClick={this.onUpload.bind(this)}>Upload</button>
+                               <ModalDisplayImage imageURL={imagePreviewUrl} width={width} height={height}/>
+                      </div>
+                </div>
+            );
+  }
+  renderImage(){
+    var imageURL=this.props.image.s3BaseURL+"/"+this.props.image.filename;
+    var {width, height}=this.props.image;
+    return(
+           <div style={styles.previewImageContainer}>
+                 <div  className="dropzone">
+                     <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(width, height)}>
+                            <img src={imageURL} style={styles.dropzone(width, height)}/>                            
+                     </Dropzone>
+                 </div>
+                 <div  style={styles.imageFooter}>                        
+                          <ModalDisplayImage imageURL={imageURL} width={width} height={height}/>
+                 </div>
            </div>
-        );
-
+    );
   }
 
-
-
-
-
 }
+
+
+
+
+
+
