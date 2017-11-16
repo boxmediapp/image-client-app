@@ -16,6 +16,21 @@ export const styles={
       justifyContent:"center"
     };
   },
+  imagezone:function(width, height,originalSize){    
+    var fitResolution={width,height};
+    if(!originalSize){
+        fitResolution=imageUtil.calculateFitImageWidth({width,height});
+    }    
+    return {
+      width: fitResolution.width,
+      height: fitResolution.height,
+      borderWidth: 2,            
+      display:"flex",
+      flexDirection:"column",
+      justifyContent:"center"
+    };
+  },
+  
   uploadButtonContainer:{
     display:"flex",
     flexDirection: "row",

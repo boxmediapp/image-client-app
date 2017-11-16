@@ -6,6 +6,7 @@ import {episodedata,store} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 import "./styles/index.css";
+
 import {styles} from "./styles";
 
 import DisplayImageSet from "./DisplayImageSet";
@@ -99,12 +100,12 @@ class CreateNewImageSetInEpisode extends Component{
 
               fileCounter++;
                 return (
-                  <div style={styles.newImageSetContainer}>
+                  
                     <DisplayCreateNewImageSet
                         {...imageSet}
                         fileCounter={fileCounter}
                         onNewImageCreated={this.props.onNewImageCreated} tags="episode"/>
-                 </div>
+                 
                 );
 
         }
