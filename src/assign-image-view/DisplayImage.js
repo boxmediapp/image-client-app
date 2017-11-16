@@ -12,7 +12,8 @@ export default class DisplayImage extends Component{
 
       constructor(props){
             super(props);
-            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null, edit:false};
+            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null, 
+            edit:false, cacheid:1};
       }
       onClearMessage(){
         this.setState(Object.assign({}, this.state,{modalMessage:null}));
@@ -69,6 +70,9 @@ export default class DisplayImage extends Component{
       onUploadComplete(data){
                 console.log("Image is replaced");
                 this.setEditImageMode(false);
+                var cacheid=this.state.cacheid+1;
+                var edit=false;                
+                this.setState(Object.assign({}, this.state, {cacheid,edit}));                
       }
       setTags(tags){
          this.setState(Object.assign({}, this.state,{tags}));
@@ -113,7 +117,7 @@ export default class DisplayImage extends Component{
                      onDropFailed={this.onDropFailed.bind(this)}
                      onDropSucess={this.onDropSucess.bind(this)}
                      onUploadError={this.onUploadError.bind(this)} edit={this.state.edit}
-                     setEditImageMode={this.setEditImageMode.bind(this)}/>
+                     setEditImageMode={this.setEditImageMode.bind(this)} cacheid={this.state.cacheid}/>
                      
                                   <div style={styles.imageRightProperty}>
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
