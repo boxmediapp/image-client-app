@@ -34,7 +34,7 @@ export  default class DisplayImateForReplace extends Component {
      this.setState(Object.assign({}, this.state, {mql:styles.msql}));
    }
    render(){
-    var imageURL=this.props.image.s3BaseURL+"/"+this.props.image.filename+"?timestamp="+(new Date()).getTime();
+    var imageURL=this.props.image.s3BaseURL+"/"+this.props.image.filename+"?cacheid="+this.props.cacheid;
     var {width, height}=this.props.image;
     var {originalSize} =this.state;
     

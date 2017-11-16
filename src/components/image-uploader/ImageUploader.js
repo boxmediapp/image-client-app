@@ -157,8 +157,7 @@ export  default class ImageUploader extends Component {
                           </Dropzone>
                       </div>
                       <div  style={styles.imageFooter}>
-                               <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={this.onUpload.bind(this)}>Upload</button>
-                               <ModalDisplayImage imageURL={imagePreviewUrl} width={width} height={height}/>
+                               <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={this.onUpload.bind(this)}>Upload</button>                              
                       </div>
                 </div>
             );

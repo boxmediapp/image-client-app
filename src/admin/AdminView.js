@@ -8,15 +8,28 @@ import {
 } from 'react-router-dom'
 import  "./styles/index.css";
 import {textValues} from "../configs";
-import {AppHeader} from "../components";
+import {AppHeader,ModalDialog} from "../components";
 
 
 export  default class AdminView extends Component {
     constructor(props){
       super(props);
       this.state={nunberOfImages:0,numberOfImageSets:0,numberOfEpisodesMissingImages:0,
-                 numberOfImageWaitingApproved:0,numberOfImageApproved:0};
+                 numberOfImageWaitingApproved:0,numberOfImageApproved:0,modalMessage:null};
       this.loadSummaries();
+    }
+    
+    onClearMessage(){
+      this.setState(Object.assign({}, this.state,{modalMessage:null}));
+    }
+    setMessage(content){
+       var modalMessage={
+              title:"Information",
+              content,
+              onConfirm:this.onClearMessage.bind(this),
+              confirmButton:"OK"
+       }
+       this.setState(Object.assign({}, this.state,{modalMessage}));
     }
     loadSummaries(){
       api.getSummaries().then(summaries=>{
@@ -33,6 +46,8 @@ export  default class AdminView extends Component {
                           filename:""
                   };
       api.sendCommand(command);
+      this.setMessage("CDN Cache is cleared");
+      
     }
 
     render(){
@@ -46,6 +61,7 @@ export  default class AdminView extends Component {
                   <div className="dataContainer">
                              <button onClick={evt=>this.invalidateAllClientImage()} className="btn btn-primary btn-normal">Clear CDN Cache</button>
                   </div>
+                    <ModalDialog message={this.state.modalMessage}/>
              </div>
 
 
