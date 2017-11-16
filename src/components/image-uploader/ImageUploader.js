@@ -11,6 +11,7 @@ import {styles} from "./styles";
 
 
 import Dropzone from 'react-dropzone';
+import "./styles/index.css";
 
 import {ProgressBar,ModalDisplayImage} from "../index";
 
@@ -83,9 +84,11 @@ export  default class ImageUploader extends Component {
   }
   onUploadComplete(){
 
-
+  setTimeout(()=>{
     this.props.onComplete(this.state);
     this.initSate();
+  },1000);  
+    
 
   }
   onUploadError(result){
@@ -154,7 +157,7 @@ export  default class ImageUploader extends Component {
                           </Dropzone>
                       </div>
                       <div  style={styles.imageFooter}>
-                               <button type="button" className="btn btn-primary btn-normal" onClick={this.onUpload.bind(this)}>Upload</button>
+                               <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={this.onUpload.bind(this)}>Upload</button>
                                <ModalDisplayImage imageURL={imagePreviewUrl} width={width} height={height}/>
                       </div>
                 </div>
@@ -167,11 +170,14 @@ export  default class ImageUploader extends Component {
            <div style={styles.previewImageContainer}>
                  <div  className="dropzone">
                      <Dropzone onDrop={this.onDrop.bind(this)} style={styles.dropzone(width, height)}>
-                            <img src={imageURL} style={styles.dropzone(width, height)}/>                            
+                            <div style={styles.previewText}>Drop an image here</div>
+                            <div style={styles.previewText}>Requires: {width} x {height}</div>
                      </Dropzone>
                  </div>
                  <div  style={styles.imageFooter}>                        
-                          <ModalDisplayImage imageURL={imageURL} width={width} height={height}/>
+                     <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={(evt) => {
+                         this.props.setEditImageMode(false);
+                     }}>Cancel</button>
                  </div>
            </div>
     );

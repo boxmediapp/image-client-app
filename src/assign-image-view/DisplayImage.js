@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ListEpisodes,ImageUploader,ModalDialog} from "../components";
+import {ListEpisodes,ImageUploader,DisplayImateForReplace,ModalDialog} from "../components";
 import {genericUtil} from "../utils";
 
 import {episodedata,store,appdata} from "../store";
@@ -12,7 +12,7 @@ export default class DisplayImage extends Component{
 
       constructor(props){
             super(props);
-            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null};
+            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null, edit:false};
       }
       onClearMessage(){
         this.setState(Object.assign({}, this.state,{modalMessage:null}));
@@ -25,6 +25,9 @@ export default class DisplayImage extends Component{
                 confirmButton:"OK"
          }
          this.setState(Object.assign({}, this.state,{modalMessage}));
+      }
+      setEditImageMode(edit){
+        this.setState(Object.assign({}, this.state,{edit}));
       }
       onConfirmDeleteImage(){
         this.onClearMessage();
@@ -65,7 +68,7 @@ export default class DisplayImage extends Component{
 
       onUploadComplete(data){
                 console.log("Image is replaced");
-                this.forceUpdate();
+                this.setEditImageMode(false);
       }
       setTags(tags){
          this.setState(Object.assign({}, this.state,{tags}));
@@ -103,13 +106,14 @@ export default class DisplayImage extends Component{
               return(
                      <div style={styles.imageRecord()}>
 
-                     <ImageUploader onComplete={this.onUploadComplete.bind(this)}
+                     <DisplayImageEditor onComplete={this.onUploadComplete.bind(this)}
                      image={this.props.image}                     
                      buildFileName={this.buildFileName.bind(this)}                     
                      bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}
                      onDropFailed={this.onDropFailed.bind(this)}
                      onDropSucess={this.onDropSucess.bind(this)}
-                     onUploadError={this.onUploadError.bind(this)}/>
+                     onUploadError={this.onUploadError.bind(this)} edit={this.state.edit}
+                     setEditImageMode={this.setEditImageMode.bind(this)}/>
                      
                                   <div style={styles.imageRightProperty}>
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
@@ -125,6 +129,24 @@ export default class DisplayImage extends Component{
 
       }
 }
+
+class DisplayImageEditor extends Component{
+    render(){
+            if(this.props.edit){
+                  return(
+                    <ImageUploader {...this.props}/>
+                  );
+            }
+            else{
+                return (
+                  <DisplayImateForReplace {...this.props}/>
+                );  
+            }      
+    }
+  
+  
+}
+
 
 class DisplayImageProperty extends Component{
   constructor(props){
