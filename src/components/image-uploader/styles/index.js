@@ -13,7 +13,11 @@ export const styles={
       borderRadius: 15,
       display:"flex",
       flexDirection:"column",
-      justifyContent:"center"
+      justifyContent:"center",
+      animationName:"borderAnimation",
+      animationDuration:"4s",
+      animationIterationCount: "infinite",
+      animationDirection: "alternate"
     };
   },
   imagezone:function(width, height,originalSize){    

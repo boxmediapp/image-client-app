@@ -40,7 +40,11 @@ const textValues={
     
     upload:{
       failed:"Failed to upload the file to the s3 bucket",
-      aborted:"Upload aborted"
+      aborted:"Upload aborted"        
+    },
+    notCorrectSize:{
+        droppedImage:"The dropped image ",
+          required:" is not acceptable for the field."
     },
     home:{
         link:"/",

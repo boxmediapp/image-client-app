@@ -4,3 +4,10 @@
     margin-top:5px;
     margin-bottom: 5px;
 }
+
+@keyframes borderAnimation {
+  0%    {border-color: rgb(231, 172, 168) rgb(54, 38, 76) rgb(54, 38, 76) rgb(54, 38, 76);}
+  25%   {border-color: rgb(54, 38, 76) rgb(231, 172, 168) rgb(54, 38, 76) rgb(54, 38, 76);}
+  50%   {border-color: rgb(54, 38, 76) rgb(54, 38, 76) rgb(231, 172, 168) rgb(54, 38, 76);}
+  75%   {border-color: rgb(54, 38, 76) rgb(54, 38, 76) rgb(54, 38, 76) rgb(231, 172, 168);}
+}
