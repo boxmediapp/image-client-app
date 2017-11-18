@@ -26,7 +26,7 @@ onDropSucess(imageInfo){
         return true;
   }
   else{
-    this.setErrorMessage("The image is not in the required size")
+    this.setErrorMessage(textValues.notCorrectSize.droppedImage+imageInfo.width+" x "+imageInfo.height+textValues.notCorrectSize.required);
     return false;
   }
 }

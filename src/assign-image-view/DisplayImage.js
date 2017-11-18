@@ -95,7 +95,7 @@ export default class DisplayImage extends Component{
               return true;
         }
         else{
-          this.setErrorMessage("the image is in the correct")
+          this.setErrorMessage(textValues.notCorrectSize.droppedImage+imageInfo.width+" x "+imageInfo.height+textValues.notCorrectSize.required);
           return false;
         }
       }
