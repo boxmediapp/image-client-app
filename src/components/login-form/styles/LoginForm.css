@@ -23,3 +23,11 @@
     background-color: #B9C6DB;
     box-shadow: 10px 10px 5px #888888;
 }
+.globalInputText{
+  font-size: 10px;
+  font-family: Roboto,sans-serif;
+  text-transform: none;
+  font-weight: 300;
+  padding-left: 150px;
+  
+}
