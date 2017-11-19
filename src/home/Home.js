@@ -40,17 +40,23 @@ export  default class Home extends Component {
                                content={textValues.newepisodes.actionText}
                                link={textValues.newepisodes.link}/>
 
-                    <BigButton label={textValues.assignedEpisodes.linkText}
-                                        content={textValues.assignedEpisodes.actionText}
-                                        link={textValues.assignedEpisodes.link}/>
+                      <BigButton label={textValues.assignedEpisodes.linkText}
+                                content={textValues.assignedEpisodes.actionText}
+                                link={textValues.assignedEpisodes.link}/>
 
                       <BigButton label={textValues.clientsView.linkText}
-                                          content={textValues.clientsView.actionText}
-                                          link={textValues.clientsView.link}/>
+                                content={textValues.clientsView.actionText}
+                                link={textValues.clientsView.link}/>
 
-                                        <BigButton label={textValues.cacheMamnagement.linkText}
-                                                              content={textValues.cacheMamnagement.actionText}
-                                                              link={textValues.cacheMamnagement.link}/>
+                      <BigButton label={textValues.cacheMamnagement.linkText}
+                                content={textValues.cacheMamnagement.actionText}
+                                link={textValues.cacheMamnagement.link}/>
+
+                      <BigButton label={textValues.scheduleImport.linkText}
+                                 content={textValues.scheduleImport.actionText}
+                                 link={textValues.scheduleImport.link}/>
+
+
 
 
                   </div>

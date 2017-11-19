@@ -20,7 +20,7 @@
 
 }
 #contractNumber{
-    width: 150px;
+    width: 100px;
     height:40px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
@@ -28,7 +28,7 @@
     margin-left: 5px;
 }
 #episodeNumber{
-  width: 150px;
+  width: 80px;
   height:40px;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
@@ -71,4 +71,8 @@
 text-align: center;
 
   background-color: #222222;
+}
+
+.formFieldWithLabel button{
+  margin-right:10px;
 }

@@ -19,7 +19,7 @@ import {EpisodeView,ContractEpisodeNumberView} from "./assign-image-view";
 import {NewEpisodesView} from "./new-episodes";
 import {ClientImagesView} from "./clients-view";
 import {Home} from "./home";
-import {AdminView} from "./admin";
+import {ManageCacheView,ScheduleImportView} from "./admin";
 
 import {ListImageSetView} from "./list-image-sets";
 import {ListAssignedEpisodesView} from "./list-assigned-episodes";
@@ -78,7 +78,8 @@ export default class App extends Component{
                                   
                                   <Route path={textValues.assignImageByContractAndEpidodeNumber.link} component={ContractEpisodeNumberView}/>
                                   <Route path={textValues.clientsView.link} component={ClientImagesView}/>
-                                  <Route path={textValues.cacheMamnagement.link} component={AdminView}/>
+                                  <Route path={textValues.cacheMamnagement.link} component={ManageCacheView}/>
+                                  <Route path={textValues.scheduleImport.link} component={ScheduleImportView}/>
                               </div>
                             </Router>
                       )

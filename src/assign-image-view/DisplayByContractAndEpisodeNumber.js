@@ -56,6 +56,9 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
         var imageSets=this.state.imageSets;
         if((!imageSet.images)|| (!imageSet.images.length)){
             imageSets=imageSets.filter(imgSet=>imgSet.id!==imageSet.id);
+            if((!imageSets) || (!imageSets.length)){
+                    this.props.redirectToImageLibrary();         
+            }
         }
         this.setImageSets(imageSets);
         api.deleteImage(image).then(response=>{
@@ -71,10 +74,23 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
     this.setState(Object.assign({},this.state, {imageSets}));
     api.deleteImageSet(imageSet).then(response=>{
       console.log("delete respose:"+response);
+      if((!imageSets) || (!imageSets.length)){
+              this.props.redirectToImageLibrary();         
+      }
     }).catch(error=>{
        console.error("delete is faled:"+error);
        this.setErrorMessage("failed to delete the image on the server");
     });
+  }
+  approveImageSet(imageSet){
+    imageSet.images.forEach(image=>{
+      image.imageStatus="APPROVED";      
+      // api.updateImage(image).catch(error=>{
+      //   this.setErrorMessage("Failed to update Image:"+error);        
+      // });
+      
+    });
+    this.setState(Object.assign({}, this.state));
   }
   
   render(){
@@ -88,7 +104,8 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
                         return(
                              <DisplayImageSet imageSet={imageSet} updateImageSetTitle={this.updateImageSetTitle.bind(this)} key={imageSet.id} 
                              deleteImage={this.deleteImage.bind(this)}
-                             deleteImageSet={this.deleteImageSet.bind(this)}/>
+                             deleteImageSet={this.deleteImageSet.bind(this)}
+                             approveImageSet={this.approveImageSet.bind(this)}/>
                         );
                       })}
                </div>

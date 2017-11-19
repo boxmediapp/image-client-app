@@ -85,7 +85,13 @@ setTags(tags){
 
 
   render(){
-        return this.renderStep(this.state.step);
+    if(!this.props.contractNumber || !this.props.episodeNumber){
+        return null;
+    }
+    else{
+          return this.renderStep(this.state.step);
+    }
+      
   }
   renderStep(step){
       if(!this.state.process){
@@ -98,7 +104,7 @@ setTags(tags){
   }
   renderUploadMaster(){
     var appconfig=appdata.getAppConfig();
-    var {contractNumber,episodeNumber,title}=this.props;
+    var {contractNumber,episodeNumber}=this.props;
     var {tags,title}=this.state;
 
     return (

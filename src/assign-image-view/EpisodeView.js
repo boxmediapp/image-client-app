@@ -51,6 +51,9 @@ export default class EpisodeView extends Component{
   onTitleChanged(title){
       this.setTitle(title);
   }
+  redirectToImageLibrary(){
+    this.props.history.push(textValues.assignedEpisodes.link);
+  }
   render(){
     if((!this.state) || (!this.state.imageSets) || (this.state.imageSets.length==0)){
           return (
@@ -69,7 +72,9 @@ export default class EpisodeView extends Component{
              <div>
                    <AppHeader selected="newepisodes"/>
                    <div style={AppHeader.styles.content}>
-                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} 
+                      episodeNumber={this.state.episodeNumber}
+                      redirectToImageLibrary={this.redirectToImageLibrary.bind(this)}/>
                    </div>
 
             </div>

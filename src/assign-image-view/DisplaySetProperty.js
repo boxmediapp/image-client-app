@@ -57,11 +57,17 @@ export default class DisplaySetProperty extends Component{
                              <input type="text" className="form-control" id="episodeNumber" placeholder="Episode Number" name="episodeNumber" readOnly={true} value={episodeNumber}/>
                            </div>
                            <div className="col-sm-4 formFieldWithLabel">
-                           <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
+                                <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
 
                                     this.displayConfirmDeleteDialog();
-                                }}>Delete All Images</button>
+                                }}>Delete</button>
+                                <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
+                                         this.props.approveImageSet();
+                                     }}>Approve</button>
                            </div>
+                           
+                           
+                           
                        </div>
                        <div className="row">
                          <div className="col-sm-12 formFieldWithLabel">
