@@ -107,6 +107,7 @@ export  default class ImageUploader extends Component {
 
   }
   onUpload(){
+    this.setProgressValue(0,1);
     var uploadRequest={};
 
     var uploadRequest={
@@ -157,7 +158,9 @@ export  default class ImageUploader extends Component {
                           </Dropzone>
                       </div>
                       <div  style={styles.imageFooter}>
-                               <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={this.onUpload.bind(this)}>Upload</button>                              
+                               <DisplayUploadButton onUpload={this.onUpload.bind(this)} progressValue={this.state.progressValue}
+                               progressTotal={this.state.progressTotal}/>
+                               
                       </div>
                 </div>
             );
@@ -185,7 +188,18 @@ export  default class ImageUploader extends Component {
 }
 
 
-
+class DisplayUploadButton extends Component{
+  
+  render(){
+    if(this.props.progressTotal){
+      return null;
+    }
+    return(
+      <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={this.props.onUpload}>Upload</button>
+    );
+    
+  }
+}
 
 
 
