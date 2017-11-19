@@ -65,7 +65,20 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
            this.setErrorMessage("failed to delete the image on the server");
         });
   }
+  deleteImageSet(imageSet){
+    var imageSets=this.state.imageSets;
+    imageSets=imageSets.filter(imageSet=>imageSet!=imageSet);
+    this.setState(Object.assign({},this.state, {imageSets}));
+    api.deleteImageSet(imageSet).then(response=>{
+      console.log("delete respose:"+response);
+    }).catch(error=>{
+       console.error("delete is faled:"+error);
+       this.setErrorMessage("failed to delete the image on the server");
+    });
+  }
+  
   render(){
+    
     return (
           <div>
 
@@ -73,7 +86,9 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
 
                       {this.state.imageSets.map(imageSet=>{
                         return(
-                             <DisplayImageSet imageSet={imageSet} updateImageSetTitle={this.updateImageSetTitle.bind(this)} key={imageSet.id} deleteImage={this.deleteImage.bind(this)}/>
+                             <DisplayImageSet imageSet={imageSet} updateImageSetTitle={this.updateImageSetTitle.bind(this)} key={imageSet.id} 
+                             deleteImage={this.deleteImage.bind(this)}
+                             deleteImageSet={this.deleteImageSet.bind(this)}/>
                         );
                       })}
                </div>
@@ -108,9 +123,19 @@ class CreateNewImageSetInEpisode extends Component{
                  
                 );
 
-        }
+        }        
         else{
-          return null;
+            var fileCounter=1;
+            return (
+                <DisplayCreateNewImageSet                     
+                    title={this.props.title}
+                    contractNumber={this.props.contractNumber}
+                    episodeNumber={this.props.episodeNumber}
+                    fileCounter={fileCounter}
+                    tags="episode"
+                    onNewImageCreated={this.props.onNewImageCreated}/>
+            );
+
         }
   }
 }

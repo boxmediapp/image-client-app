@@ -86,6 +86,8 @@ export default class LoginForm extends Component {
                        </div>
                        <div className="col-sm-6">
                               <CodeDataRenderer service={this}  config={this.buildGlobalInputConfig()} level="H" size="300" showControl={false}/>
+                              <div className="globalInputText">Powered by <a href="https://globalinput.co.uk/">Global Input Software</a>
+                              </div>
                       </div>
                     </div>
             </div>

@@ -22,6 +22,7 @@ import {Home} from "./home";
 import {AdminView} from "./admin";
 
 import {ListImageSetView} from "./list-image-sets";
+import {ListAssignedEpisodesView} from "./list-assigned-episodes";
 import {genericUtil} from "./utils";
 
 
@@ -73,9 +74,11 @@ export default class App extends Component{
                                   <Route  path={textValues.newepisodes.link}  component={NewEpisodesView}/>
                                   <Route path={textValues.assignImageByEpisode.link} component={EpisodeView}/>
                                   <Route path={textValues.imagesets.link} component={ListImageSetView}/>
+                                  <Route path={textValues.assignedEpisodes.link} component={ListAssignedEpisodesView}/>
+                                  
                                   <Route path={textValues.assignImageByContractAndEpidodeNumber.link} component={ContractEpisodeNumberView}/>
                                   <Route path={textValues.clientsView.link} component={ClientImagesView}/>
-                                  <Route path={textValues.admin.link} component={AdminView}/>
+                                  <Route path={textValues.cacheMamnagement.link} component={AdminView}/>
                               </div>
                             </Router>
                       )

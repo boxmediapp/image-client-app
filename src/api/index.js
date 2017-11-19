@@ -99,15 +99,30 @@ class ServiceAPI {
          requestS3UploadURL(request){
            return httpPostRequest("presigned", JSON.stringify(request));
          }
-         findNotProcessedEpisodes(search, start=0){
-               var queryurl="image-service/new-episodes?start="+start;
+         findNewEpisodes(search, start=0){
+               var queryurl="image-service/box-episodes?nunberOfImageSets=0&start="+start;
                if(search){
                  queryurl+="&search="+search;
                }
                return httpGetRequest(queryurl);
          }
+         findAssignedEpisodes(search, start=0){
+               var queryurl="image-service/box-episodes?minNumberOfImageSets=1&start="+start;
+               if(search){
+                 queryurl+="&search="+search;
+               }
+               return httpGetRequest(queryurl);
+         }
+         findAssignedEpisodesByProgrammeNumber(programmeNumber, start=0){
+               var queryurl="image-service/box-episodes?minNumberOfImageSets=1&start="+start;
+               if(programmeNumber){
+                 queryurl+="&programmeNumber="+programmeNumber;
+               }
+               return httpGetRequest(queryurl);
+         }
+         
          getEpisodeById(id){
-            return httpGetRequest("image-service/new-episodes/"+id);
+            return httpGetRequest("image-service/box-episodes/"+id);
          }
          createImageSet(imageset){
             return httpPostRequest("image-service/image-sets", JSON.stringify(imageset));
@@ -137,6 +152,9 @@ class ServiceAPI {
          }
          deleteImage(image){
            return httpDeleteRequest("image-service/images/"+image.id);
+         }
+         deleteImageSet(imageSet){
+           return httpDeleteRequest("image-service/image-sets/"+imageSet.id);
          }
          getSummaries(){
                return httpGetRequest("image-service/summaries");

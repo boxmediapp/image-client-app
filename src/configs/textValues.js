@@ -4,15 +4,22 @@ const textValues={
                 "Requires: 1920 x 1080"],                
     newepisodes:{
       link:"/image-app/new-episodes",
-      linkText:"New Episodes",
+      linkText:"Assign Images",
       actionText:"Assign Images"
     },
     imagesets:{
-       link:"/image-app/contract-episode-images",
-       linkText:"Assigned Images",
+       link:"/image-app/image-sets",
+       linkText:"Image Sets",
        norecords:"No assigned images",
-       actionText:"Edit Assigned Images"
+       actionText:"Edit Image Sets"
     },
+    assignedEpisodes:{
+       link:"/image-app/assigned-episodes",
+       linkText:"Limage Library",
+       norecords:"No images found",
+       actionText:"Edit Images"
+    },
+    
     clientsView:{
       link:"/image-app/clients-view",
       linkText:"Clients View",
@@ -27,9 +34,9 @@ const textValues={
         linkText:"Assign Image"        
     },
     
-    admin:{
-      link:"/image-app/admin-view",
-      linkText:"Admin",
+    cacheMamnagement:{
+      link:"/image-app/cache-maagement",
+      linkText:"Mannage Cache",
       actionText:"Purge Image Cache"
     },
     assignImageByContractAndEpidodeNumber:{      
@@ -58,6 +65,13 @@ const textValues={
       title:"Warning",
       content:"The image and its associated metadata will be deleted permanently",
       confirm:"Delete",
+      cancel:"Cancel"
+
+    },
+    deleteImageSetDialog:{
+      title:"Danger",
+      content:"All the images in this set will be deleted permanently, are you sure you want continue?",
+      confirm:"Delete All",
       cancel:"Cancel"
 
     }

@@ -52,7 +52,7 @@ export default class NewEpisodesView extends Component{
   }
   startSearch(search){
     this.setLoading(true);
-    api.findNotProcessedEpisodes(search).then(episodes =>{
+    api.findNewEpisodes(search).then(episodes =>{
       this.setLoading(false);
        var recordLimit=appdata.getAppConfig().recordLimit;
        episodedata.setEpisodeList({episodes,search,recordLimit});
@@ -77,7 +77,7 @@ export default class NewEpisodesView extends Component{
             }
             this.loadingNextPage=true;
             console.log("loading the next page......");
-            api.findNotProcessedEpisodes(this.state.search,episodedata.getNextBatchState()).then(episodes =>{
+            api.findNewEpisodes(this.state.search,episodedata.getNextBatchState()).then(episodes =>{
                var recordLimit=appdata.getAppConfig().recordLimit;
                console.log("Next batch of data is loaded");
                episodedata.nextPageEpisodes({episodes,recordLimit});

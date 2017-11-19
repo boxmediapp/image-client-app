@@ -43,10 +43,11 @@ export default class ContractEpisodeNumberView extends Component{
            return (
              <div>
                    <AppHeader selected="imagesets"/>
+                   
                    <div style={AppHeader.styles.content}>
                       <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
                    </div>
-
+                   
             </div>
            )
 
@@ -54,22 +55,3 @@ export default class ContractEpisodeNumberView extends Component{
 
 }
 
-class CreateNewImageSetInEpisode extends Component{
-    render(){
-        if(!this.props.data){
-          return null;
-        }
-        var fileCounter=1;
-          return (
-              <DisplayCreateNewImageSet {...this.props.data}
-                  episodeId={this.props.data.id}
-                  title={this.props.data.title}
-                  contractNumber={this.props.data.contractNumber}
-                  episodeNumber={this.props.data.episodeNumber}
-                  fileCounter={fileCounter}
-                  onNewImageCreated={this.props.onNewImageCreated}/>
-          );
-
-    }
-
-}

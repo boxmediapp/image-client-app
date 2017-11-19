@@ -16,8 +16,7 @@ export default class ResizeProcess{
         this.appconfig=appdata.getAppConfig();
       }
       createImageSet(data){
-        var imageset={
-             episodeId:this.caller.props.episodeId,
+        var imageset={             
              programmeNumber:this.caller.props.contractNumber+"/"+this.caller.props.episodeNumber,
              title:this.caller.state.title,
              fileCounter:this.caller.props.fileCounter
