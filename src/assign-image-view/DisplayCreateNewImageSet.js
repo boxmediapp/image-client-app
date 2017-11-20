@@ -81,24 +81,17 @@ setTitle(title){
 setTags(tags){
   this.setState(Object.assign({}, this.state,{tags}));
 }
-
+onMainAssetUploaded(data){
+    this.process.onMainAssetUploaded(data);    
+}
 
 
   render(){
-        return this.renderStep(this.state.step);
-  }
-  renderStep(step){
-      if(!this.state.process){
-              return this.renderUploadMaster();
-      }
-      else {
-        return this.renderResizeImage();
-      }
-
-  }
-  renderUploadMaster(){
+    if(!this.props.contractNumber || !this.props.episodeNumber){
+        return null;
+    }
     var appconfig=appdata.getAppConfig();
-    var {contractNumber,episodeNumber,title}=this.props;
+    var {contractNumber,episodeNumber}=this.props;
     var {tags,title}=this.state;
 
     return (
@@ -131,44 +124,61 @@ setTags(tags){
 
                    <div className="row">
                      <div className="col-sm-12">
-                         <ImageUploader  {...this.props}
-                           fileCounter={this.props.fileCounter}
-                           onComplete={this.process.onMainAssetUploaded.bind(this.process)}
+                         <RenderUploadProcess  {...this.props}                           
+                           onMainAssetUploaded={this.onMainAssetUploaded.bind(this)}
                            buildFileName={this.process.buildFileName.bind(this.process)}
                            isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
                            bucket={appconfig.imageBucket} onDropFailed={this.onDropFailed.bind(this)}
                            onDropSucess={this.onDropSucess.bind(this)}
-                           onUploadError={this.onUploadError.bind(this)}/>
+                           onUploadError={this.onUploadError.bind(this)}
+                           resizing={this.state.process} process={this.process}
+                           resizeWidth={this.state.resizeWidth} resizeHeight={this.state.resizeHeight}
+                           progressValue={this.state.progressValue} progressTotal={this.state.progressTotal}
+                           />
                      </div>
-                     <ModalDialog message={this.state.modalMessage}/>
-                   </div>
-
-
+                     <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
+                   </div>              
            </div>
-
         </div>
       );
 
   }
-  renderResizeImage(){
+  
 
-    var {width, height,imageURL}=this.process.getSourceImageInfo();
-    var {resizeWidth,resizeHeight}=this.state;
-    return (
-       <div style={styles.previewImageContainer}>
-             <div>
-                 <img src={imageURL} style={styles.image(width, height)}/>
-                 <ProgressBar width={width} height={height}
-                   progressValue={this.state.progressValue}
-                   progressTotal={this.state.progressTotal}/>
-             </div>
-             <div  style={styles.imageFooter}>
-                      Generating: {resizeWidth} x {resizeHeight}
-             </div>
-             <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
-       </div>
-     );
+
+}
+
+
+class RenderUploadProcess extends Component{
+  render(){
+    if(!this.props.resizing){
+          return this.renderMasterUpload();
+    }
+    else{
+      return this.renderResizingprocess();
+    }    
   }
-
-
+  renderMasterUpload(){
+    return(
+          <ImageUploader  {...this.props} onComplete={this.props.onMainAssetUploaded}/>
+    );
+  }
+  renderResizingprocess(){
+        var {width, height,imageURL}=this.props.process.getSourceImageInfo();
+        var {resizeWidth,resizeHeight}=this.props;
+        return (
+           <div style={styles.previewImageContainer}>
+                 <div>
+                     <img src={imageURL} style={styles.image(width, height)}/>
+                     <ProgressBar width={width} height={height}
+                       progressValue={this.props.progressValue}
+                       progressTotal={this.props.progressTotal}/>
+                 </div>
+                 <div  style={styles.imageFooter}>
+                          Generating: {resizeWidth} x {resizeHeight}
+                 </div>             
+           </div>
+         );
+  }
+  
 }

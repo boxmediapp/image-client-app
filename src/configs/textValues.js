@@ -39,6 +39,12 @@ const textValues={
       linkText:"Mannage Cache",
       actionText:"Purge Image Cache"
     },
+    scheduleImport:{      
+      link:"/image-app/schedule-imports",
+      linkText:"Schedule Imports",
+      actionText:"Import from Pirate"
+      
+    },
     assignImageByContractAndEpidodeNumber:{      
          link:"/image-app/assign-image/contract-episode-number",
          actionText:"Edit"

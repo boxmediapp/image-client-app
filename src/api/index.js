@@ -171,6 +171,15 @@ class ServiceAPI {
          sendCommand(command){
             return httpPostRequest("commands", JSON.stringify(command));
          }
+         getTasks(){
+            return httpGetRequest("tasks?importScheduleType=IMPORT_BOX_EPISODE");
+         }
+         createTask(task){          
+           return httpPostRequest("tasks", JSON.stringify(task));
+         }
+         removeTask(task){
+           return httpDeleteRequest("tasks/"+task.id);           
+         }
 }
 
 

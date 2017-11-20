@@ -1,2 +1,3 @@
-import AdminView from "./AdminView";
-export {AdminView};
+import ManageCacheView from "./ManageCacheView";
+import ScheduleImportView from "./ScheduleImportView";
+export {ManageCacheView,ScheduleImportView};

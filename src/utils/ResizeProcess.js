@@ -16,6 +16,9 @@ export default class ResizeProcess{
         this.appconfig=appdata.getAppConfig();
       }
       createImageSet(data){
+        if(!this.caller.props.contractNumber || !this.caller.props.episodeNumber){
+           throw Error("contractNumber or epsiodeNumber is empty, failed to create:"+JSON.stringify(data));
+        }
         var imageset={             
              programmeNumber:this.caller.props.contractNumber+"/"+this.caller.props.episodeNumber,
              title:this.caller.state.title,

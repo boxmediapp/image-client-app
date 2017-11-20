@@ -188,7 +188,7 @@ class DisplayImageProperty extends Component{
                               </div>
                      </div>
                      <div style={styles.imageProperty}>
-                        <SelectImageStatus imageStatus={this.props.imageStatus} updateImageStatus={this.props.updateImageStatus}/>
+                        <SelectImageStatus imageStatus={this.props.image.imageStatus} updateImageStatus={this.props.updateImageStatus}/>
                      </div>
 
 

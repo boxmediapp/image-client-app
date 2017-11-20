@@ -37,6 +37,9 @@ export default class ContractEpisodeNumberView extends Component{
   onNewImageCreated(image){
         this.loadImageSets();
   }
+  redirectToImageLibrary(){
+    this.props.history.push(textValues.assignedEpisodes.link);
+  }
   render(){
 
 
@@ -45,7 +48,8 @@ export default class ContractEpisodeNumberView extends Component{
                    <AppHeader selected="imagesets"/>
                    
                    <div style={AppHeader.styles.content}>
-                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}/>
+                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}
+                      redirectToImageLibrary={this.redirectToImageLibrary.bind(this)}/>
                    </div>
                    
             </div>

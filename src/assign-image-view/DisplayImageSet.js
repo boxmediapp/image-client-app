@@ -20,12 +20,17 @@ export default class DisplayImageSet extends Component{
   deleteImageSet(){
       this.props.deleteImageSet(this.props.imageSet);  
   }
+  approveImageSet(){
+      this.props.approveImageSet(this.props.imageSet);  
+  }
 
   render(){
 
     return (
           <div style={styles.imageSetContainer}>
-              <DisplaySetProperty {...this.props.imageSet} updateTitle={this.updateTitle.bind(this)} deleteImageSet={this.deleteImageSet.bind(this)}/>
+              <DisplaySetProperty {...this.props.imageSet} updateTitle={this.updateTitle.bind(this)} 
+              deleteImageSet={this.deleteImageSet.bind(this)}
+              approveImageSet={this.approveImageSet.bind(this)}/>
               <DisplayImagesInImageSet {...this.props.imageSet} deleteImage={this.deleteImage.bind(this)}/>
          </div>
           );

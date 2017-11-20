@@ -1,14 +1,8 @@
 import React, {Component} from 'react'
 
 export default class SelectImageStatus extends Component{
-      constructor(props){
-        super(props);
-        this.state={imageStatus:this.props.imageStatus};
-      }
-      handleOptionChange(changeEvent){
-        this.setState({
-          imageStatus: changeEvent.target.value
-        });
+    
+      handleOptionChange(changeEvent){        
         this.props.updateImageStatus(changeEvent.target.value);
       }
 
@@ -17,14 +11,14 @@ export default class SelectImageStatus extends Component{
          <div>
           <div className="radio">
                 <label>
-                  <input type="radio" value="WAITING_APPROVE" checked={this.state.imageStatus === 'WAITING_APPROVE'}
+                  <input type="radio" value="WAITING_APPROVE" checked={this.props.imageStatus === 'WAITING_APPROVE'}
                   onChange={this.handleOptionChange.bind(this)}  />
                 Awaiting Approval
                 </label>
               </div>
               <div className="radio">
                 <label>
-                  <input type="radio" value="APPROVED" checked={this.state.imageStatus === 'APPROVED'}
+                  <input type="radio" value="APPROVED" checked={this.props.imageStatus === 'APPROVED'}
                   onChange={this.handleOptionChange.bind(this)}  />
                   Approved
                 </label>

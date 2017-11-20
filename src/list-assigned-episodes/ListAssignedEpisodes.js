@@ -94,7 +94,7 @@ class ImageCell extends Component {
             <div style={styles.thumbnailContainer}>
                     {imageSets.map(imageSet=>{
                         return ( 
-                          <Link to={link}>                          
+                          <Link to={link} key={imageSet.id}>                          
                           <div key={imageSet.id} style={styles.thumbnail}>                                
                                 <DisplayThumbnail imageSet={imageSet}/>
                           </div>

@@ -6,17 +6,15 @@ import "fixed-data-table-2/dist/fixed-data-table.min.css";
 import {
   Link
 } from 'react-router-dom'
-import  "./styles/index.css";
+
 import {textValues} from "../configs";
 import {AppHeader,ModalDialog} from "../components";
 
 
-export  default class AdminView extends Component {
+export  default class ManageCacheView extends Component {
     constructor(props){
       super(props);
-      this.state={nunberOfImages:0,numberOfImageSets:0,numberOfEpisodesMissingImages:0,
-                 numberOfImageWaitingApproved:0,numberOfImageApproved:0,modalMessage:null};
-      this.loadSummaries();
+      this.state={modalMessage:null};
     }
     
     onClearMessage(){
@@ -31,14 +29,7 @@ export  default class AdminView extends Component {
        }
        this.setState(Object.assign({}, this.state,{modalMessage}));
     }
-    loadSummaries(){
-      api.getSummaries().then(summaries=>{
-        var {nunberOfImages,numberOfImageSets,numberOfEpisodesMissingImages,
-                   numberOfImageWaitingApproved,numberOfImageApproved}=summaries;
-        this.setState(Object.assign({},this.state,{nunberOfImages,numberOfImageSets,numberOfEpisodesMissingImages,
-                   numberOfImageWaitingApproved,numberOfImageApproved}));
-      });
-    }
+    
 
     invalidateAllClientImage(){
       var command={
@@ -58,9 +49,9 @@ export  default class AdminView extends Component {
 
               <div style={AppHeader.styles.content}>
 
-                  <div className="dataContainer">
+                  
                              <button onClick={evt=>this.invalidateAllClientImage()} className="btn btn-primary btn-normal">Clear CDN Cache</button>
-                  </div>
+                  
                     <ModalDialog message={this.state.modalMessage}/>
              </div>
 

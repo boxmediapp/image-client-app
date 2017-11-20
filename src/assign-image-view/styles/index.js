@@ -5,13 +5,15 @@ export const styles={
    imageSetContainer:{
         margin:50,
         backgroundColor:"#CCDDEE",
-        border:"1px solid blue"
+        border:"1px solid black",
+        boxShadow: "10px 10px 5px #888888"
     },
     newImageSetContainer:{
       margin:50,
       backgroundColor:"#CCDDEE",
-      border: "1px solid blue",
-      paddingBottom:20
+      border:"1px solid black",
+      paddingBottom:20,
+      boxShadow: "10px 10px 5px #888888"
     },
     previewImageContainer: {
       display:"flex",
@@ -67,10 +69,14 @@ export const styles={
     imageRecord:function(){
       var st={
       backgroundColor: "#EEEEEE",
-      marginBottom: 10,
+      marginBottom: 30,
       marginTop: 10,
+      marginLeft: 10,
+      marginRight: 10,
       display:"flex",
-      flexDirection:"column"
+      flexDirection:"column",
+      border:"1px solid #888888",      
+      boxShadow: "5px 5px 2px #888888"
 
       };
       if(this.mql.matches){
