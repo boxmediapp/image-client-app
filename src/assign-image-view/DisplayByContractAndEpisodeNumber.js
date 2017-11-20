@@ -82,15 +82,33 @@ export default class DisplayByContractAndEpisodeNumber extends Component{
        this.setErrorMessage("failed to delete the image on the server");
     });
   }
-  approveImageSet(imageSet){
+  approveImageSet(imageSet){    
+    var changed=false;    
     imageSet.images.forEach(image=>{
-      image.imageStatus="APPROVED";      
-      // api.updateImage(image).catch(error=>{
-      //   this.setErrorMessage("Failed to update Image:"+error);        
-      // });
-      
+      if(image.imageStatus!=="APPROVED"){
+            image.imageStatus="APPROVED";      
+            changed=true;
+            api.updateImage(image).catch(error=>{
+              this.setErrorMessage("Failed to update Image:"+error);        
+            });            
+      }
     });
-    this.setState(Object.assign({}, this.state));
+    if(changed){
+        imageSet.images=imageSet.images.map(image=>{
+            return Object.assign({},image);
+        });
+        var imageSets=this.state.imageSets.map(
+          imgSet=>{
+              if(imgSet===imageSet){
+                return Object.assign({},imageSet);
+              }
+              else{
+                return imgSet;
+              }
+          });        
+          this.setState(Object.assign({}, this.state,{imageSets}));
+    }
+    
   }
   
   render(){
