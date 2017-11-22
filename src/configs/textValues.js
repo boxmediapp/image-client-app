@@ -1,7 +1,7 @@
 const textValues={
     title:"Box Media Image",
     uploadHDImageText:["Drop an image here",
-                "Requires: 1920 x 1080"],                
+                "Requires: 1920 x 1080"],
     newepisodes:{
       link:"/image-app/new-episodes",
       linkText:"Assign Images",
@@ -15,11 +15,11 @@ const textValues={
     },
     assignedEpisodes:{
        link:"/image-app/assigned-episodes",
-       linkText:"Limage Library",
+       linkText:"Image Library",
        norecords:"No images found",
        actionText:"Edit Images"
     },
-    
+
     clientsView:{
       link:"/image-app/clients-view",
       linkText:"Clients View",
@@ -31,29 +31,29 @@ const textValues={
     },
     assignImageByEpisode:{
         link:"/image-app/assign-image/new-episodes",
-        linkText:"Assign Image"        
+        linkText:"Assign Image"
     },
-    
+
     cacheMamnagement:{
       link:"/image-app/cache-maagement",
       linkText:"Mannage Cache",
       actionText:"Purge Image Cache"
     },
-    scheduleImport:{      
+    scheduleImport:{
       link:"/image-app/schedule-imports",
       linkText:"Schedule Imports",
       actionText:"Import from Pirate"
-      
+
     },
-    assignImageByContractAndEpidodeNumber:{      
+    assignImageByContractAndEpidodeNumber:{
          link:"/image-app/assign-image/contract-episode-number",
          actionText:"Edit"
     },
-    
-    
+
+
     upload:{
       failed:"Failed to upload the file to the s3 bucket",
-      aborted:"Upload aborted"        
+      aborted:"Upload aborted"
     },
     notCorrectSize:{
         droppedImage:"The dropped image ",
