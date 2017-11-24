@@ -1,7 +1,7 @@
 
 
-var normalImageWidth=533;
-var normalImageHeight=300;
+var normalImageWidth=480;
+var normalImageHeight=270;
 
 var mobileImageWidth=190;
 var mobileImageHeight=108;
@@ -120,7 +120,9 @@ export default class ImageUtil{
                 height=resolution.height;
           }
            else{
-                  height=resolution.height*width/resolution.width;
+                  width=resolution.width/4;
+                  height=resolution.height/4;
+                  //height=resolution.height*width/resolution.width;
            }
       }
       return {width, height};
