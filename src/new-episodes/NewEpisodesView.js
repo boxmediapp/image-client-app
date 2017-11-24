@@ -6,16 +6,18 @@ import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 
-import {AppHeader,SearchBox,LoadingIcon,ModalDialog} from "../components";
+import {AppHeader,SearchWithDateRange,LoadingIcon,ModalDialog} from "../components";
 import {styles} from "./styles";
 
 
 export default class NewEpisodesView extends Component{
   constructor(props){
-        super(props);
-        this.bindToStore();
-        this.bindToQueryParameters();
-
+        super(props);       
+        this.state={loading:true,modalMessage:null, episodes:[],queryparameters:{}};
+  }
+  componentWillMount(){
+    this.bindToStore();
+    this.bindToQueryParameters();
   }
   onClearMessage(){
     this.setState(Object.assign({}, this.state,{modalMessage:null}));
@@ -29,37 +31,45 @@ export default class NewEpisodesView extends Component{
      }
      this.setState(Object.assign({}, this.state,{modalMessage}));
   }
-
+  updateFromStore(){
+    var episodeStore=episodedata.getEpisodeStore();    
+    this.setState(Object.assign({},this.state,{episodes:episodeStore.episodes, queryparameters:episodeStore.queryparameters}));
+  }
   bindToStore(){
-    this.state=Object.assign({loading:true,modalMessage:null},episodedata.getEpisodeList());
-
+    this.updateFromStore();    
     this.ubsubsribe=store.subscribe(()=>{
-            this.setEpisodes(episodedata.getEpisodeList());
+            this.updateFromStore();
     });
   }
-  setSearch(search){
-    this.setState(Object.assign({}, this.state,{search}));
-  }
+  
   bindToQueryParameters(){
        var search=genericUtil.getQueryParam(this.props.location.search, "search");
        if(!search){
          search="";
        }
-       this.startSearch(search);
+       var sortBy=genericUtil.getQueryParam(this.props.location.search, "sortBy");
+       var sortOrder=genericUtil.getQueryParam(this.props.location.search, "sortOrder");
+       var fromDate=genericUtil.getQueryParam(this.props.location.search, "fromDate");
+       var toDate=genericUtil.getQueryParam(this.props.location.search, "toDate");
+       if(!sortBy){
+         sortBy="lastModifiedAt";
+         sortOrder="desc";
+       }       
+       this.startSearch({search,sortBy,sortOrder,fromDate,toDate});
   }
   setLoading(loading){
     this.setState(Object.assign({}, this.state,{loading}));
   }
-  startSearch(search){
+  startSearch(queryparameters){
     this.setLoading(true);
-    api.findNewEpisodes(search).then(episodes =>{
+    api.findNewEpisodes(queryparameters).then(episodes =>{
       this.setLoading(false);
        var recordLimit=appdata.getAppConfig().recordLimit;
-       episodedata.setEpisodeList({episodes,search,recordLimit});
+       episodedata.setEpisodeStore({episodes,queryparameters,recordLimit});
    }).catch(error=>{
 
        this.setLoading(false);
-       this.setErrorMessage("Error loading data from the server");
+       this.setErrorMessage("Error loading episode data from the server"+error);
    });
   }
   lastRecordsDisplayed(){
@@ -77,7 +87,7 @@ export default class NewEpisodesView extends Component{
             }
             this.loadingNextPage=true;
             console.log("loading the next page......");
-            api.findNewEpisodes(this.state.search,episodedata.getNextBatchState()).then(episodes =>{
+            api.findNewEpisodes(this.state.queryparameters,episodedata.getNextBatchState()).then(episodes =>{
                var recordLimit=appdata.getAppConfig().recordLimit;
                console.log("Next batch of data is loaded");
                episodedata.nextPageEpisodes({episodes,recordLimit});
@@ -92,16 +102,28 @@ export default class NewEpisodesView extends Component{
       }
       this.setState(Object.assign({},this.state,episodelistdata));
   }
+  onSearch(queryparamter){   
+    var query=Object.assign({search:queryparamter.search}, this.state.queryparameters);
+          
+    query.fromDate=genericUtil.dateValueToTimestamp(queryparamter.fromDate);
+    query.toDate=genericUtil.dateValueToTimestamp(queryparamter.toDate);
+    
+    this.startSearch(query);    
+  }
 
 
   render(){
       this.loadingNextPage=false;
+      
+      var queryparameters={search:this.state.queryparameters.search};      
+      queryparameters.fromDate=genericUtil.timestampToDateValue(this.state.queryparameters.fromDate);
+      queryparameters.toDate=genericUtil.timestampToDateValue(this.state.queryparameters.toDate);
        return (
            <div>
              <AppHeader selected="newepisodes"/>
              <div style={AppHeader.styles.content}>
                <div style={styles.listHeader}>
-                 <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
+                 <SearchWithDateRange queryparameters={queryparameters} onSearch={this.onSearch.bind(this)}/>
                  <LoadingIcon loading={this.state.loading}/>
                </div>
                <ListNewEpisodes data={this.state} lastRecordsDisplayed={this.lastRecordsDisplayed.bind(this)} />

@@ -149,7 +149,20 @@ export default class GenericUtil{
       return cred;
 
   }
-
+  dateValueToTimestamp(datevalue){
+    if(!datevalue){
+      return null;
+    }
+    var datevalue=new Date(datevalue+" 23:59:59");
+    return datevalue.getTime();        
+  }
+  timestampToDateValue(timestamp){
+    if(!timestamp){
+      return null;
+    }
+    var dvalue=new Date(timestamp);
+    return dvalue.getFullYear()+"-"+(dvalue.getMonth()+1)+dvalue.getDate();          
+  }
 
 }
 

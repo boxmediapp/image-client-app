@@ -23,3 +23,7 @@
 	  background: #1c1c1c;
 	  color: #fff;
 	}
+.searchBox label {
+  margin-left: 15px;
+  margin-right: 5px;  
+}

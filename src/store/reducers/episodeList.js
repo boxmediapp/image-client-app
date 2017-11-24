@@ -6,7 +6,7 @@ const ActionNames ={
 
 const initialState={
      episodes:[],
-     search:"",
+     queryparameters:{},
      nextBatchStart:-1
 }
 
@@ -19,7 +19,7 @@ export const episodeList={
                                 if(action.recordLimit && action.episodes && action.episodes.length>=action.recordLimit){
                                       nextBatchStart=action.recordLimit;
                                 }
-                            return Object.assign({},state,{episodes:action.episodes,search:action.search,nextBatchStart});
+                            return Object.assign({},state,{episodes:action.episodes,queryparameters:action.queryparameters,nextBatchStart});
               case ActionNames.UPDATE_A_EPISODE:
                                 var foundInd=-1;
                                 state.episodes.forEach((ep,ind)=>{
@@ -49,7 +49,7 @@ export const episodeList={
                     return {
                           type: ActionNames.SET_EPISODE_LIST,
                           episodes:request.episodes,
-                          search:request.search,
+                          queryparameters:request.queryparameters,
                           recordLimit:request.recordLimit
                       };
                 },

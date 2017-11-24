@@ -28,7 +28,7 @@ export  default class ListNewEpisodes extends Component {
                  rowHeight={50}
                  headerHeight={50}
                  rowsCount={episodes.length}
-                 width={1000}
+                 width={1200}
                  height={1000}>
                        <Column
                         columnKey="id"
@@ -61,7 +61,14 @@ export  default class ListNewEpisodes extends Component {
                                            width={700}
                                            fixed={true}
                                           />
-
+                                          <Column
+                                                   columnKey="scheduleTimestamp"
+                                                   header={<Cell>Schedule Timestamp</Cell>}
+                                                   cell={<DateCell data={data}/>}
+                                                   width={200}
+                                                   fixed={true}
+                                                  />
+                                    
         </Table>
     </div>
      );
@@ -88,6 +95,29 @@ class TextCell extends Component {
   }
 };
 
+class DateCell extends Component {
+  render() {
+
+    const {data, rowIndex, columnKey, ...props} = this.props;
+    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
+      this.props.data.lastRecordsDisplayed();
+    }
+    var datestring="";        
+    var timestamp=data.episodes[rowIndex][columnKey];
+    if(timestamp){
+        var datevalue=new Date(timestamp);
+        datestring=datevalue.getDate()+"/"+(datevalue.getMonth()+1)+"/"+datevalue.getFullYear();
+    }
+    
+     
+    
+    return (
+      <Cell {...props}>
+        {datestring}
+      </Cell>
+    );
+  }
+};
 
 class ActionCell extends Component {
   render() {

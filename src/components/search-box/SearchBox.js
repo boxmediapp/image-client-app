@@ -26,8 +26,7 @@ export default class SearchBox extends Component{
 
   render(){
        return (
-                <div className="col-sm-6 formFieldWithLabel searchBox">
-                 <label htmlFor="episodeNumber"></label>
+                <div className="col-sm-6 formFieldWithLabel searchBox">                 
                  <input type="text" style={styles.search} id="search"  value={this.state.search}
                    onChange={evt=>this.setSearch(evt.target.value)} onKeyPress={this.handleKeyPress.bind(this)}/>
                  <span className="input-group-btn">

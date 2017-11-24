@@ -3,20 +3,20 @@ export default class EpisodeStoreData{
       constructor(store){
         this.store=store;
       }
-      setEpisodeList(listdata){
-          this.store.dispatch(episodeList.actions.setEpisodes(listdata));
+      setEpisodeStore(episodeStore){
+          this.store.dispatch(episodeList.actions.setEpisodes(episodeStore));
       }
-      nextPageEpisodes(listdata){
-          this.store.dispatch(episodeList.actions.nextPageEpisodes(listdata));
+      nextPageEpisodes(episodeStore){
+          this.store.dispatch(episodeList.actions.nextPageEpisodes(episodeStore));
       }
       getNextBatchState(){
         return this.store.getState().episodeList.nextBatchStart;
       }
-      getEpisodeList(){
-        return {episodes:this.store.getState().episodeList.episodes, search:this.store.getState().episodeList.search};
+      getEpisodeStore(){
+        return this.store.getState().episodeList;
       }
       isEpisodeListIdentical(data1, data2){
-          return data1.episodes===data2.episodes && data1.search===data2.search;
+          return data1.episodes===data2.episodes && data1.queryparameters===data2.queryparameters;
       }
       isEpisodeIsIdentical(episode1, episode2){
          if(episode1 && episode2){
@@ -24,8 +24,14 @@ export default class EpisodeStoreData{
                   if(episode1.imageSets && episode2.imageSets){
                     return episode1.imageSets.length===episode2.imageSets.length;
                   }
+                  else if(episode1.imageSets){
+                    return false;
+                  }
+                  else if(episode2.imageSets){
+                    return false;
+                  }
                   else{
-                      return false;
+                      return true;
                   }
             }
             else{
@@ -74,7 +80,7 @@ export default class EpisodeStoreData{
 
         }
         else{
-          this.setEpisodeList({episodes:[episode],search:null});
+          this.setEpisodeList({episodes:[episode],queryparameters:{}});
         }
 
       }
