@@ -8,9 +8,10 @@ import ModalDisplayImage from './dialogs/ModalDisplayImage';
 import MessageDialog from "./dialogs/MessageDialog";
 import ProgressBar from "./progress-bar/ProgressBar";
 import SearchBox from "./search-box/SearchBox";
+import SearchWithDateRange from "./search-box/SearchWithDateRange";
 import RoundButton from "./buttons/RoundButton";
 import BigButton from "./buttons/BigButton";
 import LoadingIcon from "./loading/LoadingIcon";
 export {LoginForm,AppHeader,ImageUploader,DisplayImateForReplace,ModalDialog,
-  ProgressBar,SearchBox,ModalDisplayImage,LoginAppHeader,RoundButton,
+  ProgressBar,SearchBox,SearchWithDateRange,ModalDisplayImage,LoginAppHeader,RoundButton,
   BigButton,LoadingIcon,MessageDialog};

@@ -99,11 +99,25 @@ class ServiceAPI {
          requestS3UploadURL(request){
            return httpPostRequest("presigned", JSON.stringify(request));
          }
-         findNewEpisodes(search, start=0){
-               var queryurl="image-service/box-episodes?nunberOfImageSets=0&start="+start;
-               if(search){
-                 queryurl+="&search="+search;
+         findNewEpisodes(request, start=0){
+               
+               var queryurl="image-service/box-episodes?nunberOfImageSets=0&start="+start;               
+               if(request.search){
+                 queryurl+="&search="+request.search;
                }
+               if(request.sortBy){
+                 queryurl+="&sortBy="+request.sortBy;
+               }
+               if(request.sortOrder){
+                 queryurl+="&sortOrder="+request.sortOrder;
+               }
+               if(request.fromDate){
+                 queryurl+="&from="+request.fromDate;
+               }
+               if(request.toDate){
+                 queryurl+="&to="+request.toDate;
+               }  
+                            
                return httpGetRequest(queryurl);
          }
          findAssignedEpisodes(search, start=0){
