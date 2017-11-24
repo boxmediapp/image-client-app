@@ -36,7 +36,7 @@ const textValues={
 
     cacheMamnagement:{
       link:"/image-app/cache-maagement",
-      linkText:"Mannage Cache",
+      linkText:"Manage Cache",
       actionText:"Purge Image Cache"
     },
     scheduleImport:{
