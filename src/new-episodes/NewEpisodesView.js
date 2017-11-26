@@ -12,7 +12,7 @@ import {styles} from "./styles";
 
 export default class NewEpisodesView extends Component{
   constructor(props){
-        super(props);       
+        super(props);
         this.state={loading:true,modalMessage:null, episodes:[],queryparameters:{}};
   }
   componentWillMount(){
@@ -32,16 +32,16 @@ export default class NewEpisodesView extends Component{
      this.setState(Object.assign({}, this.state,{modalMessage}));
   }
   updateFromStore(){
-    var episodeStore=episodedata.getEpisodeStore();    
+    var episodeStore=episodedata.getEpisodeStore();
     this.setState(Object.assign({},this.state,{episodes:episodeStore.episodes, queryparameters:episodeStore.queryparameters}));
   }
   bindToStore(){
-    this.updateFromStore();    
+    this.updateFromStore();
     this.ubsubsribe=store.subscribe(()=>{
             this.updateFromStore();
     });
   }
-  
+
   bindToQueryParameters(){
        var search=genericUtil.getQueryParam(this.props.location.search, "search");
        if(!search){
@@ -54,7 +54,7 @@ export default class NewEpisodesView extends Component{
        if(!sortBy){
          sortBy="lastModifiedAt";
          sortOrder="desc";
-       }       
+       }
        this.startSearch({search,sortBy,sortOrder,fromDate,toDate});
   }
   setLoading(loading){
@@ -102,20 +102,22 @@ export default class NewEpisodesView extends Component{
       }
       this.setState(Object.assign({},this.state,episodelistdata));
   }
-  onSearch(queryparamter){   
-    var query=Object.assign({search:queryparamter.search}, this.state.queryparameters);
-          
-    query.fromDate=genericUtil.dateValueToTimestamp(queryparamter.fromDate);
-    query.toDate=genericUtil.dateValueToTimestamp(queryparamter.toDate);
-    
-    this.startSearch(query);    
+  onSearch(queryparameters){
+    var query=Object.assign({},this.state.queryparameters,queryparameters);
+
+    query.fromDate=genericUtil.dateValueToTimestamp(queryparameters.fromDate);
+
+    query.toDate=genericUtil.dateValueToTimestamp(queryparameters.toDate);
+
+
+    this.startSearch(query);
   }
 
 
   render(){
       this.loadingNextPage=false;
-      
-      var queryparameters={search:this.state.queryparameters.search};      
+
+      var queryparameters={search:this.state.queryparameters.search};
       queryparameters.fromDate=genericUtil.timestampToDateValue(this.state.queryparameters.fromDate);
       queryparameters.toDate=genericUtil.timestampToDateValue(this.state.queryparameters.toDate);
        return (

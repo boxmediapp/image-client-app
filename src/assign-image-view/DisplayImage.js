@@ -12,7 +12,7 @@ export default class DisplayImage extends Component{
 
       constructor(props){
             super(props);
-            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null, 
+            this.state={...this.props.image, image:this.props.image, mql:styles.msql,modalMessage:null,
             edit:false, cacheid:1};
       }
       onClearMessage(){
@@ -49,6 +49,32 @@ export default class DisplayImage extends Component{
         this.setState(Object.assign({}, this.state,{modalMessage}));
 
       }
+      displayConfirmCopyToMediaAppDialog(){
+        var modalMessage={
+               title:textValues.uploadToMediaAppDialog.title,
+               content:textValues.uploadToMediaAppDialog.content,
+               onConfirm:this.onClearMessage.bind(this),
+               confirmButton:textValues.uploadToMediaAppDialog.confirm,
+        }
+        this.setState(Object.assign({}, this.state,{modalMessage}));
+
+      }
+      uploadImageToMediaApp(){
+            this.state.image.imageBoxMediaStatus="UPLOADED";
+            this.onClearMessage();
+            var mediaCommand={
+              command:"copy-image-to-box-media-app",
+              imageId:this.state.image.id
+            };
+            api.sendCommand(mediaCommand).then(sucess=>{
+              this.displayConfirmCopyToMediaAppDialog();
+            }).catch(error=>{
+              this.setErrorMessage("Failed to upload the image to box media app:"+error);
+            });
+
+
+
+      }
       componentWillMount(){
         this.mediaQueryChanged=this.mediaQueryChanged.bind(this);
         styles.mql.addListener(this.mediaQueryChanged);
@@ -71,8 +97,13 @@ export default class DisplayImage extends Component{
                 console.log("Image is replaced");
                 this.setEditImageMode(false);
                 var cacheid=this.state.cacheid+1;
-                var edit=false;                
-                this.setState(Object.assign({}, this.state, {cacheid,edit}));                
+                var edit=false;
+
+                if(this.state.image.imageBoxMediaStatus==="UPLOADED"){
+                    this.state.image.imageBoxMediaStatus="CAN_UPLOAD";
+                    api.updateImage(this.state.image);    
+                }
+                this.setState(Object.assign({}, this.state, {cacheid,edit}));
       }
       setTags(tags){
          this.setState(Object.assign({}, this.state,{tags}));
@@ -111,20 +142,23 @@ export default class DisplayImage extends Component{
                      <div style={styles.imageRecord()}>
 
                      <DisplayImageEditor onComplete={this.onUploadComplete.bind(this)}
-                     image={this.props.image}                     
-                     buildFileName={this.buildFileName.bind(this)}                     
+                     image={this.props.image}
+                     buildFileName={this.buildFileName.bind(this)}
                      bucket={appconfig.imageBucket} updateTags={this.updateTags.bind(this)}
                      onDropFailed={this.onDropFailed.bind(this)}
                      onDropSucess={this.onDropSucess.bind(this)}
                      onUploadError={this.onUploadError.bind(this)} edit={this.state.edit}
                      setEditImageMode={this.setEditImageMode.bind(this)} cacheid={this.state.cacheid}/>
-                     
+
                                   <div style={styles.imageRightProperty}>
                                        <DisplayImageProperty {...this.state} setTags={this.setTags.bind(this)}
                                          updateTags={this.updateTags.bind(this)} updateImageStatus={this.updateImageStatus.bind(this)}/>
-                                         <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
+                                         <div style={styles.imageButtonsContainer}>
+                                            <button type="button" className="btn btn-primary btn-normal imageButtons" onClick={(evt) => {
                                                  this.displayConfirmDeleteDialog();
                                              }}>Delete</button>
+                                             <DisplayBoxMediaButtons image={this.state.image} uploadToBoxMediaApp={this.uploadImageToMediaApp.bind(this)}/>
+                                        </div>
                                 </div>
                                 <ModalDialog message={this.state.modalMessage}/>
 
@@ -144,11 +178,11 @@ class DisplayImageEditor extends Component{
             else{
                 return (
                   <DisplayImateForReplace {...this.props}/>
-                );  
-            }      
+                );
+            }
     }
-  
-  
+
+
 }
 
 
@@ -215,5 +249,24 @@ class DisplayUpdateTagsButton extends Component {
            }
 
       }
+
+}
+
+class DisplayBoxMediaButtons extends Component{
+  render(){
+    if(this.props.image.imageBoxMediaStatus ==="CAN_UPLOAD"){
+      return(
+        <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
+                 this.props.uploadToBoxMediaApp();
+             }}>Upload to Box Media</button>
+      );
+    }
+    else{
+      return null;
+    }
+
+
+  }
+
 
 }

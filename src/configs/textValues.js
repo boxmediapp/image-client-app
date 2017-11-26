@@ -80,6 +80,11 @@ const textValues={
       confirm:"Delete All",
       cancel:"Cancel"
 
+    },
+    uploadToMediaAppDialog:{
+      title:"Box Media App",
+      content:"The Image is uploaded to the Box Media App",
+      confirm:"OK"
     }
 
 
