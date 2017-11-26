@@ -20,7 +20,7 @@
 
 }
 #contractNumber{
-    width: 100px;
+    width: 150px;
     height:40px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
@@ -75,4 +75,9 @@ text-align: center;
 
 .formFieldWithLabel button{
   margin-right:10px;
+}
+
+
+.imageButtons{
+  margin-right: 10px;
 }

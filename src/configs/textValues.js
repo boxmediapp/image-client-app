@@ -36,7 +36,7 @@ const textValues={
 
     cacheMamnagement:{
       link:"/image-app/cache-maagement",
-      linkText:"Mannage Cache",
+      linkText:"Manage Cache",
       actionText:"Purge Image Cache"
     },
     scheduleImport:{
@@ -80,6 +80,11 @@ const textValues={
       confirm:"Delete All",
       cancel:"Cancel"
 
+    },
+    uploadToMediaAppDialog:{
+      title:"Box Media App",
+      content:"The Image is uploaded to the Box Media App",
+      confirm:"OK"
     }
 
 

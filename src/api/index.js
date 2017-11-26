@@ -101,7 +101,7 @@ class ServiceAPI {
          }
          findNewEpisodes(request, start=0){
                
-               var queryurl="image-service/box-episodes?nunberOfImageSets=0&start="+start;               
+               var queryurl="image-service/box-episodes?numberOfImageSets=0&start="+start;
                if(request.search){
                  queryurl+="&search="+request.search;
                }
@@ -116,8 +116,8 @@ class ServiceAPI {
                }
                if(request.toDate){
                  queryurl+="&to="+request.toDate;
-               }  
-                            
+               }
+
                return httpGetRequest(queryurl);
          }
          findAssignedEpisodes(search, start=0){
@@ -134,7 +134,7 @@ class ServiceAPI {
                }
                return httpGetRequest(queryurl);
          }
-         
+
          getEpisodeById(id){
             return httpGetRequest("image-service/box-episodes/"+id);
          }
@@ -188,11 +188,11 @@ class ServiceAPI {
          getTasks(){
             return httpGetRequest("tasks?importScheduleType=IMPORT_BOX_EPISODE");
          }
-         createTask(task){          
+         createTask(task){
            return httpPostRequest("tasks", JSON.stringify(task));
          }
          removeTask(task){
-           return httpDeleteRequest("tasks/"+task.id);           
+           return httpDeleteRequest("tasks/"+task.id);
          }
 }
 

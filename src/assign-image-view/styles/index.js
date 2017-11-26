@@ -75,7 +75,7 @@ export const styles={
       marginRight: 10,
       display:"flex",
       flexDirection:"column",
-      border:"1px solid #888888",      
+      border:"1px solid #888888",
       boxShadow: "5px 5px 2px #888888"
 
       };
@@ -83,8 +83,14 @@ export const styles={
           st.flexDirection="row"
       }
       return st;
-  }
+  },
+  imageButtonsContainer:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
 
+  }
 
 
 

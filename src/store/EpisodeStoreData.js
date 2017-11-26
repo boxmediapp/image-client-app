@@ -52,9 +52,9 @@ export default class EpisodeStoreData{
       }
 
       findEpisodeById(id){
-        var episodelist=this.getEpisodeList();
-        if(episodelist.episodes && episodelist.episodes.length>0){
-            var matchedEpisodes=episodelist.episodes.filter(episode=>{
+        var episodestoredata=this.getEpisodeStore();
+        if(episodestoredata.episodes && episodestoredata.episodes.length>0){
+            var matchedEpisodes=episodestoredata.episodes.filter(episode=>{
                return id==episode.id;
             });
             if(matchedEpisodes.length>0){
@@ -80,7 +80,7 @@ export default class EpisodeStoreData{
 
         }
         else{
-          this.setEpisodeList({episodes:[episode],queryparameters:{}});
+          this.setEpisodeStore({episodes:[episode],queryparameters:{}});
         }
 
       }
