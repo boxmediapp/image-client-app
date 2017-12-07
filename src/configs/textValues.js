@@ -15,14 +15,14 @@ const textValues={
     },
     assignedEpisodes:{
        link:"/image-app/assigned-episodes",
-       linkText:"Image Library",
+       linkText:"Edit Images",
        norecords:"No images found",
        actionText:"Edit Images"
     },
 
     clientsView:{
       link:"/image-app/clients-view",
-      linkText:"Clients View",
+      linkText:"Approved Images",
       actionText:"Approved Images"
     },
     logout:{
