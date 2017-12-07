@@ -8,10 +8,12 @@ export  default class LoginAppHeader extends Component {
         return (
 
           <div style={styles.header()}>
-                  <div style={styles.titleContainer}>
-                          <img src={localImages.logo} className="logo"/>
+                  <div style={styles.titleContainer()}>
+                          <img src={localImages.logo} style={styles.logo}/>
+
+                           <div style={styles.appTitle}>{textValues.title}</div>
                   </div>
-                    <div style={styles.appTitle}>{textValues.title}</div>
+
 
             </div>
 

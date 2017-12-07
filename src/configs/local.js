@@ -1,13 +1,3 @@
-var config={
-    apikey:"k7jc3QcMPKEXGW5UC",
-    securityGroup:"1CNbWCFpsbmRQuKdd",
-    api:{
-      base:"http://localb/mule/boxtv/",
-      getUrl(path){
-        return this.base+path;
-      }
-    },
-    normalImageWidth:533,
-    normalImageHeight:300
-}
+import config from "./prod";
+config.api.base="http://localb/mule/boxtv/";
 export default config;

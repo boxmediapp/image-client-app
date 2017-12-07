@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {localImages,textValues} from "../../configs";
+import {localImages,textValues,config} from "../../configs";
 import TopMenu from "./TopMenu";
 import {styles} from "./styles";
 export  default class AppHeader extends Component {
@@ -23,13 +23,18 @@ export  default class AppHeader extends Component {
 
         return (
             <div style={styles.header()}>
-                    <div style={styles.titleContainer}>
-                            <img src={localImages.logo} className="logo"/>
+                    <div style={styles.titleContainer()}>
+                            <img src={localImages.logo} style={styles.logo}/>
+                             <div style={styles.appTitleContainer}>
+                                  <div style={styles.appTitle}>{textValues.title}</div>
+                                  <div style={styles.appVersion}>v{config.version}</div>
+                            </div>
+
                     </div>
 
                       <TopMenu selected={this.props.selected}/>
 
-                      <div style={styles.appTitle}>{textValues.title}</div>
+
 
               </div>
 
