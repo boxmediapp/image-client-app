@@ -30,7 +30,9 @@ export  default class TopMenu extends Component {
   menuPressed(){
       this.setState(Object.assign({},this.state,{menuPressed:!this.state.menuPressed}));
   }
-
+  setMenuPressed(menuPressed){
+      this.setState(Object.assign({},this.state,{menuPressed}));
+  }
 
   render() {
 
@@ -39,7 +41,7 @@ export  default class TopMenu extends Component {
                <div style={styles.topnav}>
                     <MobileMenuIcon menuPressed={this.menuPressed.bind(this)}/>
                     <ListMenuItems {...this.props} menuPressed={this.state.menuPressed}/>
-
+                    <MobileMenuOverlayer {...this.props} menuPressed={this.state.menuPressed} setMenuPressed={this.setMenuPressed.bind(this)}/>
 
 
                </div>
@@ -59,7 +61,7 @@ class MobileMenuIcon extends Component{
       else{
           return (
              <div style={styles.mobileMenu}>
-                <a className="icon" onClick={this.props.menuPressed}>&#9776;</a>
+                <a style={styles.mobileMenuIcon} onClick={this.props.menuPressed}>&#9776;</a>
             </div>
           );
       }
@@ -69,19 +71,19 @@ class ListMenuItems extends Component{
 
   render(){
      if(styles.mql.matches || this.props.menuPressed){
+
        return(
            <div style={styles.menuItems()}>
-
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}/>
-             
+
              <MenuItem  {...this.props} displayItem="assignedEpisodes" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="clientsView" selected={this.props.selected}/>
              <LogoutMenuItem/>
 
 
+         </div>
 
-           </div>
            );
      }
      else{
@@ -147,4 +149,24 @@ class LogoutMenuItem extends Component{
         </a>
       );
   }
+}
+class MobileMenuOverlayer extends Component{
+  render(){
+      if((!styles.mql.matche) && this.props.menuPressed){
+        return(
+          <div style={styles.mobileMenuOverlay} onClick={(evt)=>{
+              this.props.setMenuPressed(false);
+            }}>
+
+
+          </div>
+        );
+
+
+      }
+      else{
+        return null;
+      }
+  }
+
 }

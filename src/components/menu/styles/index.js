@@ -1,5 +1,3 @@
-
-
 export const styles={
   header: function(){
 
@@ -9,7 +7,7 @@ export const styles={
         height:80,
         display:"flex",
         flexDirection: "row",
-        backgroundColor: "#e2277c",
+        backgroundColor: "#F5047A",
         zIndex:10
 
     };
@@ -18,9 +16,16 @@ export const styles={
     }
     return ret;
   },
-  titleContainer:{
-    display:"flex",
-    flexDirection: "row"
+  titleContainer:function(){
+    var ret={
+      display:"flex",
+      flexDirection: "row",
+      marginLeft:40
+    };
+    if(styles.mql.matches){
+        ret.marginLeft=1;
+    }
+    return ret;
   },
   mql:window.matchMedia(`(min-width: 700px)`),
   topnav: {
@@ -30,12 +35,84 @@ export const styles={
     width:"100%",
     display:"flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     alignItems: "center",
 
 
   },
+
+  appTitleContainer:{
+    marginLeft:10,
+    paddingTop:5
+
+
+  },
+  appTitle:{
+    fontFamily: "GiorgioSans-Regular",
+    fontSize: 25,
+    fontWeight:400,
+    color: "#FFFFFF",
+    whiteSpace: "nowrap",
+    boxSizing: "inherit"
+  },
+  appVersion:{
+    fontFamily: "GiorgioSans-Regular",
+    fontSize: 12,
+    color: "#FFFFFF",
+    marginLeft:10
+
+  },
+  mobileMenu:{
+     position:"absolute",
+     left:0,
+     top:0
+  },
+  mobileMenuIcon:{
+    fontWeight: 'normal',
+    fontSize:40,
+    color: "white",
+    fontStyle: 'normal',
+  },
+  mobileMenuOverlay:{
+    position:"absolute",
+      left:0,
+      top:0,
+      width:"100%",
+      height:window.innerHeight,
+      backgroundColor:"rgba(8,88,88, 0.5)",
+      zIndex:0
+
+
+  },
+  menuItems:function(){
+    const isMobile=!styles.mql.matches;
+    if(isMobile){
+        return{
+          position:"absolute",
+          display:"flex",
+          flexDirection:"column",
+          left:0,
+          top:0,
+          backgroundColor:"white",
+          boxShadow: "10px 10px 5px #888888",
+          zIndex:1000,
+        };
+
+    }
+    else{
+      return{
+          position:"absolute",
+          display:"flex",
+          flexDirection:"row",
+          right:0,
+          top:39
+      };
+    }
+
+
+  },
   menuItem:function(isSelected,hover){
+    const isDesktop=styles.mql.matches;
     var ret= {
       float: "left",
       display: "block",
@@ -43,13 +120,21 @@ export const styles={
       padding: "8px 16px",
       textDecoration: "none",
       fontSize: 17,
-      marginBottom: 10,
-      border: "1px solid #AA4444",
-      backgroundColor: "#e2277c",
+      marginBottom: 0,
+      fontFamily:"Gobold Thin",
       color:"white",
       whiteSpace:"nowrap"
     };
-
+    if(isDesktop){
+        ret.borderTopRightRadius=10;
+        ret.borderTopLeftRadius=10;
+        ret.marginBottom=10;
+        ret.color="#FFFFFF";
+    }
+    else{
+        ret.color="#5C5A5B";
+        ret.textAlign="left";
+    }
     if(isSelected){
       ret.color="#5C5A5B";
       ret.backgroundColor="white";
@@ -59,41 +144,11 @@ export const styles={
       ret.color="#5C5A5B";
     }
 
+
+
+
     return ret;
   },
-  appTitle:{
-    fontFamily: "'Roboto', sans-serif",
-    textTransform: "uppercase",
-    fontWeight: 500,
-    fontSize: 28,
-    color: "#FFFFFF",
-    whiteSpace: "nowrap",
-    position:"absolute",
-    top: 10,
-    left: 200
-  },
-  menuItems:function(){
-    const isMobile=!styles.mql.matches;
-    if(isMobile){
-        return{
-            position:"absolute",
-            top:80,
-            display:"flex",
-            flexDirection:"column",
-            backgroundColor:"white",
-            border:"1px solid #07C"
-        };
-
-    }
-    else{
-      return {
-
-      };
-    }
-
-
-  },
-
   content:{
     position:"absolute",
     marginTop:90,
@@ -102,11 +157,11 @@ export const styles={
 
 
   },
-  mobileMenu:{
-     position:"abolute",
-     left:10,
 
-
+  logo:{
+    maxWidth:80,
+    marginLeft:10,
+    marginBottom:4
   }
 
 };
