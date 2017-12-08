@@ -6,9 +6,9 @@ getProjectVersionFromPom(){
 }
 
 buildVariables(){
-  export websiterootfolder="/home/ec2-user/bdocker/bnginx/var/www"
+  export websiterootfolder="bdocker/bnginx/var/www"
 
-  export websitefoldername="html"
+  export websitefoldername="imageapp"
   export zipfilename="$projectName-$projectversion.zip"
   export sourcezipfilepath="package/target/$zipfilename"
   export destzipfolder="$websiterootfolder/$websitefoldername"
