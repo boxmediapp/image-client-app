@@ -100,7 +100,7 @@ class ServiceAPI {
            return httpPostRequest("presigned", JSON.stringify(request));
          }
          findNewEpisodes(request, start=0){
-               
+
                var queryurl="image-service/box-episodes?numberOfImageSets=0&start="+start;
                if(request.search){
                  queryurl+="&search="+request.search;
@@ -193,6 +193,9 @@ class ServiceAPI {
          }
          removeTask(task){
            return httpDeleteRequest("tasks/"+task.id);
+         }
+         getAllBoxChannels(){
+           return httpGetRequest("box-channels");
          }
 }
 

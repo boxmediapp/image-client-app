@@ -154,14 +154,45 @@ export default class GenericUtil{
       return null;
     }
     var datevalue=new Date(datevalue+" 23:59:59");
-    return datevalue.getTime();        
+    return datevalue.getTime();
   }
   timestampToDateValue(timestamp){
     if(!timestamp){
       return null;
     }
     var dvalue=new Date(timestamp);
-    return dvalue.getFullYear()+"-"+(dvalue.getMonth()+1)+dvalue.getDate();          
+    return dvalue.getFullYear()+"-"+(dvalue.getMonth()+1)+dvalue.getDate();
+  }
+  timeValueFromNow(seconds){
+        var timevalue=new Date();
+        timevalue.setSeconds(timevalue.getSeconds() + seconds);
+        var hourValue=timevalue.getHours();
+        var minutes=timevalue.getMinutes();
+        var seconds=timevalue.getSeconds();
+        var ret="";
+        if(hourValue<10){
+          ret+="0"+hourValue;
+        }
+        else{
+          ret+=hourValue;
+        }
+        ret+=":";
+        if(minutes<10){
+          ret+="0"+minutes;
+        }
+        else{
+          ret+=minutes;
+        }
+        ret+=":";
+        if(seconds<10){
+          ret+="0"+seconds;
+        }
+        else{
+          ret+=seconds;
+        }
+        return ret;
+
+
   }
 
 }
