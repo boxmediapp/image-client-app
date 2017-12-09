@@ -8,6 +8,8 @@ import {
 } from 'react-router-dom'
 
 import {textValues} from "../configs";
+import {genericUtil} from "../utils";
+
 import {AppHeader,ModalDialog} from "../components";
 
 import "./styles/index.css";
@@ -16,20 +18,34 @@ import {styles} from "./styles";
 export  default class ScheduleImportView extends Component {
     constructor(props){
       super(props);
-      this.state={modalMessage:null, tasks:[]};   
-      this.startLoadTasks();   
+      this.state={modalMessage:null, tasks:[], channels:[]};
+
+    }
+    componentWillMount(){
+      this.startLoadTasks();
+      this.startLoadChannels();
     }
     startLoadTasks(){
       api.getTasks().then(tasks=>{
           this.setTasks(tasks);
       }).catch(error=>{
-        this.setErrorMessage("failed to load the tasks:"+error);        
-      });      
+        this.setErrorMessage("failed to load the tasks:"+error);
+      });
     }
-    setTasks(tasks){      
-      this.setState(Object.assign({},this.state,{tasks}));      
+    startLoadChannels(){
+      api.getAllBoxChannels().then(channels=>{
+          this.setChannels(channels);
+      }).catch(error=>{
+        this.setErrorMessage("failed to load the channels:"+error);
+      });
     }
-    
+    setTasks(tasks){
+      this.setState(Object.assign({},this.state,{tasks}));
+    }
+    setChannels(channels){
+      this.setState(Object.assign({},this.state,{channels}));
+    }
+
     onClearMessage(){
       this.setState(Object.assign({}, this.state,{modalMessage:null}));
     }
@@ -41,13 +57,13 @@ export  default class ScheduleImportView extends Component {
         this.setState(Object.assign({},this.state,{tasks}));
         if(task.id){
             api.removeTask(task).then(result=>{
-                this.startLoadTasks();   
+                this.startLoadTasks();
             }).catch(error=>{
-              this.setErrorMessage("failed to remove the task:"+error);        
-              this.startLoadTasks();   
+              this.setErrorMessage("failed to remove the task:"+error);
+              this.startLoadTasks();
             });
         }
-        
+
     }
     createTask(request){
       if(!request.runOnTime){
@@ -72,7 +88,7 @@ export  default class ScheduleImportView extends Component {
                    channelId:request.channelId,
                    type:"Press",
                    info:"Episode",
-                   importScheduleType:"IMPORT_BOX_EPISODE"    				            
+                   importScheduleType:"IMPORT_BOX_EPISODE"
          }
       };
       tasks.push(task);
@@ -81,10 +97,10 @@ export  default class ScheduleImportView extends Component {
           this.startLoadTasks();
       }).catch(error=>{
           this.setErrorMessage("failed to create the task:"+error);
-          this.startLoadTasks();   
-      });  
+          this.startLoadTasks();
+      });
     }
-    
+
     setErrorMessage(content){
        var modalMessage={
               title:"Error",
@@ -94,11 +110,11 @@ export  default class ScheduleImportView extends Component {
        }
        this.setState(Object.assign({}, this.state,{modalMessage}));
     }
-    
 
-  
-  
-  
+
+
+
+
 
     render(){
 
@@ -107,8 +123,8 @@ export  default class ScheduleImportView extends Component {
             <AppHeader selected="home"/>
 
               <div style={AppHeader.styles.content}>
-                  <ShowTaskListTable tasks={this.state.tasks} removeTask={this.removeTask.bind(this)}/>                    
-                  <CreateNewScheduledImport createTask={this.createTask.bind(this)}/>                
+                  <ShowTaskListTable tasks={this.state.tasks} removeTask={this.removeTask.bind(this)}/>
+                  <CreateNewScheduledImport createTask={this.createTask.bind(this)} channels={this.state.channels}/>
                   <ModalDialog message={this.state.modalMessage}/>
              </div>
 
@@ -132,7 +148,7 @@ class ShowTaskListTable extends Component{
                      <th>From</th>
                      <th>To</th>
                      <th></th>
-                  </tr>          
+                  </tr>
                   <ShowTasksRowData {...this.props}/>
                 </table>
               );
@@ -141,37 +157,40 @@ class ShowTaskListTable extends Component{
             return null;
           }
       }
-      
-      
+
+
 }
 class ShowTasksRowData extends Component{
-  
-  render(){                
+
+  render(){
           return this.props.tasks.map(task=>this.renderTask(task));
         }
   renderTask(task){
     return(
             <tr style={styles.taskRecord}>
                 <td style={styles.taskField}>{task.importScheduleTask.channelId}</td>
-                <td style={styles.taskField}>{task.runOnTime}</td>                
-                <td style={styles.taskField}>{task.importScheduleTask.fromDayOffset}</td>                
+                <td style={styles.taskField}>{task.runOnTime}</td>
+                <td style={styles.taskField}>{task.importScheduleTask.fromDayOffset}</td>
                 <td style={styles.taskField}>{task.importScheduleTask.toDayOffset}</td>
                 <td style={styles.taskField}>
                    <button onClick={evt=>this.props.removeTask(task)} className="btn btn-primary btn-normal">Remove</button>
-                </td>                                
+                </td>
             </tr>
           );
   }
-            
-    
-    
+
+
+
 }
 
 
 class CreateNewScheduledImport extends Component{
   constructor(props){
     super(props);
-    this.state={runOnTime:"20:10",fromDayOffset:1,toDayOffset:2, channelId:"1865244993"};
+    var timeFromNow=genericUtil.timeValueFromNow(60);
+
+
+    this.state={runOnTime:timeFromNow,fromDayOffset:1,toDayOffset:2, channelId:"1865244993"};
   }
   setFromDayOffset(fromDayOffset){
     this.setState(Object.assign({},this.state,{fromDayOffset}));
@@ -193,55 +212,73 @@ class CreateNewScheduledImport extends Component{
         channelId:this.state.channelId
       };
       this.props.createTask(data);
-    
+
   }
-  
+
+
   render(){
-      
+
       return(
         <div className="container">
                <h1>Create tasks</h1>
                <div className="row">
                     <div className="col-sm-4 formFieldWithLabel">
                       <label htmlFor="fromDayOffset">From day:</label>
-                      <input type="text" className="form-control" id="fromDayOffset" 
+                      <input type="text" className="form-control" id="fromDayOffset"
                       placeholder="fromDayOffset" name="fromDayOffset" value={this.state.fromDayOffset}
-                      onChange={evt=>{this.setFromDayOffset(evt.target.value)}}/>                    
+                      onChange={evt=>{this.setFromDayOffset(evt.target.value)}}/>
                     </div>
                     <div className="col-sm-4 formFieldWithLabel">
                       <label htmlFor="toDayOffset">To day:</label>
-                      <input type="text" className="form-control" id="toDayOffset" placeholder="toDayOffset" 
+                      <input type="text" className="form-control" id="toDayOffset" placeholder="toDayOffset"
                       name="toDayOffset" value={this.state.toDayOffset}
                       onChange={evt=>{this.setToDayOffset(evt.target.value)}}/>
-                    </div>                  
+                    </div>
               </div>
               <div className="row">
                   <div className="col-sm-4 formFieldWithLabel">
                    <label htmlFor="channelId">channelId:</label>
-                     <input type="text" className="form-control" id="channelId" 
-                     placeholder="channelId" name="channelId" value={this.state.channelId}
-                     onChange={evt=>{this.setChannelId(evt.target.value)}}/>
+                      <select className="form-control" id="channelId" name="channelId"
+                        value={this.state.channelId} onChange={evt=>{this.setChannelId(evt.target.value)}}>
+                              <RenderChannelOptions channels={this.props.channels}/>
+                      </select>
+
+
+
                   </div>
              </div>
-              
+
                 <div className="row">
                     <div className="col-sm-4 formFieldWithLabel">
                        <label htmlFor="runOnTime">Execution on:</label>
                        <input type="text" className="form-control" id="runOnTime" placeholder="Execution Time" name="runOnTime" value={this.state.runOnTime}
                        onChange={evt=>{this.setRunOnTime(evt.target.value)}}/>
-                     </div> 
+                     </div>
                      <div className="col-sm-4 formFieldWithLabel">
-                        
+
                            <button onClick={evt=>this.createTask()} className="btn btn-primary btn-normal">Create Scheduled Task</button>
                     </div>
-                                                       
+
                </div>
-               
-               
+
+
               <ModalDialog message={this.state.modalMessage}/>
        </div>
       );
   }
-  
-  
+
+
+}
+
+
+class RenderChannelOptions extends Component{
+  renderChannelOption(channel){
+      return (
+        <option value={channel.channelId} key={channel.channelId}>{channel.channelName}</option>
+      );
+  }
+   render(){
+      return this.props.channels.map(this.renderChannelOption.bind(this));
+    }
+
 }
