@@ -8,7 +8,7 @@ export const styles={
         display:"flex",
         flexDirection: "row",
         backgroundColor: "#F5047A",
-        zIndex:10
+        zIndex:100
 
     };
     if(!styles.mql.matches){
