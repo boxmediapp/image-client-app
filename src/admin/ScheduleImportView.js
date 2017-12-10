@@ -123,7 +123,7 @@ export  default class ScheduleImportView extends Component {
             <AppHeader selected="home"/>
 
               <div style={AppHeader.styles.content}>
-                  <ShowTaskListTable tasks={this.state.tasks} removeTask={this.removeTask.bind(this)}/>
+                  <ShowTaskListTable tasks={this.state.tasks} channels={this.state.channels} removeTask={this.removeTask.bind(this)}/>
                   <CreateNewScheduledImport createTask={this.createTask.bind(this)} channels={this.state.channels}/>
                   <ModalDialog message={this.state.modalMessage}/>
              </div>
@@ -143,7 +143,7 @@ class ShowTaskListTable extends Component{
               return(
                 <table style={styles.tasksTable}>
                   <tr style={styles.tasksTableHeader}>
-                     <th>Channel ID </th>
+                     <th>Channel</th>
                      <th>Time</th>
                      <th>From</th>
                      <th>To</th>
@@ -166,9 +166,17 @@ class ShowTasksRowData extends Component{
           return this.props.tasks.map(task=>this.renderTask(task));
         }
   renderTask(task){
+    var channelText=task.importScheduleTask.channelId;
+    if(this.props.channels){
+        var matchedChannel=this.props.channels.filter(channel=>channel.channelId===task.importScheduleTask.channelId);
+        if(matchedChannel && matchedChannel.length>0){
+          channelText=matchedChannel[0].channelName+" ("+channelText+")";
+
+        }
+    }
     return(
             <tr style={styles.taskRecord}>
-                <td style={styles.taskField}>{task.importScheduleTask.channelId}</td>
+                <td style={styles.taskField}>{channelText}</td>
                 <td style={styles.taskField}>{task.runOnTime}</td>
                 <td style={styles.taskField}>{task.importScheduleTask.fromDayOffset}</td>
                 <td style={styles.taskField}>{task.importScheduleTask.toDayOffset}</td>
@@ -237,7 +245,7 @@ class CreateNewScheduledImport extends Component{
               </div>
               <div className="row">
                   <div className="col-sm-4 formFieldWithLabel">
-                   <label htmlFor="channelId">channelId:</label>
+                   <label htmlFor="channelId">Channel:</label>
                       <select className="form-control" id="channelId" name="channelId"
                         value={this.state.channelId} onChange={evt=>{this.setChannelId(evt.target.value)}}>
                               <RenderChannelOptions channels={this.props.channels}/>
