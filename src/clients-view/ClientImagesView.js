@@ -52,7 +52,7 @@ export default class ClientImagesView extends Component{
 
 
                  <ListImages images={this.state.images}/>
-                 <DisplayNotRecords loading={this.state.loading} imageSets={this.state.images}/>
+                 <DisplayNotRecords loading={this.state.loading} images={this.state.images}/>
                </div>
 
              </div>
