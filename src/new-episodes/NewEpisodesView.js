@@ -6,22 +6,34 @@ import {episodedata,store,appdata} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 
-import {AppHeader,SearchWithDateRange,LoadingIcon,ModalDialog} from "../components";
+import {AppHeader,SearchWithDateRangeChannel,LoadingIcon,ModalDialog} from "../components";
 import {styles} from "./styles";
 
 
 export default class NewEpisodesView extends Component{
   constructor(props){
         super(props);
-        this.state={loading:true,modalMessage:null, episodes:[],queryparameters:{}};
+        this.state={loading:true,modalMessage:null, episodes:[],queryparameters:{}, channels:[],channelId:null};
   }
   componentWillMount(){
     this.bindToStore();
     this.bindToQueryParameters();
+    this.startLoadChannels();
+  }
+  startLoadChannels(){
+    api.getAllBoxChannels().then(channels=>{
+        this.setChannels(channels);
+    }).catch(error=>{
+      this.setErrorMessage("failed to load the channels:"+error);
+    });
+  }
+  setChannels(channels){
+    this.setState(Object.assign({},this.state,{channels}));
   }
   onClearMessage(){
     this.setState(Object.assign({}, this.state,{modalMessage:null}));
   }
+
   setErrorMessage(content){
      var modalMessage={
             title:"Error",
@@ -51,11 +63,13 @@ export default class NewEpisodesView extends Component{
        var sortOrder=genericUtil.getQueryParam(this.props.location.search, "sortOrder");
        var fromDate=genericUtil.getQueryParam(this.props.location.search, "fromDate");
        var toDate=genericUtil.getQueryParam(this.props.location.search, "toDate");
+       var channelId=genericUtil.getQueryParam(this.props.location.search, "channelId");
+
        if(!sortBy){
          sortBy="lastModifiedAt";
          sortOrder="desc";
        }
-       this.startSearch({search,sortBy,sortOrder,fromDate,toDate});
+       this.startSearch({search,sortBy,sortOrder,fromDate,toDate,channelId});
   }
   setLoading(loading){
     this.setState(Object.assign({}, this.state,{loading}));
@@ -105,9 +119,9 @@ export default class NewEpisodesView extends Component{
   onSearch(queryparameters){
     var query=Object.assign({},this.state.queryparameters,queryparameters);
 
-    query.fromDate=genericUtil.dateValueToTimestamp(queryparameters.fromDate);
+    query.fromDate=genericUtil.dateValueToTimestamp(queryparameters.fromDate,"00:00:00");
 
-    query.toDate=genericUtil.dateValueToTimestamp(queryparameters.toDate);
+    query.toDate=genericUtil.dateValueToTimestamp(queryparameters.toDate,"23:59:59");
 
 
     this.startSearch(query);
@@ -125,7 +139,8 @@ export default class NewEpisodesView extends Component{
              <AppHeader selected="newepisodes"/>
              <div style={AppHeader.styles.content}>
                <div style={styles.listHeader}>
-                 <SearchWithDateRange queryparameters={queryparameters} onSearch={this.onSearch.bind(this)}/>
+                 <SearchWithDateRangeChannel queryparameters={queryparameters} onSearch={this.onSearch.bind(this)}
+                   channels={this.state.channels}/>
                  <LoadingIcon loading={this.state.loading}/>
                </div>
                <ListNewEpisodes data={this.state} lastRecordsDisplayed={this.lastRecordsDisplayed.bind(this)} />

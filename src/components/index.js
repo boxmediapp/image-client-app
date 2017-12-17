@@ -9,9 +9,10 @@ import MessageDialog from "./dialogs/MessageDialog";
 import ProgressBar from "./progress-bar/ProgressBar";
 import SearchBox from "./search-box/SearchBox";
 import SearchWithDateRange from "./search-box/SearchWithDateRange";
+import SearchWithDateRangeChannel from "./search-box/SearchWithDateRangeChannel";
 import RoundButton from "./buttons/RoundButton";
 import BigButton from "./buttons/BigButton";
 import LoadingIcon from "./loading/LoadingIcon";
 export {LoginForm,AppHeader,ImageUploader,DisplayImateForReplace,ModalDialog,
   ProgressBar,SearchBox,SearchWithDateRange,ModalDisplayImage,LoginAppHeader,RoundButton,
-  BigButton,LoadingIcon,MessageDialog};
+  BigButton,LoadingIcon,MessageDialog,SearchWithDateRangeChannel};

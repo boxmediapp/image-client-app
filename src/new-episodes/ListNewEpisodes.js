@@ -58,17 +58,28 @@ export  default class ListNewEpisodes extends Component {
                                            columnKey="title"
                                            header={<Cell>Title</Cell>}
                                            cell={<TextCell data={data}/>}
-                                           width={700}
+                                           width={500}
                                            fixed={true}
                                           />
                                           <Column
-                                                   columnKey="scheduleTimestamp"
+                                                   columnKey="schedule.scheduleTimestamp"
                                                    header={<Cell>Schedule Timestamp</Cell>}
-                                                   cell={<DateCell data={data}/>}
+                                                   cell={<ScheduleDateCell data={data}/>}
                                                    width={200}
                                                    fixed={true}
                                                   />
-                                    
+
+                                      <Column
+                                                  columnKey="schedule.channel"
+                                                           header={<Cell>Channel</Cell>}
+                                                           cell={<ChannelDateCell data={data}/>}
+                                                           width={200}
+                                                           fixed={true}
+                                                          />
+
+
+
+
         </Table>
     </div>
      );
@@ -102,18 +113,63 @@ class DateCell extends Component {
     if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
       this.props.data.lastRecordsDisplayed();
     }
-    var datestring="";        
+    var datestring="";
     var timestamp=data.episodes[rowIndex][columnKey];
     if(timestamp){
         var datevalue=new Date(timestamp);
         datestring=datevalue.getDate()+"/"+(datevalue.getMonth()+1)+"/"+datevalue.getFullYear();
     }
-    
-     
-    
+
+
+
     return (
       <Cell {...props}>
         {datestring}
+      </Cell>
+    );
+  }
+};
+class ScheduleDateCell extends Component {
+  render() {
+
+    const {data, rowIndex, columnKey, ...props} = this.props;
+    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
+      this.props.data.lastRecordsDisplayed();
+    }
+    var datestring="";
+    if(data.episodes[rowIndex].schedule && data.episodes[rowIndex].schedule.scheduleTimestamp){
+          var timestamp=data.episodes[rowIndex].schedule.scheduleTimestamp;
+          if(timestamp){
+              var datevalue=new Date(timestamp);
+              datestring=datevalue.getDate()+"/"+(datevalue.getMonth()+1)+"/"+datevalue.getFullYear();
+          }
+    }
+
+
+
+
+    return (
+      <Cell {...props}>
+        {datestring}
+      </Cell>
+    );
+  }
+};
+class ChannelDateCell extends Component {
+  render() {
+
+    const {data, rowIndex, columnKey, ...props} = this.props;
+    if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
+      this.props.data.lastRecordsDisplayed();
+    }
+    var channelName="";
+    if(data.episodes[rowIndex].schedule && data.episodes[rowIndex].schedule.boxChannel){
+          channelName=data.episodes[rowIndex].schedule.boxChannel.channelName;
+    }
+
+    return (
+      <Cell {...props}>
+        {channelName}
       </Cell>
     );
   }

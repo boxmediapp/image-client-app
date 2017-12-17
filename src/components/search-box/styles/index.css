@@ -25,5 +25,14 @@
 	}
 .searchBox label {
   margin-left: 15px;
-  margin-right: 5px;  
+  margin-right: 5px;
+}
+.searchWithChannelBox{
+  display:flex;
+  flex-direction: row;
+}
+
+.searchWithChannelBox label {
+  margin-left: 15px;
+  margin-right: 5px;
 }
