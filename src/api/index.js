@@ -117,6 +117,10 @@ class ServiceAPI {
                if(request.toDate){
                  queryurl+="&to="+request.toDate;
                }
+               if(request.channelId){
+                 queryurl+="&channelId="+request.channelId;
+               }
+
 
                return httpGetRequest(queryurl);
          }

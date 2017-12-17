@@ -149,11 +149,11 @@ export default class GenericUtil{
       return cred;
 
   }
-  dateValueToTimestamp(datevalue){
+  dateValueToTimestamp(datevalue, timevalue){
     if(!datevalue){
       return null;
     }
-    var datevalue=new Date(datevalue+" 23:59:59");
+    var datevalue=new Date(datevalue+" "+timevalue);
     return datevalue.getTime();
   }
   timestampToDateValue(timestamp){
