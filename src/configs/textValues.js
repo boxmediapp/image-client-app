@@ -7,6 +7,11 @@ const textValues={
       linkText:"Assign Images",
       actionText:"Assign Images"
     },
+    listScheduleEpisodes:{
+      link:"/image-app/schedule-episodes",
+      linkText:"Schedule View",
+      actionText:"Schedule View"
+    },
     imagesets:{
        link:"/image-app/image-sets",
        linkText:"Image Sets",
@@ -47,7 +52,8 @@ const textValues={
     },
     assignImageByContractAndEpidodeNumber:{
          link:"/image-app/assign-image/contract-episode-number",
-         actionText:"Edit"
+         actionText:"Edit",
+         linkText:"Edit"
     },
 
 

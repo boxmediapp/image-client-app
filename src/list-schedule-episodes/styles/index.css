@@ -1,0 +1,38 @@
+.searchBox{
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+#search{
+  width:200px;
+  margin-left: 5px;
+}
+
+.btn-search {
+	  background: #424242;
+	  border-radius: 0;
+	  color: #fff;
+	  border-width: 1px;
+	  border-style: solid;
+	  border-color: #1c1c1c;
+	}
+	.btn-search:link, .btn-search:visited {
+	  color: #fff;
+	}
+	.btn-search:active, .btn-search:hover {
+	  background: #1c1c1c;
+	  color: #fff;
+	}
+.searchBox label {
+  margin-left: 15px;
+  margin-right: 5px;
+}
+.searchWithChannelBox{
+  display:flex;
+  flex-direction: row;
+}
+
+.searchWithChannelBox label {
+  margin-left: 15px;
+  margin-right: 5px;
+}
