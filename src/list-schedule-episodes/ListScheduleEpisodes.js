@@ -109,7 +109,7 @@ class DateCell extends Component {
 
     const {data, rowIndex, columnKey, ...props} = this.props;
     if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
-      this.props.data.lastRecordsDisplayed();
+      this.props.data.onLoadLoadNextPage();
     }
     var datestring="";
     var timestamp=data.episodes[rowIndex][columnKey];

@@ -108,7 +108,7 @@ export default class ListScheduleEpisodesView extends Component{
             onConfirm:this.onClearMessage.bind(this),
             confirmButton:"OK"
      }
-     var episodesState=LOAD_EPISODE_STATUS.FULLY_LOADED;
+     var episodesState=LOAD_EPISODE_STATUS.FAILED;
      this.episodesState=episodesState;
      this.setState(Object.assign({}, this.state,{modalMessage,episodesState}));
   }
