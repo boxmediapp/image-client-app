@@ -7,12 +7,12 @@ import {
   Link
 } from 'react-router-dom'
 import {styles} from "./styles";
-export  default class ListNewEpisodes extends Component {
+export  default class ListScheduleEpisodes extends Component {
 
     render(){
-        var episodes=this.props.data.episodes;
+        var {episodes,onLoadLoadNextPage}=this.props;
         if(episodes){
-          return this.renderEpisodes(episodes);
+          return this.renderEpisodes(episodes,onLoadLoadNextPage);
         }
         else{
           return null;
@@ -20,63 +20,61 @@ export  default class ListNewEpisodes extends Component {
 
     }
 
-  renderEpisodes(episodes){
-    var data={episodes, lastRecordsDisplayed:this.props.lastRecordsDisplayed}
+  renderEpisodes(episodes,onLoadLoadNextPage){
+    var data={episodes, onLoadLoadNextPage}
     return(
       <div className="content">
                <Table
                  rowHeight={50}
                  headerHeight={50}
                  rowsCount={episodes.length}
-                 width={1200}
+                 width={1000}
                  height={1000}>
-                       <Column
-                        columnKey="id"
-                        header={<Cell></Cell>}
-                        cell={<ActionCell data={data}/>}
+
+                 <Column
+                          columnKey="schedule.scheduleTimestamp"
+                          header={<Cell>Date</Cell>}
+                          cell={<ScheduleDateCell data={data}/>}
+                          width={100}
+                          fixed={true}
+                         />
+
+               <Column
+                        columnKey="schedule.channel"
+                        header={<Cell>Channel</Cell>}
+                        cell={<ChannelDateCell data={data}/>}
+                        width={100}
                         fixed={true}
-                        width={120}
-                        />
-                         <Column
+                />
+               <Column
                            columnKey="contractNumber"
                            header={<Cell>Contract</Cell>}
                            cell={<TextCell data={data}/>}
                            fixed={true}
                            width={100}
                            />
-                          <Column
+               <Column
                                columnKey="episodeNumber"
                                header={<Cell>Episode</Cell>}
                                cell={<TextCell data={data}/>}
                                fixed={true}
                                width={100}
                                />
-
-
-
-                                  <Column
+                <Column
                                            columnKey="title"
                                            header={<Cell>Title</Cell>}
                                            cell={<TextCell data={data}/>}
-                                           width={500}
+                                           width={400}
                                            fixed={true}
                                           />
+
                                           <Column
-                                                   columnKey="schedule.scheduleTimestamp"
-                                                   header={<Cell>Date</Cell>}
-                                                   cell={<ScheduleDateCell data={data}/>}
-                                                   width={200}
-                                                   fixed={true}
-                                                  />
-
-                                      <Column
-                                                  columnKey="schedule.channel"
-                                                           header={<Cell>Channel</Cell>}
-                                                           cell={<ChannelDateCell data={data}/>}
-                                                           width={200}
-                                                           fixed={true}
-                                                          />
-
+                                           columnKey="id"
+                                           header={<Cell></Cell>}
+                                           cell={<ActionCell data={data}/>}
+                                           fixed={true}
+                                           width={200}
+                                           />
 
 
 
@@ -96,7 +94,7 @@ class TextCell extends Component {
 
     const {data, rowIndex, columnKey, ...props} = this.props;
     if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
-      this.props.data.lastRecordsDisplayed();
+      this.props.data.onLoadLoadNextPage();
     }
     return (
       <Cell {...props}>
@@ -134,7 +132,7 @@ class ScheduleDateCell extends Component {
 
     const {data, rowIndex, columnKey, ...props} = this.props;
     if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
-      this.props.data.lastRecordsDisplayed();
+      this.props.data.onLoadLoadNextPage();
     }
     var datestring="";
     if(data.episodes[rowIndex].schedule && data.episodes[rowIndex].schedule.scheduleTimestamp){
@@ -160,7 +158,7 @@ class ChannelDateCell extends Component {
 
     const {data, rowIndex, columnKey, ...props} = this.props;
     if(data.episodes.length && (rowIndex+10)>=data.episodes.length){
-      this.props.data.lastRecordsDisplayed();
+      this.props.data.onLoadLoadNextPage();
     }
     var channelName="";
     if(data.episodes[rowIndex].schedule && data.episodes[rowIndex].schedule.boxChannel){
@@ -178,8 +176,18 @@ class ChannelDateCell extends Component {
 class ActionCell extends Component {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
-    var link=textValues.assignImageByEpisode.link+"/?episodeid="+data.episodes[rowIndex][columnKey];
-    var linkText=textValues.assignImageByEpisode.linkText;
+    var link=null;
+    var linkText=null;
+    var episode=data.episodes[rowIndex];
+    if(episode.imageSets && episode.imageSets.length>0){
+      link=textValues.assignImageByContractAndEpidodeNumber.link+"/?contractNumber="+episode.contractNumber+"&episodeNumber="+episode.episodeNumber;
+      linkText=textValues.assignImageByContractAndEpidodeNumber.linkText;
+    }
+    else{
+          link=textValues.assignImageByEpisode.link+"/?episodeid="+episode.id;
+          linkText=textValues.assignImageByEpisode.linkText;
+    }
+
 
     return (
       <Cell {...props} >

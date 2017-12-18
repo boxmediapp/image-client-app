@@ -76,6 +76,7 @@ class ListMenuItems extends Component{
            <div style={styles.menuItems()}>
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}/>
+             <MenuItem  {...this.props} displayItem="listScheduleEpisodes" selected={this.props.selected}/>
 
              <MenuItem  {...this.props} displayItem="assignedEpisodes" selected={this.props.selected}/>
              <MenuItem  {...this.props} displayItem="clientsView" selected={this.props.selected}/>

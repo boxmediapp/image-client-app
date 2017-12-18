@@ -2,7 +2,7 @@
 import "whatwg-fetch";
 import {config} from "../configs";
 import {appdata} from "../store";
-
+import {genericUtil} from "../utils";
 
 var appconfig=appdata.getAppConfig();
 
@@ -124,6 +124,29 @@ class ServiceAPI {
 
                return httpGetRequest(queryurl);
          }
+         findScheduleEpisodes(request, start=0){
+
+               var queryurl="image-service/box-schedule-episodes?start="+start;
+               if(request.search){
+                 queryurl+="&search="+request.search;
+               }
+               if(request.sortBy){
+                 queryurl+="&sortBy="+request.sortBy;
+               }
+               if(request.sortOrder){
+                 queryurl+="&sortOrder="+request.sortOrder;
+               }
+               if(request.fromDate){
+                 queryurl+="&from="+genericUtil.dateValueToTimestamp(request.fromDate,"00:00:00");
+               }
+               if(request.toDate){
+                 queryurl+="&to="+genericUtil.dateValueToTimestamp(request.toDate,"23:59:59");
+               }
+               if(request.channelId){
+                 queryurl+="&channelId="+request.channelId;
+               }
+               return httpGetRequest(queryurl);
+         }
          findAssignedEpisodes(search, start=0){
                var queryurl="image-service/box-episodes?minNumberOfImageSets=1&start="+start;
                if(search){
@@ -201,6 +224,7 @@ class ServiceAPI {
          getAllBoxChannels(){
            return httpGetRequest("box-channels");
          }
+
 }
 
 

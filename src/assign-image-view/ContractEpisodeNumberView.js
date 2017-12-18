@@ -45,17 +45,16 @@ export default class ContractEpisodeNumberView extends Component{
 
            return (
              <div>
-                   <AppHeader selected="imagesets"/>
-                   
+                   <AppHeader selected="assignedEpisodes"/>
+
                    <div style={AppHeader.styles.content}>
                       <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} episodeNumber={this.state.episodeNumber}
                       redirectToImageLibrary={this.redirectToImageLibrary.bind(this)}/>
                    </div>
-                   
+
             </div>
            )
 
     }
 
 }
-

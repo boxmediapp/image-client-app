@@ -161,7 +161,17 @@ export default class GenericUtil{
       return null;
     }
     var dvalue=new Date(timestamp);
-    return dvalue.getFullYear()+"-"+(dvalue.getMonth()+1)+dvalue.getDate();
+
+    var fullYear=dvalue.getFullYear();
+    var mm=dvalue.getMonth()+1;
+    if(mm<10){
+      mm="0"+mm;
+    }
+    var dd=dvalue.getDate();
+    if(dd<10){
+      dd="0"+dd;
+    }
+    return fullYear+"-"+mm+"-"+dd;    
   }
   timeValueFromNow(seconds){
         var timevalue=new Date();
@@ -191,9 +201,42 @@ export default class GenericUtil{
           ret+=seconds;
         }
         return ret;
-
-
   }
+  getWeek(datevalue){
+        var weektime=new Date("2017-01-01");
+        var t=datevalue.getTime()-weektime.getTime()/(3600000*24);
+        return t%7;
+  }
+  getDateFromWeekOfYear(year,week,fromWeekDay, toWeekDay){
+        var timevalue=new Date(year+"-01-01");
+        timevalue.setDate(timevalue.getDate()+7*week);
+        var fromDate=timevalue;
+        for(var i=0;i<=7;i++){
+              var t=new Date(timevalue.getTime());
+              t.setDate(t.getDate()-i);
+              if(this.getWeek(t)===fromWeekDay){
+                fromDate=t;
+                break;
+              }
+              t=new Date(timevalue.getTime());
+              t.setDate(t.getDate()+i);
+              if(this.getWeek(t)===fromWeekDay){
+                fromDate=t;
+                break;
+              }
+        }
+        var toDate=fromDate;
+        for(var i=0;i<=7;i++){
+              var t=new Date(fromDate.getTime());
+              t.setDate(t.getDate()+i);
+              if(this.getWeek(t)===toWeekDay){
+                toDate=t;
+                break;
+              }
+        }
+        return {fromDate,toDate};
+  }
+
 
 }
 
