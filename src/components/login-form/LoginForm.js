@@ -24,11 +24,12 @@ export default class LoginForm extends Component {
   login(){
       const {username,password}=this.state;
       var that=this;
-      api.login(username,password).then(function(user){
-          appdata.setCredentials(username,password);
-          genericUtil.saveCred(username,password);
+      api.login(username,password).then(function(logininfo){
+          console.log("****logininfo***"+JSON.stringify(logininfo));
+          appdata.setCredentials(logininfo.clientId,logininfo.clientSecret);
+          genericUtil.saveCred(logininfo.clientId,logininfo.clientSecret);
       }).catch(function(){
-             that.props.onLoginFail();             
+             that.props.onLoginFail();
       });
   }
 
