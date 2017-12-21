@@ -1,35 +1,24 @@
 const ActionNames ={
-  SET_PASSSWORD: "SET_USER_NAME",
-  SET_USER_NAME: "SET_PASSWORD"
+  SET_USER_INFO: "SET_USER_INFO"
 }
 
 const initialState={
-     username:"",
-     password:"",
+     userinfo:null
 }
 
 export const userSettings={
       reducer:function (state=initialState, action){
               switch(action.type){
-              case ActionNames.SET_PASSSWORD:
-                            return Object.assign({},state,{password:action.password});
-              case ActionNames.SET_USER_NAME:
-                            return Object.assign({},state,{username:action.username});
-
+              case ActionNames.SET_USER_INFO:
+                            return Object.assign({},state,{userinfo:action.userinfo});
             }
             return state;
         },
        actions:{
-                password:function(password){
+                setUserinfo:function(userinfo){
                     return {
-                        type: ActionNames.SET_PASSSWORD,
-                        password
-                      };
-                },
-                username:function(username){
-                    return {
-                        type: ActionNames.SET_USER_NAME,
-                        username
+                        type: ActionNames.SET_USER_INFO,
+                        userinfo
                       };
                 }
       }

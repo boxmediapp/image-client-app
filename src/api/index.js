@@ -88,7 +88,7 @@ class ServiceAPI {
 
         login(username,password){
                 var headers=pBuildHttpHeaderWithUsernameAndPassword(username,password);
-                return pHTTPGetRequest("users",headers);
+                return pHTTPPostRequest("login",headers, JSON.stringify({username:username}));
          }
 
          loadConfig(){

@@ -26,49 +26,81 @@ import {ManageCacheView,ScheduleImportView} from "./admin";
 import {ListImageSetView} from "./list-image-sets";
 import {ListAssignedEpisodesView} from "./list-assigned-episodes";
 import {genericUtil} from "./utils";
+import {ModalDialog} from "./components";
 
+import {LoadingScreen} from "./loading-screen";
 
 
 export default class App extends Component{
   constructor(props){
     super(props);
-    this.state={authorization:appdata.getAuthorization()};
-    this.ubsubsribe=store.subscribe(()=>{
-          this.setAuthorization(appdata.getAuthorization());
-    });
-
+    this.state={userinfo:"", message:null,loading:true};
+    this.ubsubsribe=store.subscribe(this.receiveStateFromStore.bind(this));
+    genericUtil.clearOldStorage();
+    var userInfo=genericUtil.loadUserInfo();
+    if(!userInfo){
+      this.state.loading=false;
+    }
+    else{
+      appdata.setUserInfo(userInfo);
+    }
   }
-  onLoggedOut(currentAuthorization){
-    this.setState(Object.assign({}, this.state, {authorization:null}));
+
+  componentWillUnmount(){
+    if(this.ubsubsribe){
+      this.ubsubsribe();
+    }
   }
-  onLoggedIn(currentAuthorization){
-    api.loadConfig().then(appconfig=>{
-
-        appdata.setAppConfig(appconfig);
-
-
-      this.setState(Object.assign({}, this.state, {authorization:currentAuthorization}));
-    }).catch((err)=>{
-        console.error("failed to load the appinfo:"+err.stack);
-
-    })
-
-
-  }
-  setAuthorization(currentAuthorization){
-       if(this.state.authorization && (!currentAuthorization) ){
-             this.onLoggedOut(currentAuthorization);
+  receiveStateFromStore(){
+       var userinfo= appdata.getUserInfo();
+       if(!userinfo){
+          if(this.state.userinfo){
+            this.setState(Object.assign({}, this.state, {userinfo:null,loading:false}));
+            genericUtil.signout();
+          }
+          return;
        }
-       else if((!this.state.authorization) && currentAuthorization){
-            this.onLoggedIn(currentAuthorization);
+       else if(userinfo === this.userinfo){
+            return;
        }
-       else if(this.state.authorization && currentAuthorization && this.state.authorization!==currentAuthorization){
-            this.onLoggedIn(currentAuthorization);
-       }
-
+       this.userinfo=userinfo;
+       api.loadConfig().then(appconfig=>{
+                var loading=false;
+                this.setState(Object.assign({}, this.state, {userinfo,loading}));
+                appdata.setAppConfig(appconfig);
+       }).catch((err)=>{
+           console.error("failed to load the appinfo:"+err.stack);
+           appdata.setUserInfo(null);
+           this.setState(Object.assign({}, this.state, {userinfo:null,loading:false}));
+           this.setErrorMessage("Login failed:"+err);
+       })
   }
+
+
+
+
+
+  onClearMessage(){
+    this.setState(Object.assign({}, this.state,{modalMessage:null}));
+  }
+  setErrorMessage(content){
+     var modalMessage={
+            title:"Error",
+            content,
+            onConfirm:this.onClearMessage.bind(this),
+            confirmButton:"OK"
+     }
+     this.setState(Object.assign({}, this.state,{modalMessage,loading:false}));
+  }
+
+
+
   render(){
-                if(this.state.authorization){
+
+              if(this.state.loading){
+                  return (<LoadingScreen/>);
+              }
+               else if(this.state.userinfo){
                     return (
                             <Router>
                               <div className="topContainer">
@@ -83,37 +115,20 @@ export default class App extends Component{
                                   <Route path={textValues.cacheMamnagement.link} component={ManageCacheView}/>
                                   <Route path={textValues.scheduleImport.link} component={ScheduleImportView}/>
                                   <Route path={textValues.listScheduleEpisodes.link} component={ListScheduleEpisodesView}/>
-
+                                  <ModalDialog message={this.state.modalMessage}/>
                               </div>
+
                             </Router>
                       )
                     }
                     else{
-                        this.autoLogin();
                         return (
                             <DisplayLogin/>
-
                         );
 
                    }
     }
-    componentWillUnmount(){
-      if(this.ubsubsribe){
-        this.ubsubsribe();
-      }
-    }
 
-   autoLogin(){
-     var cred=genericUtil.loadCred();
-     if(!cred){
-         return;
-     }
-     else{
-         var username=cred.username;
-         var password=cred.password;
-         appdata.setCredentials(username,password);
-     }
-   }
 
 
 }

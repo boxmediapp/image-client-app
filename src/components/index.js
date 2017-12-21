@@ -1,4 +1,4 @@
-import LoginForm from "./login-form/LoginForm";
+import AppLogin from "./app-login/AppLogin";
 import AppHeader from "./menu/AppHeader";
 import LoginAppHeader from "./menu/LoginAppHeader";
 import ImageUploader from "./image-uploader/ImageUploader";
@@ -13,6 +13,6 @@ import SearchWithDateRangeChannel from "./search-box/SearchWithDateRangeChannel"
 import RoundButton from "./buttons/RoundButton";
 import BigButton from "./buttons/BigButton";
 import LoadingIcon from "./loading/LoadingIcon";
-export {LoginForm,AppHeader,ImageUploader,DisplayImateForReplace,ModalDialog,
+export {AppLogin,AppHeader,ImageUploader,DisplayImateForReplace,ModalDialog,
   ProgressBar,SearchBox,SearchWithDateRange,ModalDisplayImage,LoginAppHeader,RoundButton,
   BigButton,LoadingIcon,MessageDialog,SearchWithDateRangeChannel};

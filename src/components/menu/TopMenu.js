@@ -129,9 +129,8 @@ class LogoutMenuItem extends Component{
     this.state={hover:false}
   }
   logout(){
-
-    genericUtil.saveCred("","");
-    appdata.setCredentials(null,null);
+    genericUtil.signout();
+    appdata.setUserInfo(null);
   }
   onHover(){
     this.setState({hover: true})

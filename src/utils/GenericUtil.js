@@ -108,47 +108,36 @@ export default class GenericUtil{
   decrypt(content, password){
     return CryptoJS.AES.decrypt(unescape(content), password).toString(CryptoJS.enc.Utf8);
   }
+  clearOldStorage(){
+    localStorage.removeItem("localImageKey");
+    localStorage.removeItem("imageCred");
+  }
   getLocalKey(){
-      var localKey=localStorage.getItem("localImageKey");
-      if(localKey){
-        return localKey;
-      }
-      localKey=this.generatateRandomString();
-      localStorage.setItem('localImageKey', localKey);
-      return localKey;
+      return "xIiSIif7z0zQurp0y";
   }
-  saveCred(username,password){
-      var cred={
-          username,
-          password,
-          expiredOn:new Date().getTime()+36000000
-      };
-      var credString=JSON.stringify(cred);
+  saveUserInfo(userInfo){
+      var userInfoString=JSON.stringify(userInfo);
       var key=this.getLocalKey();
-      var imageCred=this.encrypt(credString,key);
-      localStorage.setItem('imageCred', imageCred);
+      var cred=this.encrypt(userInfoString,key);
+      localStorage.setItem('imageUser', cred);
   }
-  loadCred(){
-      var imageCred=localStorage.getItem("imageCred");
-      if(!imageCred){
-        return null;
-      }
-      var key=this.getLocalKey();
-      var credString=this.decrypt(imageCred,key);
-      if(!credString){
+  signout(){
+        localStorage.removeItem("imageUser");
+  }
+  loadUserInfo(){
+        var imageCred=localStorage.getItem("imageUser");
+        if(!imageCred){
           return null;
-      }
-      var cred=JSON.parse(credString);
-      if( (!cred.username) || (!cred.password) || (!cred.expiredOn)){
-        return null;
-      }
-      var now=new Date().getTime();
-      if(now>=cred.expiredOn){
-        return null;
-      }
-      return cred;
-
+        }
+        var key=this.getLocalKey();
+        var credString=this.decrypt(imageCred,key);
+        if(!credString){
+          return null;
+        }
+        return JSON.parse(credString);
   }
+  
+
   dateValueToTimestamp(datevalue, timevalue){
     if(!datevalue){
       return null;
@@ -171,7 +160,7 @@ export default class GenericUtil{
     if(dd<10){
       dd="0"+dd;
     }
-    return fullYear+"-"+mm+"-"+dd;    
+    return fullYear+"-"+mm+"-"+dd;
   }
   timeValueFromNow(seconds){
         var timevalue=new Date();
