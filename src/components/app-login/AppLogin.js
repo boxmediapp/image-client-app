@@ -9,7 +9,7 @@ import {api} from "../../api";
 import {appdata} from "../../store";
 import {genericUtil} from "../../utils";
 
-export default class LoginForm extends Component {
+export default class AppLogin extends Component {
    constructor(props){
      super(props);
      this.state={username:"",password:""};
@@ -24,10 +24,12 @@ export default class LoginForm extends Component {
   login(){
       const {username,password}=this.state;
       var that=this;
-      api.login(username,password).then(function(logininfo){
-          console.log("****logininfo***"+JSON.stringify(logininfo));
-          appdata.setCredentials(logininfo.clientId,logininfo.clientSecret);
-          genericUtil.saveCred(logininfo.clientId,logininfo.clientSecret);
+      api.login(username,password).then(function(userinfo){
+          console.log("****logininfo***"+JSON.stringify(userinfo));
+          if(userinfo){
+                appdata.setUserInfo(userinfo);
+                genericUtil.saveUserInfo(userinfo);
+          }
       }).catch(function(){
              that.props.onLoginFail();
       });

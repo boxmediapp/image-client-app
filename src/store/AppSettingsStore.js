@@ -4,21 +4,23 @@ export default class AppSettingsStore{
   constructor(store){
     this.store=store;
   }
-  setCredentials(username,password){
-    this.store.dispatch(userSettings.actions.username(username));
-    this.store.dispatch(userSettings.actions.password(password));
+  setUserInfo(userinfo){
+    this.store.dispatch(userSettings.actions.setUserinfo(userinfo));
   }
-  buildAuthorization(username,password){
-    return "Basic " + btoa(username+":"+password)
+  getUserInfo(){
+    return this.store.getState().userSettings.userinfo;
+  }
+  buildAuthorization(clientId,clientSecret){
+    return "Basic " + btoa(clientId+":"+clientSecret)
   }
   getAuthorization(){
-    var username=this.store.getState().userSettings.username;
-    var password=this.store.getState().userSettings.password;
-    if(!username || !password){
+    var clientId=this.store.getState().userSettings.userinfo.clientId;
+    var clientSecret=this.store.getState().userSettings.userinfo.clientSecret;
+    if(!clientId || !clientSecret){
       return null;
     }
     else{
-      return this.buildAuthorization(username,password);
+      return this.buildAuthorization(clientId,clientSecret);
     }
   }
   setAppConfig(appconfig){
