@@ -111,6 +111,8 @@ export default class GenericUtil{
   clearOldStorage(){
     localStorage.removeItem("localImageKey");
     localStorage.removeItem("imageCred");
+    localStorage.removeItem("box.username");
+    localStorage.removeItem("box.password");
   }
   getLocalKey(){
       return "xIiSIif7z0zQurp0y";
@@ -121,6 +123,23 @@ export default class GenericUtil{
       var cred=this.encrypt(userInfoString,key);
       localStorage.setItem('imageUser', cred);
   }
+  isUserInfoValid:function(userinfo){
+                      if(  userinfo && userinfo.clientId && userinfo.clientSecret){
+                            var expiresAt=userinfo.expiresAt;
+                            var now=new Date();
+                            if(now.getTime()>=expiresAt){
+                              console.warn("user info is expired");
+                              this.signout();
+                              return false;
+                            }
+                            else{
+                              return true;
+                            }
+                      }
+                      else{
+                        return false;
+                      }
+  },
   signout(){
         localStorage.removeItem("imageUser");
   }
@@ -130,13 +149,20 @@ export default class GenericUtil{
           return null;
         }
         var key=this.getLocalKey();
-        var credString=this.decrypt(imageCred,key);
+        var credString=null;
+      try{
+            credString=this.decrypt(imageCred,key);
+          }
+        catch(error){
+          console.error(error+" when decrypting the userInfo");
+        }
+
         if(!credString){
           return null;
         }
         return JSON.parse(credString);
   }
-  
+
 
   dateValueToTimestamp(datevalue, timevalue){
     if(!datevalue){
