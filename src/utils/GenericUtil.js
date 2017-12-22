@@ -123,7 +123,7 @@ export default class GenericUtil{
       var cred=this.encrypt(userInfoString,key);
       localStorage.setItem('imageUser', cred);
   }
-  isUserInfoValid:function(userinfo){
+  isUserInfoValid(userinfo){
                       if(  userinfo && userinfo.clientId && userinfo.clientSecret){
                             var expiresAt=userinfo.expiresAt;
                             var now=new Date();
@@ -139,7 +139,7 @@ export default class GenericUtil{
                       else{
                         return false;
                       }
-  },
+  }
   signout(){
         localStorage.removeItem("imageUser");
   }
