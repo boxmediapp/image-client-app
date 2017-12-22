@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.co.boxnetwork.boxmedia</groupId>
   <artifactId>image-client-app-pom</artifactId>
-  <version>1.1.18</version>
+  <version>1.1.19</version>
   <packaging>pom</packaging>
 
 
