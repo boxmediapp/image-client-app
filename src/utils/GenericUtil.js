@@ -1,5 +1,5 @@
 //var episodeId=genericUtil.getPathVariable(this.props.location.pathname,textValues.episode.view.link);
-
+import {api} from "../api";
 export default class GenericUtil{
   getQueryParam(query,variable) {
     if(!query){
@@ -123,26 +123,55 @@ export default class GenericUtil{
       var cred=this.encrypt(userInfoString,key);
       localStorage.setItem('imageUser', cred);
   }
-  isUserInfoValid(userinfo){
-                      if(  userinfo && userinfo.clientId && userinfo.clientSecret){
-                            var expiresAt=userinfo.expiresAt;
-                            var now=new Date();
-                            if(now.getTime()>=expiresAt){
-                              console.warn("user info is expired");
-                              this.signout();
-                              return false;
-                            }
-                            else{
-                              return true;
-                            }
-                      }
-                      else{
-                        return false;
-                      }
+  refreshExpiresOfUserInfo(userinfo){
+    var now=new Date();
+    userinfo.expiresAt=now.getTime()+userinfo.durationInSeconds*1000;
+    this.saveUserInfo(userinfo);
+    console.log("userInfo expiration time is refreshed");
+}
+isUserInfoExpired(userinfo){
+      var expiresAt=userinfo.expiresAt;
+      var now=new Date();
+      if(now.getTime()>=expiresAt){
+          return true;
+      }
+      else{
+            return false;
+      }
+}
+isUserInfoValid(userinfo){
+      return userinfo && userinfo.clientId && userinfo.clientSecret && (!this.isUserInfoExpired(userinfo));
+
+}
+
+signout(){
+      this.stopRefreshLoginThread();
+      if(localStorage.getItem("imageUser")){
+            var userinfo=this.loadUserInfo();
+            localStorage.removeItem("imageUser");
+            if(userinfo){
+                api.logout(userinfo);
+            }
+      }
+}
+stopRefreshLoginThread(){
+  if(this.refreshLoginTimer){
+      clearInterval(this.refreshLoginTimer);
+      this.refreshLoginTimer=null;
   }
-  signout(){
-        localStorage.removeItem("imageUser");
-  }
+}
+startRefreshLoginThread(userinfo){
+    this.stopRefreshLoginThread();
+    var refreshInterval=userinfo.durationInSeconds-30;
+    if(refreshInterval<0){
+        refreshInterval=30;
+    }
+      this.refreshLoginTimer=setInterval(()=>{
+            api.refreshLogin(userinfo).then(respose=>{
+                  this.refreshExpiresOfUserInfo(userinfo);
+            });
+    },refreshInterval*1000);
+}
   loadUserInfo(){
         var imageCred=localStorage.getItem("imageUser");
         if(!imageCred){

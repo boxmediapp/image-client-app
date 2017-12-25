@@ -86,11 +86,33 @@ const httpPutRequest=function(path,body){
 
 class ServiceAPI {
 
-        login(username,password){
-                var headers=pBuildHttpHeaderWithUsernameAndPassword(username,password);
-                return pHTTPPostRequest("login",headers, JSON.stringify({username:username}));
-         }
-
+  login(username,password){
+    var headers=pBuildHttpHeaderWithUsernameAndPassword(username,password);
+    return pHTTPPostRequest("login",headers, JSON.stringify({username:username}));
+  }
+  refreshLogin(userInfo){
+      return httpPostRequest("refresh-login", JSON.stringify({userInfo}));
+  }
+  logout(userinfo){
+      if(!userinfo){
+          return;
+        }
+        var clientId=userinfo.clientId;
+        var clientSecret=userinfo.clientSecret;
+        if(!clientId){
+            return;
+          }
+          if(!clientSecret){
+            return;
+          }
+          var expiresAt=userinfo.expiresAt;
+          var now=new Date();
+          if(now.getTime()>=expiresAt){
+            return;
+          }
+          var headers=pBuildHttpHeaderWithUsernameAndPassword(clientId,clientSecret);
+          return pHTTPPostRequest("user-logout",headers, JSON.stringify(userinfo));
+    }
          loadConfig(){
            return httpGetRequest("app/info").then(function(data){
              return data.appconfig;
