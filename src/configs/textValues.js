@@ -34,6 +34,29 @@ const textValues={
       link:"/image-app/logout",
       linkText:"Sign out"
     },
+    signup:{
+       link:"/image-app/sign-up",
+       linkText:"Create Account",
+       error:{
+         title:"Error",
+         firstName:"The first name is a required field",
+         lastName:"The last name is a required field",
+         email:"The email is a required field",
+         password:{
+             missing:"The password is a required field",
+             tooshort:"The password should be at least 6 characters inn length"
+         },
+         company:"The company field is a required field",
+       },
+       welcome:{
+            title:"Welcome to the Box Image Application",
+            content:["You can now sign in using your email address as your user name and the password you have specified. Please click",
+              "here",
+              " to continue"
+            ]
+
+       }
+    },
     assignImageByEpisode:{
         link:"/image-app/assign-image/new-episodes",
         linkText:"Assign Image"

@@ -14,8 +14,13 @@ export default class AppSettingsStore{
     return "Basic " + btoa(clientId+":"+clientSecret)
   }
   getAuthorization(){
-    var clientId=this.store.getState().userSettings.userinfo.clientId;
-    var clientSecret=this.store.getState().userSettings.userinfo.clientSecret;
+    var userinfo=this.store.getState().userSettings.userinfo;
+
+    if(!userinfo){
+      return null;
+    }
+    var clientId=userinfo.clientId;
+    var clientSecret=userinfo.clientSecret;
     if(!clientId || !clientSecret){
       return null;
     }

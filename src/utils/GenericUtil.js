@@ -1,5 +1,8 @@
 //var episodeId=genericUtil.getPathVariable(this.props.location.pathname,textValues.episode.view.link);
 import {api} from "../api";
+import {appdata} from "../store";
+
+
 export default class GenericUtil{
   getQueryParam(query,variable) {
     if(!query){
@@ -21,6 +24,14 @@ export default class GenericUtil{
     }
     var ret=path.substring(ind+basepath.length);
     return this.removePrefix(ret,"/");
+  }
+  getPathName(){
+    if(window.location && window.location.pathname){
+        return window.location.pathname;
+    }
+    else{
+      return window.location.pathname;
+    }
   }
   removePrefix(content,prefix){
     if(content.length<prefix.length){
@@ -123,12 +134,8 @@ export default class GenericUtil{
       var cred=this.encrypt(userInfoString,key);
       localStorage.setItem('imageUser', cred);
   }
-  refreshExpiresOfUserInfo(userinfo){
-    var now=new Date();
-    userinfo.expiresAt=now.getTime()+userinfo.durationInSeconds*1000;
-    this.saveUserInfo(userinfo);
-    console.log("userInfo expiration time is refreshed");
-}
+
+
 isUserInfoExpired(userinfo){
       var expiresAt=userinfo.expiresAt;
       var now=new Date();
@@ -160,16 +167,44 @@ stopRefreshLoginThread(){
       this.refreshLoginTimer=null;
   }
 }
+
+
 startRefreshLoginThread(userinfo){
     this.stopRefreshLoginThread();
+    if(!userinfo){
+          return;
+    }
+    if(!userinfo.durationInSeconds){
+              return;
+    }
+    if(userinfo.durationInSeconds<45){
+      return;
+    }
+
     var refreshInterval=userinfo.durationInSeconds-30;
     if(refreshInterval<0){
         refreshInterval=30;
     }
-      this.refreshLoginTimer=setInterval(()=>{
-            api.refreshLogin(userinfo).then(respose=>{
-                  this.refreshExpiresOfUserInfo(userinfo);
-            });
+    this.refreshLoginTimer=setInterval(()=>{
+                api.refreshLogin(userinfo).then(operator=>{
+                        var newuserinfo=operator.loginInfo;
+                        this.saveUserInfo(newuserinfo);
+                        var appuserinfo=appdata.getUserInfo();
+                        if(!appuserinfo){
+                              appdata.setUserInfo(newuserinfo);
+                        }
+                        if(newuserinfo.application!==userinfo.application){
+                            appdata.setUserInfo(newuserinfo);
+                        }
+                        return operator;
+                }).catch(error=>{
+                    console.error(error+" while refreshing login info");
+                    this.stopRefreshLoginThread();
+                    var us=appdata.getUserInfo();
+                    if(us){
+                      appdata.setUserInfo(null);
+                    }
+                });
     },refreshInterval*1000);
 }
   loadUserInfo(){

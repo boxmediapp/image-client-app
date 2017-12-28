@@ -88,10 +88,10 @@ class ServiceAPI {
 
   login(username,password){
     var headers=pBuildHttpHeaderWithUsernameAndPassword(username,password);
-    return pHTTPPostRequest("login",headers, JSON.stringify({username:username}));
+    return pHTTPPostRequest("accounts/login",headers, JSON.stringify({username:username}));
   }
   refreshLogin(userInfo){
-      return httpPostRequest("refresh-login", JSON.stringify({userInfo}));
+      return httpPostRequest("accounts/refresh-login", JSON.stringify({userInfo}));
   }
   logout(userinfo){
       if(!userinfo){
@@ -111,7 +111,13 @@ class ServiceAPI {
             return;
           }
           var headers=pBuildHttpHeaderWithUsernameAndPassword(clientId,clientSecret);
-          return pHTTPPostRequest("user-logout",headers, JSON.stringify(userinfo));
+          return pHTTPPostRequest("accounts/user-logout",headers, JSON.stringify(userinfo));
+    }
+    createAccount(user){
+       return httpPostRequest("accounts/create-account", JSON.stringify(user));
+    }
+    updateUserAccount(userAccount){
+        return httpPostRequest("accounts/user-account", JSON.stringify(userAccount));
     }
          loadConfig(){
            return httpGetRequest("app/info").then(function(data){

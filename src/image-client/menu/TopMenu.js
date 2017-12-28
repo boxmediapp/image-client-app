@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {textValues} from  "../../configs";
+import {textValues} from  "../configs";
 import {genericUtil} from "../../utils";
 import {
   Link
@@ -76,11 +76,7 @@ class ListMenuItems extends Component{
        return(
            <div style={styles.menuItems()}>
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected} render={true}/>
-             <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}  render={isImageApp}/>
-             <MenuItem  {...this.props} displayItem="listScheduleEpisodes" selected={this.props.selected} render={isImageApp}/>
-
-             <MenuItem  {...this.props} displayItem="assignedEpisodes" selected={this.props.selected} render={isImageApp}/>
-             <MenuItem  {...this.props} displayItem="clientsView" selected={this.props.selected} render={isImageApp}/>
+             <MenuItem  {...this.props} displayItem="imageSearch" selected={this.props.selected} render={true}/>
              <LogoutMenuItem/>
          </div>
 
