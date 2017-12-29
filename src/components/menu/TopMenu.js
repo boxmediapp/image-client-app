@@ -78,9 +78,8 @@ class ListMenuItems extends Component{
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected} render={true}/>
              <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}  render={isImageApp}/>
              <MenuItem  {...this.props} displayItem="listScheduleEpisodes" selected={this.props.selected} render={isImageApp}/>
-
              <MenuItem  {...this.props} displayItem="assignedEpisodes" selected={this.props.selected} render={isImageApp}/>
-             <MenuItem  {...this.props} displayItem="clientsView" selected={this.props.selected} render={isImageApp}/>
+             <MenuItem  {...this.props} displayItem="admin" selected={this.props.selected} render={isImageApp}/>
              <LogoutMenuItem/>
          </div>
 
@@ -131,8 +130,7 @@ class LogoutMenuItem extends Component{
     this.state={hover:false}
   }
   logout(){
-    genericUtil.signout();
-    appdata.setUserInfo(null);
+        appdata.setUserInfo(null);
   }
   onHover(){
     this.setState({hover: true})

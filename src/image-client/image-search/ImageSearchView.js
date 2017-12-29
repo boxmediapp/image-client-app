@@ -3,7 +3,7 @@ import ListImages from "./ListImages";
 import {genericUtil} from "../../utils";
 
 
-import {api} from "../../api";
+import {api} from "../api";
 import {textValues} from "../configs";
 import {styles} from './styles';
 

@@ -1,8 +1,4 @@
 //var episodeId=genericUtil.getPathVariable(this.props.location.pathname,textValues.episode.view.link);
-import {api} from "../api";
-import {appdata} from "../store";
-
-
 export default class GenericUtil{
   getQueryParam(query,variable) {
     if(!query){
@@ -136,29 +132,20 @@ export default class GenericUtil{
   }
 
 
-isUserInfoExpired(userinfo){
-      var expiresAt=userinfo.expiresAt;
-      var now=new Date();
-      if(now.getTime()>=expiresAt){
-          return true;
-      }
-      else{
-            return false;
-      }
-}
-isUserInfoValid(userinfo){
-      return userinfo && userinfo.clientId && userinfo.clientSecret && (!this.isUserInfoExpired(userinfo));
 
+isUserInfoValid(userinfo){
+     if(!userinfo){
+       return false;
+     }
+    var expiresAt=userinfo.expiresAt;
+    var now=new Date();
+    return  userinfo.clientId && userinfo.clientSecret && now.getTime()<expiresAt;
 }
 
 signout(){
       this.stopRefreshLoginThread();
       if(localStorage.getItem("imageUser")){
-            var userinfo=this.loadUserInfo();
             localStorage.removeItem("imageUser");
-            if(userinfo){
-                api.logout(userinfo);
-            }
       }
 }
 stopRefreshLoginThread(){
@@ -169,7 +156,7 @@ stopRefreshLoginThread(){
 }
 
 
-startRefreshLoginThread(userinfo){
+startRefreshLoginThread(userinfo, refreshLogin, appdata){
     this.stopRefreshLoginThread();
     if(!userinfo){
           return;
@@ -186,7 +173,7 @@ startRefreshLoginThread(userinfo){
         refreshInterval=30;
     }
     this.refreshLoginTimer=setInterval(()=>{
-                api.refreshLogin(userinfo).then(operator=>{
+                refreshLogin(userinfo).then(operator=>{
                         var newuserinfo=operator.loginInfo;
                         this.saveUserInfo(newuserinfo);
                         var appuserinfo=appdata.getUserInfo();
@@ -315,7 +302,6 @@ startRefreshLoginThread(userinfo){
         }
         return {fromDate,toDate};
   }
-
 
 }
 

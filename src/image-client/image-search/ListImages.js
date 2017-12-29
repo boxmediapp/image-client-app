@@ -27,9 +27,15 @@ export  default class ListImages extends Component {
                  rowHeight={150}
                  headerHeight={50}
                  rowsCount={images.length}
-                 width={1000}
+                 width={1500}
                  height={1000}>
-
+                 <Column
+                   columnKey="id"
+                   header={<Cell>ID</Cell>}
+                   cell={<TextCell data={images}/>}
+                   fixed={true}
+                   width={100}
+                   />
                          <Column
                            columnKey="contractNumber"
                            header={<Cell>Contract</Cell>}
@@ -44,7 +50,14 @@ export  default class ListImages extends Component {
                                fixed={true}
                                width={100}
                                />
-                               <Column
+                          <Column
+                                    columnKey="tags"
+                                    header={<Cell>Tags</Cell>}
+                                    cell={<TextCell data={images}/>}
+                                    fixed={true}
+                                    width={100}
+                                    />
+                             <Column
                                     columnKey="width"
                                     header={<Cell>Width</Cell>}
                                     cell={<TextCell data={images}/>}
@@ -58,6 +71,14 @@ export  default class ListImages extends Component {
                                          fixed={true}
                                          width={100}
                                 />
+
+                                <Column
+                                                    columnKey="title"
+                                                    header={<Cell>Title</Cell>}
+                                                    cell={<TextCell data={images}/>}
+                                                    fixed={true}
+                                                    width={300}
+                                                    />
                                <Column
                                     columnKey="url"
                                     header={<Cell>URL</Cell>}

@@ -16,7 +16,7 @@ export  default class ManageCacheView extends Component {
       super(props);
       this.state={modalMessage:null};
     }
-    
+
     onClearMessage(){
       this.setState(Object.assign({}, this.state,{modalMessage:null}));
     }
@@ -29,7 +29,7 @@ export  default class ManageCacheView extends Component {
        }
        this.setState(Object.assign({}, this.state,{modalMessage}));
     }
-    
+
 
     invalidateAllClientImage(){
       var command={
@@ -38,7 +38,7 @@ export  default class ManageCacheView extends Component {
                   };
       api.sendCommand(command);
       this.setMessage("CDN Cache is cleared");
-      
+
     }
 
     render(){
@@ -49,9 +49,9 @@ export  default class ManageCacheView extends Component {
 
               <div style={AppHeader.styles.content}>
 
-                  
+
                              <button onClick={evt=>this.invalidateAllClientImage()} className="btn btn-primary btn-normal">Clear CDN Cache</button>
-                  
+
                     <ModalDialog message={this.state.modalMessage}/>
              </div>
 

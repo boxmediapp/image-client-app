@@ -10,13 +10,16 @@ import {EpisodeView,ContractEpisodeNumberView} from "./assign-image-view";
 import {NewEpisodesView} from "./new-episodes";
 import {ListScheduleEpisodesView} from "./list-schedule-episodes";
 
-import {ClientImagesView} from "./clients-view";
+
 import {Home} from "./home";
-import {ManageCacheView,ScheduleImportView} from "./admin";
+import {ManageCacheView} from "./manage-cache";
+import {ManageImportScheduleView} from "./manage-schedule-import";
 
 import {ListImageSetView} from "./list-image-sets";
 import {ListAssignedEpisodesView} from "./list-assigned-episodes";
 import {ModalDialog} from "./components";
+import {AdminView} from "./admin";
+import {ManageUsersView} from "./manage-users";
 
 export default class RenderImageApp extends Component{
 
@@ -31,11 +34,15 @@ export default class RenderImageApp extends Component{
                   <Route path={textValues.assignedEpisodes.link} component={ListAssignedEpisodesView}/>
 
                   <Route path={textValues.assignImageByContractAndEpidodeNumber.link} component={ContractEpisodeNumberView}/>
-                  <Route path={textValues.clientsView.link} component={ClientImagesView}/>
-                  <Route path={textValues.cacheMamnagement.link} component={ManageCacheView}/>
-                  <Route path={textValues.scheduleImport.link} component={ScheduleImportView}/>
+
+                  <Route path={textValues.manageCache.link} component={ManageCacheView}/>
+                  <Route path={textValues.manageSchduleImport.link} component={ManageImportScheduleView}/>
                   <Route path={textValues.listScheduleEpisodes.link} component={ListScheduleEpisodesView}/>
-                  
+                  <Route path={textValues.admin.link} component={AdminView}/>
+                  <Route path={textValues.manageUser.link} component={ManageUsersView}/>
+
+
+
               </div>
 
             </Router>

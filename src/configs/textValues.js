@@ -24,12 +24,12 @@ const textValues={
        norecords:"No images found",
        actionText:"Edit Images"
     },
+    admin:{
+              link:"/image-app/admin",
+              linkText:"Admin",
+              actionText:"Admin"
+        },
 
-    clientsView:{
-      link:"/image-app/clients-view",
-      linkText:"Approved Images",
-      actionText:"Approved Images"
-    },
     logout:{
       link:"/image-app/logout",
       linkText:"Sign out"
@@ -61,14 +61,18 @@ const textValues={
         link:"/image-app/assign-image/new-episodes",
         linkText:"Assign Image"
     },
-
-    cacheMamnagement:{
-      link:"/image-app/cache-maagement",
+    manageUser:{
+          linkText:"Users Manager",
+          actionText:"Manage Users",
+          link:"/image-app/manage-users",
+    },
+    manageCache:{
+      link:"/image-app/manage-cache",
       linkText:"Manage Cache",
       actionText:"Purge Image Cache"
     },
-    scheduleImport:{
-      link:"/image-app/schedule-imports",
+    manageSchduleImport:{
+      link:"/image-app/manage-schedule-imports",
       linkText:"Schedule Imports",
       actionText:"Import from Pirate"
 

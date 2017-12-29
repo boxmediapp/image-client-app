@@ -30,9 +30,9 @@ export default class AppLogin extends Component {
                 appdata.setUserInfo(userinfo);
                 genericUtil.saveUserInfo(userinfo);
           }
-      }).catch(function(){
+      }).catch(function(error){
              that.props.onLoginFail();
-      });
+      });  
   }
 
       buildGlobalInputConfig(){

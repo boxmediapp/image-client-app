@@ -50,6 +50,7 @@ export default class App extends Component{
        var userinfo= appdata.getUserInfo();
        if(!userinfo){
           if(this.state.userinfo){
+            api.logout(this.state.userinfo);
             this.setState(Object.assign({}, this.state, {userinfo:null,loading:false}));
             genericUtil.signout();
           }
@@ -75,7 +76,7 @@ export default class App extends Component{
           var loading=false;
           this.setState(Object.assign({}, this.state, {userinfo,loading}));
        }
-       genericUtil.startRefreshLoginThread(userinfo);
+       genericUtil.startRefreshLoginThread(userinfo,api.refreshLogin.bind(api), appdata);
   }
 
 

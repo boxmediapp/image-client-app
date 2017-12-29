@@ -15,7 +15,7 @@ import {AppHeader,ModalDialog} from "../components";
 import "./styles/index.css";
 
 import {styles} from "./styles";
-export  default class ScheduleImportView extends Component {
+export  default class ManageImportScheduleView extends Component {
     constructor(props){
       super(props);
       this.state={modalMessage:null, tasks:[], channels:[]};
