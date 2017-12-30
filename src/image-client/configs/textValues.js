@@ -35,7 +35,7 @@ const textValues={
 
       },
       imageSearch:{
-        link:"/image-app/client-image-search",
+        link:"/image-app/client-image/search-image",
         linkText:"Images",
         actionText:"Search Images"
       },
@@ -47,5 +47,19 @@ const textValues={
         link:"/",
         linkText:"Sign out"
       },
+      apiAccessHelp:{
+        link:"/image-app/image-client/api-help",
+        linkText:"Image API",
+        actionText:"Image API",
+        content:{
+            title:"Image API",
+            p1:["You need  a pair of a Client ID and a Client Secret to access the Box Image API.",
+                "Your client ID and client Secret, and the services endpoint:"]
+        }
+      },
+      noServices:{
+          link:"/image-app/services",
+          title:"Service Not Permitted"
+      }
   };
 export default textValues;

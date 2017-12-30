@@ -3,29 +3,29 @@ const textValues={
     uploadHDImageText:["Drop an image here",
                 "Requires: 1920 x 1080"],
     newepisodes:{
-      link:"/image-app/new-episodes",
+      link:"/image-app/services/new-episodes",
       linkText:"Assign Images",
       actionText:"Assign Images"
     },
     listScheduleEpisodes:{
-      link:"/image-app/schedule-episodes",
-      linkText:"Schedule View",
-      actionText:"Schedule View"
+      link:"/image-app/services/schedule-episodes",
+      linkText:"Schedules",
+      actionText:"Episodes by TX"
     },
     imagesets:{
-       link:"/image-app/image-sets",
+       link:"/image-app/services/image-sets",
        linkText:"Image Sets",
        norecords:"No assigned images",
        actionText:"Edit Image Sets"
     },
     assignedEpisodes:{
-       link:"/image-app/assigned-episodes",
+       link:"/image-app/services/assigned-episodes",
        linkText:"Edit Images",
        norecords:"No images found",
        actionText:"Edit Images"
     },
     admin:{
-              link:"/image-app/admin",
+              link:"/image-app/services/admin",
               linkText:"Admin",
               actionText:"Admin"
         },
@@ -58,27 +58,27 @@ const textValues={
        }
     },
     assignImageByEpisode:{
-        link:"/image-app/assign-image/new-episodes",
+        link:"/image-app/services/assign-image/new-episodes",
         linkText:"Assign Image"
     },
     manageUser:{
           linkText:"Users Manager",
           actionText:"Manage Users",
-          link:"/image-app/manage-users",
+          link:"/image-app/services/manage-users",
     },
     manageCache:{
-      link:"/image-app/manage-cache",
+      link:"/image-app/services/manage-cache",
       linkText:"Manage Cache",
       actionText:"Purge Image Cache"
     },
     manageSchduleImport:{
-      link:"/image-app/manage-schedule-imports",
+      link:"/image-app/services/manage-schedule-imports",
       linkText:"Schedule Imports",
       actionText:"Import from Pirate"
 
     },
     assignImageByContractAndEpidodeNumber:{
-         link:"/image-app/assign-image/contract-episode-number",
+         link:"/image-app/services/assign-image/contract-episode-number",
          actionText:"Edit",
          linkText:"Edit"
     },

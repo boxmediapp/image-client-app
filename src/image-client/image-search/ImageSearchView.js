@@ -15,12 +15,16 @@ export default class ImageSearchView extends Component{
 
     constructor(props){
           super(props);
+         this.state={images:[], programmeNumber:null,search:null,loading:false};
+    }
+    componentWillMount(){
           this.bindToQueryParameters();
     }
-
     bindToQueryParameters(){
          var programmeNumber=genericUtil.getQueryParam(this.props.location.search, "programmeNumber");
-         this.state={images:[], programmeNumber,loading:true};
+         var search=genericUtil.getQueryParam(this.props.location.search, "search");
+
+         this.setState(Object.assign({}, this.state,{programmeNumber,search,loading:true}));
 
          this.searchByProgrammeNumber(programmeNumber);
 
@@ -28,7 +32,14 @@ export default class ImageSearchView extends Component{
     }
     searchByProgrammeNumber(programmeNumber){
       this.setLoading(true);
-      api.getClientImages(programmeNumber).then(images =>{
+      api.getClientImages({programmeNumber}).then(images =>{
+            this.setLoading(false);
+             this.setImages(images);
+       });
+    }
+    searchBySearch(search){
+      this.setLoading(true);
+      api.getClientImages({search}).then(images =>{
             this.setLoading(false);
              this.setImages(images);
        });
@@ -46,7 +57,7 @@ export default class ImageSearchView extends Component{
                <AppHeader selected="clientsView"/>
                <div style={AppHeader.styles.content}>
                  <div style={styles.listHeader}>
-                     <SearchBox search={this.state.programmeNumber} startSearch={this.searchByProgrammeNumber.bind(this)}/>
+                     <SearchBox search={this.state.search} startSearch={this.searchBySearch.bind(this)}/>
                      <LoadingIcon loading={this.state.loading}/>
                  </div>
 

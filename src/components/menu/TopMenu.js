@@ -131,6 +131,7 @@ class LogoutMenuItem extends Component{
   }
   logout(){
         appdata.setUserInfo(null);
+
   }
   onHover(){
     this.setState({hover: true})
@@ -141,9 +142,10 @@ class LogoutMenuItem extends Component{
   render(){
     var linkText=textValues.logout.linkText;
     return(
-        <a href="#" style={styles.menuItem(false, this.state.hover)}
+        <a href="/" style={styles.menuItem(false, this.state.hover)}
           onMouseEnter={this.onHover.bind(this)} onMouseLeave={this.offHover.bind(this)}  onClick={(evt) => {
                    this.logout();
+                   return false;
                }}>
               {linkText}
         </a>

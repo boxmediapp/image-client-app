@@ -29,6 +29,10 @@ export  default class Home extends Component {
                                 content={textValues.imageSearch.actionText}
                                 link={textValues.imageSearch.link}/>
 
+                      <BigButton label={textValues.apiAccessHelp.linkText}
+                                          content={textValues.apiAccessHelp.actionText}
+                                          link={textValues.apiAccessHelp.link}/>
+
 
 
 

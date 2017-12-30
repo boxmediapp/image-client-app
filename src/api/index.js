@@ -10,6 +10,7 @@ class ServiceAPI {
    constructor(config,appdata){
       this.config=config;
       this.appdata=appdata;
+      this.clientImagePath="image-service/clients/images";
    }
    executeHTTPGetRequestWithHeaders(path, headers){
      if(!headers){
@@ -142,6 +143,9 @@ class ServiceAPI {
     updateUserAccount(userAccount){
         return this.doPostRequest("accounts/user-account", JSON.stringify(userAccount));
     }
+    getUserAccount(){
+        return this.doGetRequest("accounts/user-account");
+    }
 
     loadConfig(){
            return this.doGetRequest("app/info").then(function(data){
@@ -253,12 +257,18 @@ class ServiceAPI {
          getSummaries(){
                return this.doGetRequest("image-service/summaries");
          }
-         getClientImages(programmeNumber){
-             if(programmeNumber){
-               return this.doGetRequest("image-service/clients/images?programmeNumber="+programmeNumber);
+         getClientImages(request){
+             if(!request){
+               return this.doGetRequest(this.clientImagePath);
+             }
+             else if(request.programmeNumber){
+               return this.doGetRequest(this.clientImagePath+"?programmeNumber="+request.programmeNumber);
+             }
+             else if(request.search){
+               return this.doGetRequest(this.clientImagePath+"?search="+request.search);
              }
              else{
-               return this.doGetRequest("image-service/clients/images");
+               return this.doGetRequest(this.clientImagePath);
              }
 
          }

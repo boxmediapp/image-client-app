@@ -12,6 +12,8 @@ import {Home} from "./home";
 import {appdata,store} from "../store";
 import DisplayTAndC from "./DisplayTAndC";
 import {genericUtil} from "../utils";
+import {ApiAccessDocumentationView} from "./api-access-documentation";
+import {NoServicesView} from "./no-services";
 
 
 export default class ImageClientApp extends Component{
@@ -25,15 +27,18 @@ export default class ImageClientApp extends Component{
       var userInfo=appdata.getUserInfo();
       userInfo.userStatus="accepted";
       appdata.setUserInfo(userInfo);
-
+      genericUtil.saveUserInfo(userInfo);
       this.setState(Object.assign({}, this.state, {userInfo}));
   }
   renderApp(){
+    
     return (
           <Router>
               <div className="topContainer">
                   <Route  path={textValues.home.link} exact component={Home}/>
                   <Route path={textValues.imageSearch.link} component={ImageSearchView}/>
+                  <Route path={textValues.apiAccessHelp.link} component={ApiAccessDocumentationView}/>
+                  <Route path={textValues.noServices.link} component={NoServicesView}/>
               </div>
 
           </Router>

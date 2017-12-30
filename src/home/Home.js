@@ -36,6 +36,10 @@ export  default class Home extends Component {
               <div style={AppHeader.styles.content}>
 
                   <div className="dataContainer">
+                    <BigButton label={textValues.listScheduleEpisodes.linkText}
+                             content={textValues.listScheduleEpisodes.actionText}
+                             link={textValues.listScheduleEpisodes.link}/>
+
                       <BigButton label={textValues.newepisodes.linkText}
                                content={textValues.newepisodes.actionText}
                                link={textValues.newepisodes.link}/>
