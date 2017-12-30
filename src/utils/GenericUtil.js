@@ -1,5 +1,4 @@
 //var episodeId=genericUtil.getPathVariable(this.props.location.pathname,textValues.episode.view.link);
-
 export default class GenericUtil{
   getQueryParam(query,variable) {
     if(!query){
@@ -21,6 +20,14 @@ export default class GenericUtil{
     }
     var ret=path.substring(ind+basepath.length);
     return this.removePrefix(ret,"/");
+  }
+  getPathName(){
+    if(window.location && window.location.pathname){
+        return window.location.pathname;
+    }
+    else{
+      return window.location.pathname;
+    }
   }
   removePrefix(content,prefix){
     if(content.length<prefix.length){
@@ -123,26 +130,70 @@ export default class GenericUtil{
       var cred=this.encrypt(userInfoString,key);
       localStorage.setItem('imageUser', cred);
   }
-  isUserInfoValid(userinfo){
-                      if(  userinfo && userinfo.clientId && userinfo.clientSecret){
-                            var expiresAt=userinfo.expiresAt;
-                            var now=new Date();
-                            if(now.getTime()>=expiresAt){
-                              console.warn("user info is expired");
-                              this.signout();
-                              return false;
-                            }
-                            else{
-                              return true;
-                            }
-                      }
-                      else{
-                        return false;
-                      }
+
+
+
+isUserInfoValid(userinfo){
+     if(!userinfo){
+       return false;
+     }
+    var expiresAt=userinfo.expiresAt;
+    var now=new Date();
+    return  userinfo.clientId && userinfo.clientSecret && now.getTime()<expiresAt;
+}
+
+signout(){
+      this.stopRefreshLoginThread();
+      if(localStorage.getItem("imageUser")){
+            localStorage.removeItem("imageUser");
+      }
+}
+stopRefreshLoginThread(){
+  if(this.refreshLoginTimer){
+      clearInterval(this.refreshLoginTimer);
+      this.refreshLoginTimer=null;
   }
-  signout(){
-        localStorage.removeItem("imageUser");
-  }
+}
+
+
+startRefreshLoginThread(userinfo, refreshLogin, appdata){
+    this.stopRefreshLoginThread();
+    if(!userinfo){
+          return;
+    }
+    if(!userinfo.durationInSeconds){
+              return;
+    }
+    if(userinfo.durationInSeconds<45){
+      return;
+    }
+
+    var refreshInterval=userinfo.durationInSeconds-30;
+    if(refreshInterval<0){
+        refreshInterval=30;
+    }
+    this.refreshLoginTimer=setInterval(()=>{
+                refreshLogin(userinfo).then(operator=>{
+                        var newuserinfo=operator.loginInfo;
+                        this.saveUserInfo(newuserinfo);
+                        var appuserinfo=appdata.getUserInfo();
+                        if(!appuserinfo){
+                              appdata.setUserInfo(newuserinfo);
+                        }
+                        if(newuserinfo.application!==userinfo.application){
+                            appdata.setUserInfo(newuserinfo);
+                        }
+                        return operator;
+                }).catch(error=>{
+                    console.error(error+" while refreshing login info");
+                    this.stopRefreshLoginThread();
+                    var us=appdata.getUserInfo();
+                    if(us){
+                      appdata.setUserInfo(null);
+                    }
+                });
+    },refreshInterval*1000);
+}
   loadUserInfo(){
         var imageCred=localStorage.getItem("imageUser");
         if(!imageCred){
@@ -251,7 +302,6 @@ export default class GenericUtil{
         }
         return {fromDate,toDate};
   }
-
 
 }
 

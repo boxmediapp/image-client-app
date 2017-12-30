@@ -5,6 +5,7 @@ import {textValues} from "../configs";
 
 import  "./styles/DisplayLogin.css";
 import {genericUtil} from "../utils";
+import {styles} from "./styles";
 export  default class DisplayLogin extends Component {
   constructor(props){
     super(props);
@@ -33,6 +34,7 @@ export  default class DisplayLogin extends Component {
 
                 <div style={LoginAppHeader.styles.content}>
                           <AppLogin onLoginFail={this.onLoginFail.bind(this)}/>
+                          <SubscriptionLink/>
                           <DisplayMessage message={this.state.message}/>
 
                 </div>
@@ -54,5 +56,21 @@ class DisplayMessage extends Component{
     else{
       return null;
     }
+  }
+}
+
+
+class SubscriptionLink extends Component{
+  render(){
+      return (
+        <div className="content">
+            <div   style={styles.subscription}>
+                <a href={textValues.signup.link}>{textValues.signup.linkText}</a>
+
+            </div>
+        </div>
+
+      )
+
   }
 }

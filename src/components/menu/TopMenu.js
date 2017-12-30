@@ -71,18 +71,16 @@ class ListMenuItems extends Component{
 
   render(){
      if(styles.mql.matches || this.props.menuPressed){
-
+        var userinfo= appdata.getUserInfo();
+        var isImageApp=userinfo.application==="boxmedia";
        return(
            <div style={styles.menuItems()}>
-             <MenuItem {...this.props} displayItem="home" selected={this.props.selected}/>
-             <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}/>
-             <MenuItem  {...this.props} displayItem="listScheduleEpisodes" selected={this.props.selected}/>
-
-             <MenuItem  {...this.props} displayItem="assignedEpisodes" selected={this.props.selected}/>
-             <MenuItem  {...this.props} displayItem="clientsView" selected={this.props.selected}/>
+             <MenuItem {...this.props} displayItem="home" selected={this.props.selected} render={true}/>
+             <MenuItem  {...this.props} displayItem="newepisodes" selected={this.props.selected}  render={isImageApp}/>
+             <MenuItem  {...this.props} displayItem="listScheduleEpisodes" selected={this.props.selected} render={isImageApp}/>
+             <MenuItem  {...this.props} displayItem="assignedEpisodes" selected={this.props.selected} render={isImageApp}/>
+             <MenuItem  {...this.props} displayItem="admin" selected={this.props.selected} render={isImageApp}/>
              <LogoutMenuItem/>
-
-
          </div>
 
            );
@@ -107,6 +105,9 @@ class MenuItem extends Component{
     this.setState({hover: false})
   }
   render(){
+    if(!this.props.render){
+      return null;
+    }
     var link=textValues[this.props.displayItem].link;
     if(!link){
       link="/";
@@ -129,8 +130,8 @@ class LogoutMenuItem extends Component{
     this.state={hover:false}
   }
   logout(){
-    genericUtil.signout();
-    appdata.setUserInfo(null);
+        appdata.setUserInfo(null);
+
   }
   onHover(){
     this.setState({hover: true})
@@ -141,9 +142,10 @@ class LogoutMenuItem extends Component{
   render(){
     var linkText=textValues.logout.linkText;
     return(
-        <a href="#" style={styles.menuItem(false, this.state.hover)}
+        <a href="/" style={styles.menuItem(false, this.state.hover)}
           onMouseEnter={this.onHover.bind(this)} onMouseLeave={this.offHover.bind(this)}  onClick={(evt) => {
                    this.logout();
+                   return false;
                }}>
               {linkText}
         </a>

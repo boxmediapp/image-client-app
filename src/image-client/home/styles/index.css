@@ -1,0 +1,16 @@
+
+.dataContainer{
+  margin-top: 20px;
+  margin-left: 0px;
+  flex-direction: row;
+  justify-content: flex-start;
+
+
+
+  display: -webkit-flex; /* Safari */
+   -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+   display: flex;
+   flex-wrap: wrap;
+
+
+}

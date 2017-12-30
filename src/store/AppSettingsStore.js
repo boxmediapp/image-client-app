@@ -10,19 +10,8 @@ export default class AppSettingsStore{
   getUserInfo(){
     return this.store.getState().userSettings.userinfo;
   }
-  buildAuthorization(clientId,clientSecret){
-    return "Basic " + btoa(clientId+":"+clientSecret)
-  }
-  getAuthorization(){
-    var clientId=this.store.getState().userSettings.userinfo.clientId;
-    var clientSecret=this.store.getState().userSettings.userinfo.clientSecret;
-    if(!clientId || !clientSecret){
-      return null;
-    }
-    else{
-      return this.buildAuthorization(clientId,clientSecret);
-    }
-  }
+  
+
   setAppConfig(appconfig){
     this.store.dispatch(applicationSettings.actions.appconfig(appconfig));
   }

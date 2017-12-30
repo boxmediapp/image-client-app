@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import {AppLogin,LoginAppHeader,LoadingIcon} from "../components";
+import {AppLogin,LoginAppHeader,LoadingIcon,MessageDialog} from "../components";
 import {textValues} from "../configs";
 
 
@@ -14,6 +14,7 @@ export default class LoadingScreen extends Component {
 
                 <div style={LoginAppHeader.styles.content}>
                             <LoadingIcon loading="true"/>
+
                 </div>
           </div>
                 );
