@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 
-import {AppLogin,LoginAppHeader} from "../components";
+import {AppLogin} from "../components";
+import AppHeader from "./app-header/AppHeader"
 import {textValues} from "../configs";
 
 import  "./styles/DisplayLogin.css";
@@ -30,9 +31,9 @@ export  default class DisplayLogin extends Component {
     render() {
         return (
         <div>
-          <LoginAppHeader/>
+          <AppHeader/>
 
-                <div style={LoginAppHeader.styles.content}>
+                <div style={AppHeader.styles.content}>
                           <AppLogin onLoginFail={this.onLoginFail.bind(this)}/>
                           <SubscriptionLink/>
                           <DisplayMessage message={this.state.message}/>

@@ -1,7 +1,11 @@
 const textValues={
-    title:"Box Media Image",
+    title:"Box Image Asset Mager",
     uploadHDImageText:["Drop an image here",
                 "Requires: 1920 x 1080"],
+    signin:{
+        title:"Sign in"
+    },
+
     newepisodes:{
       link:"/image-app/services/new-episodes",
       linkText:"Assign Images",
@@ -49,7 +53,7 @@ const textValues={
          company:"The company field is a required field",
        },
        welcome:{
-            title:"Welcome to the Box Image Application",
+            title:"Welcome to the Box Image Asset Manager",
             content:["You can now sign in using your email address as your user name and the password you have specified. Please click",
               "here",
               " to continue"

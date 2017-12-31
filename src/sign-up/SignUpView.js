@@ -9,12 +9,13 @@ import {
 } from 'react-router-dom'
 
 
-import {LoginAppHeader,ModalDialog} from "../components";
+import {ModalDialog} from "../components";
+import AppHeader from "./app-header/AppHeader";
 import {appdata,store} from "../store";
 import {styles} from "./styles";
 import {textValues} from "../configs";
 import {LoadingScreen} from "../loading-screen";
-
+import "./styles/index.css";
 
 export  default class SignUpView extends Component {
   constructor(props){
@@ -159,9 +160,9 @@ export  default class SignUpView extends Component {
 renderForm(){
   return (
     <div>
-        <LoginAppHeader selected="home"/>
+        <AppHeader selected="home"/>
 
-        <div style={LoginAppHeader.styles.content}>
+        <div style={AppHeader.styles.content}>
                    <div style={styles.contentContainer}>
                       <div style={styles.formContainer}>
                           <div style={styles.title}>Create Your Account</div>
@@ -200,10 +201,11 @@ renderForm(){
                               this.setCompany(evt.target.value);
                             }} value={this.state.company}/>
                           </div>
-
-                           <button type="submit" className="btn btn-primary btn-normal"onClick={(evt) => {
+                          <div className="form-group">
+                           <button type="submit" className="btn btn-primary btn-block createAccountButton"onClick={(evt) => {
                                     this.createAccount();
                                 }}>Create Account</button>
+                            </div>
 
                       </div>
                       <div style={styles.globalInputContainer}>
@@ -227,8 +229,8 @@ renderAccountCreated(){
 
 
     <div>
-        <LoginAppHeader selected="home"/>
-          <div style={LoginAppHeader.styles.content}>
+        <AppHeader selected="home"/>
+          <div style={AppHeader.styles.content}>
                      <div style={styles.contentContainer}>
                           <div style={styles.contentContainer}>
                               <div style={styles.formContainer}>

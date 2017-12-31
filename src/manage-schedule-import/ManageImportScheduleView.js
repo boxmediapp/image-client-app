@@ -7,8 +7,9 @@ import {
   Link
 } from 'react-router-dom'
 
-import {textValues} from "../configs";
+import {textValues,config} from "../configs";
 import {genericUtil} from "../utils";
+
 
 import {AppHeader,ModalDialog} from "../components";
 
@@ -26,7 +27,7 @@ export  default class ManageImportScheduleView extends Component {
       this.startLoadChannels();
     }
     startLoadTasks(){
-      api.getTasks().then(tasks=>{
+      api.getTasks(config.importScheduleType).then(tasks=>{
           this.setTasks(tasks);
       }).catch(error=>{
         this.setErrorMessage("failed to load the tasks:"+error);

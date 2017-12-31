@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 
-import {config} from "../../configs";
+import {config,textValues} from "../../configs";
 
 import {CodeDataRenderer} from "global-input-react";
 import  "./styles/LoginForm.css";
@@ -32,7 +32,7 @@ export default class AppLogin extends Component {
           }
       }).catch(function(error){
              that.props.onLoginFail();
-      });  
+      });
   }
 
       buildGlobalInputConfig(){
@@ -103,32 +103,25 @@ class DisplaySignInForm extends Component{
   render(){
     return(
     <div className="loginForm">
-       <div className="loginTitle">LOGIN</div>
-       <div className="content">
-            <div className="row">
-               <div className="col-sm-12">
-                  <label htmlFor="username">Username:</label>
+       <div className="loginTitle">{textValues.signin.title}</div>
+            <div className="loginFieldContainer">
+                  <label htmlFor="username">Username/Email address:</label>
                   <input type="text" className="form-control" id="username" placeholder="Username" name="username"  onChange={(evt) => {
                   this.props.setUsername(evt.target.value);
                 }} value={this.props.username}/>
-               </div>
+            </div>
 
-               <div className="col-sm-12">
+            <div>
                   <label htmlFor="password">Password:</label>
                   <input type="password" className="form-control" id="password" placeholder="Password" name="password" onChange={(evt) => {
                         this.props.setPassword(evt.target.value);
                         }} value={this.props.password} />
-               </div>
-               <div className="col-sm-12">
+            </div>
+            <div>
                   <button type="button" className="btn btn-primary btn-block" onClick={(evt) => {
                            this.props.login();
                        }}>Login</button>
-               </div>
             </div>
-       </div>
-
-
-
     </div>
   );
 

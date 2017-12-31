@@ -8,6 +8,7 @@ var config={
         return this.base+path;
       }
     },
+    importScheduleType:'IMPORT_BOX_EPISODE',
     normalImageWidth:533,
     normalImageHeight:300
 }
