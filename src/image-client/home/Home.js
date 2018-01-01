@@ -9,7 +9,7 @@ import {
 import  "./styles/index.css";
 import {textValues} from "../configs";
 import {BigButton} from "../../components";
-import {AppHeader} from "../menu";
+import {AppHeader} from "../app-header";
 
 
 export  default class Home extends Component {

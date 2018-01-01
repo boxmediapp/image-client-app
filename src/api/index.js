@@ -12,20 +12,52 @@ class ServiceAPI {
       this.appdata=appdata;
       this.clientImagePath="image-service/clients/images";
    }
+   handleHttpResponse(response){
+      if(!response){
+            throw  Error("Network Error");
+      }
+      if(response.status && response.status>=200 && response.status<300){
+            return response.text();
+      }
+      return response.text().then(text=>{
+            var errorMessage=text;
+            var errorObj=null;
+            try{
+                  errorObj=JSON.parse(text);
+                  if(errorObj.error){
+                      errorMessage=errorObj.error;
+                  }
+              }
+              catch(perror){
+                console.error(perror+" when parsing:"+text);
+              }
+              if((!errorMessage)|| (errorMessage.trim().length===0)){
+                    errorMessage="Empty response is received from the server";
+              }
+              else if(errorMessage.length>80){
+                    errorMessage=errorMessage.substring(0,80)+"...";
+              }
+              let error = Error(errorMessage);
+              error.response = response;
+              error.errorObj=errorObj;
+              throw error;
+      });
+   }
+   converdHttpBodyToJson(body){
+     try{
+          return JSON.parse(body);
+      }
+      catch(error){
+        console.error(error+" error in parsing JSON:"+body);
+        throw new Error("Error parsing the json");
+      }
+   }
    executeHTTPGetRequestWithHeaders(path, headers){
      if(!headers){
        headers={};
      }
     return fetch(this.config.api.getUrl(path),{headers})
-    .then(function(response) {
-      if((!response) || response.status>=400){
-          console.error("failure response on get request:"+path);
-          throw Error("HTTP get request response error on:"+path);
-      }
-          return response.text();
-    }).then(function(body) {
-        return JSON.parse(body);
-    });
+    .then(this.handleHttpResponse.bind(this)).then(this.converdHttpBodyToJson.bind(this));
   };
 
 
@@ -34,15 +66,8 @@ class ServiceAPI {
        headers={};
      }
     return fetch(this.config.api.getUrl(path),{headers, method:"POST", body})
-    .then(function(response) {
-      if((!response) || response.status>=400){
-          console.error("failure response on post request:"+path);
-          throw Error("HTTP post request response error on:"+path);
-      }
-          return response.text();
-    }).then(function(body) {
-        return JSON.parse(body);
-    });
+    .then(this.handleHttpResponse.bind(this)).then(this.converdHttpBodyToJson.bind(this));
+
    }
 
    executeHTTPPutRequestWithHeaders(path, headers, body){
@@ -50,15 +75,8 @@ class ServiceAPI {
        headers={};
      }
     return fetch(this.config.api.getUrl(path),{headers, method:"PUT", body})
-    .then(function(response) {
-      if((!response) || response.status>=400){
-          console.error("failure response on put request:"+path);
-          throw Error("HTTP put request response error on:"+path);
-      }
-          return response.text();
-    }).then(function(body) {
-        return JSON.parse(body);
-    });
+    .then(this.handleHttpResponse.bind(this)).then(this.converdHttpBodyToJson.bind(this));
+
   }
 
 
@@ -67,16 +85,7 @@ class ServiceAPI {
        headers={};
      }
     return fetch(this.config.api.getUrl(path),{headers,method:"DELETE"})
-    .then(function(response) {
-          if((!response) || response.status>=400){
-              console.error("failure response on delete request:"+path);
-              throw Error("HTTP response error on:"+path);
-          }
-
-          return response.text();
-    }).then(function(body) {
-        return JSON.parse(body);
-    });
+    .then(this.handleHttpResponse.bind(this)).then(this.converdHttpBodyToJson.bind(this));
   }
 
   buildHttpHeader(checkExpiration){
@@ -275,9 +284,9 @@ class ServiceAPI {
          sendCommand(command){
             return this.doPostRequest("commands", JSON.stringify(command));
          }
-         getTasks(){
-            return this.doGetRequest("tasks?importScheduleType=IMPORT_BOX_EPISODE");
-         }
+         getTasks(importScheduleType){
+              return this.doGetRequest("tasks?importScheduleType="+importScheduleType);
+          }
          createTask(task){
            return this.doPostRequest("tasks", JSON.stringify(task));
          }

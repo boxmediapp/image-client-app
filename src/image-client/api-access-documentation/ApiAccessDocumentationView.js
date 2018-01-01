@@ -12,7 +12,7 @@ import {textValues,config} from "../configs";
 import {api} from "../../api";
 import {styles} from "./styles";
 import ReactMarkdown from "react-markdown";
-import {AppHeader} from "../menu";
+import {AppHeader} from "../app-header";
 
 export  default class ApiAccessDocumentationView extends Component {
 
@@ -55,7 +55,7 @@ export  default class ApiAccessDocumentationView extends Component {
         return (
 
              <div>
-                  <AppHeader selected="help"/>
+                  <AppHeader selected="apiAccessHelp"/>
                   <div style={AppHeader.styles.content}>
                              <div style={styles.contentContainer}>
                                           <div className="content">
@@ -79,7 +79,7 @@ export  default class ApiAccessDocumentationView extends Component {
                                                   </div>
                                                   <div style={styles.detailsRow}>
                                                       <div style={styles.detailsLabel}>Accepted parameters:</div>
-                                                      <div style={styles.detailsValue}>ProgrammeNumber, search</div>                                                      
+                                                      <div style={styles.detailsValue}>ProgrammeNumber, search</div>
                                                   </div>
 
                                           </div>

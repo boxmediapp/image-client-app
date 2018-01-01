@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 
 
 import {imageUtil,genericUtil} from "../../utils";
+import {appdata} from "../../store";
 
 import {api} from "../../api";
 import {textValues} from "../../configs";
@@ -87,8 +88,8 @@ export  default class ImageUploader extends Component {
   setTimeout(()=>{
     this.props.onComplete(this.state);
     this.initSate();
-  },1000);  
-    
+  },1000);
+
 
   }
   onUploadError(result){
@@ -124,15 +125,20 @@ export  default class ImageUploader extends Component {
   }
 
   render() {
+       var userinfo=appdata.getUserInfo();
         if(this.state.imagePreviewUrl){
               return this.renderPreviewImage();
         }
+        else if(!genericUtil.doesUserHasFullAccess(userinfo)){      
+              return this.renderMissingUploadPermission();
+        }
         else if(this.props.image){
-               return this.renderImage();               
+               return this.renderImage();
         }
         else{
-               return this.renderDropPlaceHolder();
-        }          
+
+                return this.renderDropPlaceHolder();
+        }
   }
   renderDropPlaceHolder(){
     return (
@@ -147,8 +153,17 @@ export  default class ImageUploader extends Component {
       </div>
     );
   }
+
+  renderMissingUploadPermission(){
+    return (
+      <div style={styles.dropzone()}>
+            {textValues.uploadPermissonError}
+
+      </div>
+    );
+  }
   renderPreviewImage(){
-        var {width,height,progressValue,progressTotal,imagePreviewUrl}=this.state;    
+        var {width,height,progressValue,progressTotal,imagePreviewUrl}=this.state;
         return(
                 <div style={styles.previewImageContainer}>
                       <div  className="dropzone">
@@ -160,7 +175,7 @@ export  default class ImageUploader extends Component {
                       <div  style={styles.imageFooter}>
                                <DisplayUploadButton onUpload={this.onUpload.bind(this)} progressValue={this.state.progressValue}
                                progressTotal={this.state.progressTotal}/>
-                               
+
                       </div>
                 </div>
             );
@@ -176,7 +191,7 @@ export  default class ImageUploader extends Component {
                             <div style={styles.previewText}>Requires: {width} x {height}</div>
                      </Dropzone>
                  </div>
-                 <div  style={styles.imageFooter}>                        
+                 <div  style={styles.imageFooter}>
                      <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={(evt) => {
                          this.props.setEditImageMode(false);
                      }}>Cancel</button>
@@ -189,7 +204,7 @@ export  default class ImageUploader extends Component {
 
 
 class DisplayUploadButton extends Component{
-  
+
   render(){
     if(this.props.progressTotal){
       return null;
@@ -197,9 +212,6 @@ class DisplayUploadButton extends Component{
     return(
       <button type="button" className="btn btn-primary btn-normal imageControlButton" onClick={this.props.onUpload}>Upload</button>
     );
-    
+
   }
 }
-
-
-

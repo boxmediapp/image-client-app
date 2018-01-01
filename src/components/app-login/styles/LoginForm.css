@@ -3,25 +3,37 @@
   display:flex;
   flex-direction: row;
   justify-content: center;
-  color:white;
+  color:#888888;
   align-items: center;
-  background-color: #396BBC;
-  font-size: 36px;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+.loginFieldContainer{
+  margin-bottom: 30px;
+
 }
 
 .formContainer {
   background: #ffffff;
   max-width: 320px;
   width: 100%;
-  border-top: 5px solid #33b5e5;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+
+
   margin: 0 auto;
   dispay:flex;
   flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  box-shadow: 10px 10px 5px #888888;
 }
-.loginForm{
-    background-color: #B9C6DB;
-    box-shadow: 10px 10px 5px #888888;
+.loginForm button{
+
+  margin-top: 20px;
+  background-color: rgb(70, 104, 140);
+
 }
 .globalInputText{
   font-size: 10px;
@@ -29,5 +41,5 @@
   text-transform: none;
   font-weight: 300;
   padding-left: 150px;
-  
+
 }

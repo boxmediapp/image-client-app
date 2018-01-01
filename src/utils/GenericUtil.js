@@ -141,7 +141,21 @@ isUserInfoValid(userinfo){
     var now=new Date();
     return  userinfo.clientId && userinfo.clientSecret && now.getTime()<expiresAt;
 }
-
+doesUserHasFullAccess(userinfo){
+    if(!userinfo){
+         return false;
+    }
+    if(!userinfo.roles){
+      return false;
+    }
+    var hasWriteAccess=false;
+    userinfo.roles.forEach(role=>{
+        if(role.operationAccess==="admin" || role.operationAccess==="full-access"){
+              hasWriteAccess=true;
+        }
+    });
+    return hasWriteAccess;
+}
 signout(){
       this.stopRefreshLoginThread();
       if(localStorage.getItem("imageUser")){

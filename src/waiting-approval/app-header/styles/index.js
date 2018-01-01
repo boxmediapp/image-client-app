@@ -55,7 +55,8 @@ export const styles={
      backgroundColor:"#E6E6E6",
      padding:20,
      paddingBottom:100,
-     paddingTop:50
+     paddingTop:50,
+     minHeight:window.innerHeight-120,
    },
 
    logo:{

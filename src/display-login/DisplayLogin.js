@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 
-import {AppLogin,LoginAppHeader} from "../components";
+import {AppLogin} from "../components";
+import AppHeader from "./app-header/AppHeader"
 import {textValues} from "../configs";
 
 import  "./styles/DisplayLogin.css";
@@ -24,15 +25,15 @@ export  default class DisplayLogin extends Component {
      this.setState(Object.assign({}, this.state,{message}));
   }
 
-  onLoginFail(){
-        this.setErrorMessage("Login failed");
+  onLoginFail(error){
+        this.setErrorMessage("Failed to sign in");
   }
     render() {
         return (
         <div>
-          <LoginAppHeader/>
+          <AppHeader/>
 
-                <div style={LoginAppHeader.styles.content}>
+                <div style={AppHeader.styles.content}>
                           <AppLogin onLoginFail={this.onLoginFail.bind(this)}/>
                           <SubscriptionLink/>
                           <DisplayMessage message={this.state.message}/>
@@ -66,7 +67,6 @@ class SubscriptionLink extends Component{
         <div className="content">
             <div   style={styles.subscription}>
                 <a href={textValues.signup.link}>{textValues.signup.linkText}</a>
-
             </div>
         </div>
 

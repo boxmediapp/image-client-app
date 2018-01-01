@@ -1,4 +1,7 @@
-const textValues={
+import {textValues as appTextValues} from "../../configs";
+
+
+const ptextValues={
       tc:{
         title:"IMAGE USE TERMS AND CONDITIONS",
         content:{
@@ -62,4 +65,7 @@ const textValues={
           title:"Service Not Permitted"
       }
   };
+
+var textValues=Object.assign({},appTextValues,ptextValues);
+
 export default textValues;

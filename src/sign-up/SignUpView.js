@@ -9,12 +9,13 @@ import {
 } from 'react-router-dom'
 
 
-import {LoginAppHeader,ModalDialog} from "../components";
+import {ModalDialog} from "../components";
+import AppHeader from "./app-header/AppHeader";
 import {appdata,store} from "../store";
 import {styles} from "./styles";
 import {textValues} from "../configs";
 import {LoadingScreen} from "../loading-screen";
-
+import "./styles/index.css";
 
 export  default class SignUpView extends Component {
   constructor(props){
@@ -148,7 +149,21 @@ export  default class SignUpView extends Component {
          this.setState(Object.assign({}, this.state,{loading:false,created:true}));
        }).catch(error=>{
          this.setState(Object.assign({}, this.state,{loading:false,created:false}));
-         this.setErrorMessage("Failed to created account:"+error);
+        if(error && error.response){
+              if(error.response.status===409){
+                  this.setErrorMessage("The email address/Username '"+this.state.email+"' already exists.");
+              }
+              else if(error.response.status===502){
+                  this.setErrorMessage("Server seems down, please try again later");
+              }
+              else{
+                  this.setErrorMessage("Server error:"+error.response.status);
+              }
+        }
+        else{
+            this.setErrorMessage("Failed to created account:"+error);
+        }
+
 
        });
     }
@@ -159,9 +174,9 @@ export  default class SignUpView extends Component {
 renderForm(){
   return (
     <div>
-        <LoginAppHeader selected="home"/>
+        <AppHeader selected="home"/>
 
-        <div style={LoginAppHeader.styles.content}>
+        <div style={AppHeader.styles.content}>
                    <div style={styles.contentContainer}>
                       <div style={styles.formContainer}>
                           <div style={styles.title}>Create Your Account</div>
@@ -200,10 +215,11 @@ renderForm(){
                               this.setCompany(evt.target.value);
                             }} value={this.state.company}/>
                           </div>
-
-                           <button type="submit" className="btn btn-primary btn-normal"onClick={(evt) => {
+                          <div className="form-group">
+                           <button type="submit" className="btn btn-primary btn-block createAccountButton"onClick={(evt) => {
                                     this.createAccount();
                                 }}>Create Account</button>
+                            </div>
 
                       </div>
                       <div style={styles.globalInputContainer}>
@@ -227,8 +243,8 @@ renderAccountCreated(){
 
 
     <div>
-        <LoginAppHeader selected="home"/>
-          <div style={LoginAppHeader.styles.content}>
+        <AppHeader selected="home"/>
+          <div style={AppHeader.styles.content}>
                      <div style={styles.contentContainer}>
                           <div style={styles.contentContainer}>
                               <div style={styles.formContainer}>
