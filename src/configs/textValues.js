@@ -2,6 +2,11 @@ const textValues={
     title:"Box Image Asset Mager",
     uploadHDImageText:["Drop an image here",
                 "Requires: 1920 x 1080"],
+    uploadPermissonError:"You do not have permission to upload image",
+    permissionError:{
+        title:"Permission Error",
+        content:"You do not have permission to do this operation!"
+    },
     signin:{
         title:"Sign in"
     },

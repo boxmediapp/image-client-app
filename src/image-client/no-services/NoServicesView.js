@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 
 import {textValues} from "../configs";
-import {AppHeader} from "../../components";
+import {AppHeader} from "../app-header";
 
 import {styles} from "./styles";
 import {genericUtil} from "../../utils";

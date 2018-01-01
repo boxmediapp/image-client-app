@@ -31,7 +31,8 @@ export default class AppLogin extends Component {
                 genericUtil.saveUserInfo(userinfo);
           }
       }).catch(function(error){
-             that.props.onLoginFail();
+             console.error(error);
+             that.props.onLoginFail("Failed to sign in");
       });
   }
 

@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 
 import {textValues} from "./configs";
-import {AppHeader} from "../components";
+import AppHeader from "./app-header/AppHeader";
 import {appdata,store} from "../store";
 import {styles} from "./styles";
 

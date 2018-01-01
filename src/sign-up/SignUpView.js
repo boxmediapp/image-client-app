@@ -149,7 +149,21 @@ export  default class SignUpView extends Component {
          this.setState(Object.assign({}, this.state,{loading:false,created:true}));
        }).catch(error=>{
          this.setState(Object.assign({}, this.state,{loading:false,created:false}));
-         this.setErrorMessage("Failed to created account:"+error);
+        if(error && error.response){
+              if(error.response.status===409){
+                  this.setErrorMessage("The email address/Username '"+this.state.email+"' already exists.");
+              }
+              else if(error.response.status===502){
+                  this.setErrorMessage("Server seems down, please try again later");
+              }
+              else{
+                  this.setErrorMessage("Server error:"+error.response.status);
+              }
+        }
+        else{
+            this.setErrorMessage("Failed to created account:"+error);
+        }
+
 
        });
     }

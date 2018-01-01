@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {ListEpisodes,ImageUploader,DisplayImateForReplace,ModalDialog} from "../components";
 import {genericUtil} from "../utils";
 
-import {episodedata,store,appdata} from "../store";
+import {store,appdata} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 import "./styles/index.css";
@@ -27,8 +27,9 @@ export default class DisplayImage extends Component{
          }
          this.setState(Object.assign({}, this.state,{modalMessage}));
       }
-      setEditImageMode(edit){
+      setEditImageMode(edit){        
         this.setState(Object.assign({}, this.state,{edit}));
+
       }
       onConfirmDeleteImage(){
         this.onClearMessage();
@@ -37,26 +38,45 @@ export default class DisplayImage extends Component{
       onCancelDeleteImage(){
         this.onClearMessage();
       }
+      checkPermission(){
+          var userinfo=appdata.getUserInfo();
+          if(genericUtil.doesUserHasFullAccess(userinfo)){
+             return true;
+          }
+          else{
+            var modalMessage={
+                   title:textValues.permissionError.title,
+                   content:textValues.permissionError.content,
+                   onConfirm:this.onClearMessage.bind(this),
+                   confirmButton:"OK"
+            }
+            this.setState(Object.assign({}, this.state,{modalMessage}));
+            return false;
+          }
+      }
       displayConfirmDeleteDialog(){
-        var modalMessage={
-               title:textValues.deleteImageDialog.title,
-               content:textValues.deleteImageDialog.content,
-               onConfirm:this.onConfirmDeleteImage.bind(this),
-               confirmButton:textValues.deleteImageDialog.confirm,
-               cancelButton:textValues.deleteImageDialog.cancel,
-               onCancel:this.onCancelDeleteImage.bind(this)
+        if(this.checkPermission()){
+          var modalMessage={
+                 title:textValues.deleteImageDialog.title,
+                 content:textValues.deleteImageDialog.content,
+                 onConfirm:this.onConfirmDeleteImage.bind(this),
+                 confirmButton:textValues.deleteImageDialog.confirm,
+                 cancelButton:textValues.deleteImageDialog.cancel,
+                 onCancel:this.onCancelDeleteImage.bind(this)
+          }
+          this.setState(Object.assign({}, this.state,{modalMessage}));
         }
-        this.setState(Object.assign({}, this.state,{modalMessage}));
-
       }
       displayConfirmCopyToMediaAppDialog(){
-        var modalMessage={
-               title:textValues.uploadToMediaAppDialog.title,
-               content:textValues.uploadToMediaAppDialog.content,
-               onConfirm:this.onClearMessage.bind(this),
-               confirmButton:textValues.uploadToMediaAppDialog.confirm,
-        }
-        this.setState(Object.assign({}, this.state,{modalMessage}));
+          if(this.checkPermission()){
+                var modalMessage={
+                       title:textValues.uploadToMediaAppDialog.title,
+                       content:textValues.uploadToMediaAppDialog.content,
+                       onConfirm:this.onClearMessage.bind(this),
+                       confirmButton:textValues.uploadToMediaAppDialog.confirm,
+                }
+                this.setState(Object.assign({}, this.state,{modalMessage}));
+          }
 
       }
       uploadImageToMediaApp(){
@@ -101,7 +121,7 @@ export default class DisplayImage extends Component{
 
                 if(this.state.image.imageBoxMediaStatus==="UPLOADED"){
                     this.state.image.imageBoxMediaStatus="CAN_UPLOAD";
-                    api.updateImage(this.state.image);    
+                    api.updateImage(this.state.image);
                 }
                 this.setState(Object.assign({}, this.state, {cacheid,edit}));
       }

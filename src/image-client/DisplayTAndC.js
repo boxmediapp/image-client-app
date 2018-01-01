@@ -9,7 +9,8 @@ import {api} from "../api";
 import "fixed-data-table-2/dist/fixed-data-table.min.css";
 
 import {textValues} from "./configs";
-import {AppHeader,ModalDialog,LoadingIcon} from "../components";
+import {ModalDialog,LoadingIcon} from "../components";
+import {AppHeader} from "./app-header";
 import {appdata,store} from "../store";
 import {styles} from "./styles";
 import ReactMarkdown from "react-markdown";

@@ -7,7 +7,7 @@ import {api} from "../api";
 import {textValues} from "../configs";
 import {styles} from './styles';
 
-import {AppHeader} from "../menu";
+import {AppHeader} from "../app-header";
 import {SearchBox,LoadingIcon,MessageDialog} from "../../components";
 
 
@@ -35,6 +35,9 @@ export default class ImageSearchView extends Component{
       api.getClientImages({programmeNumber}).then(images =>{
             this.setLoading(false);
              this.setImages(images);
+       }).catch(error=>{
+            console.log("Error in search:"+error);
+            this.setLoading(false);
        });
     }
     searchBySearch(search){
@@ -54,7 +57,7 @@ export default class ImageSearchView extends Component{
     render(){
          return (
              <div>
-               <AppHeader selected="clientsView"/>
+               <AppHeader selected="imageSearch"/>
                <div style={AppHeader.styles.content}>
                  <div style={styles.listHeader}>
                      <SearchBox search={this.state.search} startSearch={this.searchBySearch.bind(this)}/>

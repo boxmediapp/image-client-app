@@ -25,8 +25,8 @@ export  default class DisplayLogin extends Component {
      this.setState(Object.assign({}, this.state,{message}));
   }
 
-  onLoginFail(){
-        this.setErrorMessage("Login failed");
+  onLoginFail(error){
+        this.setErrorMessage("Failed to sign in");
   }
     render() {
         return (
@@ -67,7 +67,6 @@ class SubscriptionLink extends Component{
         <div className="content">
             <div   style={styles.subscription}>
                 <a href={textValues.signup.link}>{textValues.signup.linkText}</a>
-
             </div>
         </div>
 
