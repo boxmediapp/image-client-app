@@ -95,6 +95,13 @@ export default class DisplayUserDetails extends Component {
                    <div style={styles.detailsValue}>{user.lastName}</div>
                </div>
 
+
+               <div style={styles.detailsRow}>
+                   <div style={styles.detailsLabel}>Username:</div>
+                   <div style={styles.detailsValue}>{user.username}</div>
+               </div>
+
+
                <div style={styles.detailsRow}>
                    <div style={styles.detailsLabel}>Role:</div>
                    <div style={styles.detailsValue}>{user.roles}</div>
@@ -217,8 +224,8 @@ class DeleteUserDialog extends Component{
             onCancel:this.props.onCancel,
             inputs:[
                    {name:"username",  label:"Username:", readOnly:true, value:this.props.user.username},
-                   {name:"firstName",  label:"First Name:", readOnly:true},
-                   {name:"lastName",  label:"LastName Name:", readOnly:true}],
+                   {name:"firstName",  label:"First Name:", readOnly:true,value:this.props.user.firstName},
+                   {name:"lastName",  label:"LastName Name:", readOnly:true,value:this.props.user.lastName}],
                    confirmButton:"Delete",
                    cancelButton:"Cancel"
          }
