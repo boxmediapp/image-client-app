@@ -45,12 +45,12 @@ export default class AppLogin extends Component {
               action:"input",
               dataType:"login",
               form:{
-                id: "daCbO8wfgBfdVfTke",
+                id: "###username###@"+window.location.host,
                 title:"Sign In",
                 label:"Image App Sign In",
                 fields:[{
-                          id:"emailAddress",
-                          label:"Email address",
+                          id:"username",
+                          label:"Username",
                           value:this.state.username,
                           operations:{
                               onInput:this.setUsername.bind(this)

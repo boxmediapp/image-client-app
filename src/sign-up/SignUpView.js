@@ -20,7 +20,7 @@ import "./styles/index.css";
 export  default class SignUpView extends Component {
   constructor(props){
         super(props);
-        this.state={firstName:"",lastName:"",email:"",password:"",company:"",modalMessage:null};
+        this.state={firstName:"",lastName:"",email:"",password:"",company:"",modalMessage:null, username:""};
   }
 
   setErrorMessage(message){
@@ -47,6 +47,9 @@ export  default class SignUpView extends Component {
   setEmail(email){
        this.setState(Object.assign({}, this.state,{email}));
   }
+  setUsername(username){
+          this.setState(Object.assign({}, this.state,{username}));
+  }
   setPassword(password){
        this.setState(Object.assign({}, this.state,{password}));
   }
@@ -62,7 +65,7 @@ export  default class SignUpView extends Component {
           action:"input",
           dataType:"subscribe",
           form:{
-            id: "EjpMSalxPX@"+window.location.host,
+            id: "###username###@"+window.location.host,
             title:"Create Account",
             label:"Image App Account",
             fields:[{
@@ -84,9 +87,18 @@ export  default class SignUpView extends Component {
                     },{
                               id:"email",
                               label:"Email",
+                              autoSetDefaultOn:"username",
                               value:this.state.email,
                               operations:{
                                   onInput:this.setEmail.bind(this)
+                              }
+
+                    },{
+                              id:"username",
+                              label:"Username",
+                              value:this.state.username,
+                              operations:{
+                                  onInput:this.setUsername.bind(this)
                               }
 
                     },{
@@ -143,6 +155,7 @@ export  default class SignUpView extends Component {
           firstName:this.state.firstName,
           lastName:this.state.lastName,
           password:this.state.password,
+          username:this.state.username,
           company:this.state.company
        }).then(response=>{
 
@@ -181,36 +194,51 @@ renderForm(){
                       <div style={styles.formContainer}>
                           <div style={styles.title}>Create Your Account</div>
                           <div className="form-group">
-                              <label for="firstName">First Name:</label>
+                              <label htmlFor="firstName">First Name:</label>
                               <input type="text" className="form-control" id="firstName" placeholder="First Name"
                               onChange={(evt) => {
                               this.setFirstName(evt.target.value);
                             }} value={this.state.firstName}/>
                           </div>
                           <div className="form-group">
-                              <label for="lastName">Last Name:</label>
+                              <label htmlFor="lastName">Last Name:</label>
                               <input type="text" className="form-control" id="lastName" placeholder="Last Name"
                               onChange={(evt) => {
                               this.setLastName(evt.target.value);
                             }} value={this.state.lastName}/>
                           </div>
                           <div className="form-group">
-                              <label for="email">Email:</label>
+                              <label htmlFor="email">Email:</label>
                               <input type="text" className="form-control" id="email" placeholder="Email"
                               onChange={(evt) => {
-                              this.setEmail(evt.target.value);
+                                var email=evt.target.value;
+                                  if((!this.state.username) || this.state.username ===this.state.email){
+                                     this.setState(Object.assign({}, this.state,{email, username:email}));
+                                  }
+                                  else{
+                                        this.setEmail(email);
+                                  }
+
                             }} value={this.state.email}/>
                           </div>
                           <div className="form-group">
-                              <label for="password">Password:</label>
+                              <label htmlFor="username">Username:</label>
+                              <input type="text" className="form-control" id="username" placeholder="Username"
+                              onChange={(evt) => {
+                              this.setUsername(evt.target.value);
+                            }} value={this.state.username}/>
+                          </div>
+
+                          <div className="form-group">
+                              <label htmlFor="password">Password:</label>
                               <input type="password" className="form-control" id="password" placeholder="Password"
                               onChange={(evt) => {
                               this.setPassword(evt.target.value);
                             }} value={this.state.password}/>
                           </div>
                           <div className="form-group">
-                              <label for="company">Company:</label>
-                              <input type="text" className="form-control" id="email" placeholder="Company"
+                              <label htmlFor="company">Company:</label>
+                              <input type="text" className="form-control" id="company" placeholder="Company"
                               onChange={(evt) => {
                               this.setCompany(evt.target.value);
                             }} value={this.state.company}/>
