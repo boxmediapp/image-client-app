@@ -46,6 +46,17 @@ const ptextValues={
           link:"/",
           linkText:"Home"
       },
+      account:{
+        link: "/account",
+        linkText:"Account",
+        actionText:"Account",
+        changePassword:{
+            linkText:"Password",
+            actionText:"Change Password",
+            link:"/account/changePassword"
+        },
+      },
+
       logout:{
         link:"/",
         linkText:"Sign out"

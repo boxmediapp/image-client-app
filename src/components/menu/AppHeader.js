@@ -19,8 +19,7 @@ export  default class AppHeader extends Component {
     this.setState(Object.assign({}, this.state, {mql:styles.msql}));
   }
 
-    render(){
-
+    render(){      
         return (
             <div style={styles.header()}>
                     <div style={styles.titleContainer()}>

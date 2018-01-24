@@ -64,7 +64,11 @@ export const styles={
 
    },
 
-
+userinfo:{
+    position:"absolute",
+    top:10,
+    right:10
+},
   topnav: {
     overflow: "hidden",
     marginRight:30,
