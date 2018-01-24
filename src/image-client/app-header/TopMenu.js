@@ -77,6 +77,7 @@ class ListMenuItems extends Component{
              <MenuItem {...this.props} displayItem="home" selected={this.props.selected} render={true}/>
              <MenuItem  {...this.props} displayItem="imageSearch" selected={this.props.selected} render={true}/>
              <MenuItem  {...this.props} displayItem="apiAccessHelp" selected={this.props.selected} render={true}/>
+             <MenuItem  {...this.props} displayItem="account" selected={this.props.selected} render={true}/>
              <LogoutMenuItem/>
          </div>
 

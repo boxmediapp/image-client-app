@@ -14,7 +14,7 @@ import DisplayTAndC from "./DisplayTAndC";
 import {genericUtil} from "../utils";
 import {ApiAccessDocumentationView} from "./api-access-documentation";
 import {NoServicesView} from "./no-services";
-
+import {AccountView} from "./account";
 
 export default class ImageClientApp extends Component{
   constructor(props){
@@ -31,13 +31,14 @@ export default class ImageClientApp extends Component{
       this.setState(Object.assign({}, this.state, {userInfo}));
   }
   renderApp(){
-    
+
     return (
           <Router>
               <div className="topContainer">
                   <Route  path={textValues.home.link} exact component={Home}/>
                   <Route path={textValues.imageSearch.link} component={ImageSearchView}/>
                   <Route path={textValues.apiAccessHelp.link} component={ApiAccessDocumentationView}/>
+                  <Route path={textValues.account.link} component={AccountView}/>
                   <Route path={textValues.noServices.link} component={NoServicesView}/>
               </div>
 

@@ -4,6 +4,7 @@ import {localImages,config} from "../../configs";
 import {textValues} from "../configs";
 import TopMenu from "./TopMenu";
 import {styles} from "./styles";
+import {appdata} from "../../store";
 export  default class AppHeader extends Component {
   constructor(props){
       super(props);
@@ -21,6 +22,7 @@ export  default class AppHeader extends Component {
   }
 
     render(){
+      var userinfo=appdata.getUserInfo();
 
         return (
             <div style={styles.header()}>
@@ -30,8 +32,9 @@ export  default class AppHeader extends Component {
                                   <div style={styles.appTitle}>{textValues.title}</div>
                                   <div style={styles.appVersion}>v{config.version}</div>
                             </div>
-
+                            <div style={styles.userinfo}>{userinfo.username}</div>  
                     </div>
+                    <div></div>
 
                       <TopMenu selected={this.props.selected}/>
 
