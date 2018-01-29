@@ -127,8 +127,8 @@ const textValues={
       title:"Box Media App",
       content:"The Image is uploaded to the Box Media App",
       confirm:"OK"
-    }
-
+    },
+    
 
   };
 export default textValues;

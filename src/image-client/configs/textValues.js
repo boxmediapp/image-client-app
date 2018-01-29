@@ -50,11 +50,18 @@ const ptextValues={
         link: "/account",
         linkText:"Account",
         actionText:"Account",
-        changePassword:{
-            linkText:"Password",
-            actionText:"Change Password",
-            link:"/account/changePassword"
+        originalPasswordVerify:{
+             titile:"Original Password Verification",
+             verification:{
+                   error:"The password verification failed"
+             }
         },
+        modifyFirstName:{
+              title:"Modifying the First Name",
+              error:"Failed to update the first name"
+
+        }
+
       },
 
       logout:{
@@ -74,7 +81,8 @@ const ptextValues={
       noServices:{
           link:"/image-app/services",
           title:"Service Not Permitted"
-      }
+      },
+
   };
 
 var textValues=Object.assign({},appTextValues,ptextValues);
