@@ -5,7 +5,8 @@ import {config} from "../configs";
 
 import "fixed-data-table-2/dist/fixed-data-table.min.css";
 import {
-  Link
+  Link,
+  browserHistory
 } from 'react-router-dom'
 
 
@@ -17,10 +18,17 @@ import {textValues} from "../configs";
 import {LoadingScreen} from "../loading-screen";
 import "./styles/index.css";
 
+var RENDER_ACTION={
+    DISPLAY_FORM:1,
+    WORKING:2,
+    ACCOUNT_CREATED:3
+}
+
 export  default class SignUpView extends Component {
   constructor(props){
         super(props);
-        this.state={firstName:"",lastName:"",email:"",password:"",company:"",modalMessage:null, username:""};
+        this.state={firstName:"",lastName:"",email:"",password:"",company:"",modalMessage:null, username:"",
+        renderAction:RENDER_ACTION.DISPLAY_FORM};
   }
 
   setErrorMessage(message){
@@ -28,11 +36,9 @@ export  default class SignUpView extends Component {
            title:textValues.signup.error.title,
            content:message,
            onConfirm:this.onClearMessage.bind(this),
-           confirmButton:"Ok",
-           loading:false,
-           created:false
+           confirmButton:"Ok"
     }
-    this.setState(Object.assign({}, this.state,{modalMessage}));
+    this.setState(Object.assign({}, this.state,{modalMessage,renderAction:RENDER_ACTION.DISPLAY_FORM}));
   }
 
   onClearMessage(){
@@ -128,6 +134,43 @@ export  default class SignUpView extends Component {
        }
     };
   }
+gotoSignIn(){
+    window.location.pathname="/";
+}
+
+  accountCreated(){
+       this.setState(Object.assign({}, this.state,{renderAction:RENDER_ACTION.ACCOUNT_CREATED}));
+       var initData={
+                  action:"info",
+                  dataType:"select",
+                  form:{
+                        title:textValues.signup.welcome.title,
+                        fields:[{
+                           type:"info",
+                           value:textValues.signup.welcome.mobile.content
+                         },{
+                            label:textValues.signup.welcome.mobile.okButton,
+                            type:"button",
+                            operations:{
+                                    onInput:this.gotoSignIn.bind(this)
+                            }
+
+                          }]
+                   }
+
+       };
+       this.initGlobalInput(initData);
+  }
+  initGlobalInput(initData){
+      if(this.globalInput && this.globalInput.connector){
+              this.globalInput.connector.sendInitData(initData) ;
+      }
+      else{
+              console.log("Not connected");
+      }
+  }
+
+
 
   createAccount(){
     if(!this.state.firstName){
@@ -149,7 +192,7 @@ export  default class SignUpView extends Component {
       this.setErrorMessage(textValues.signup.error.password.tooshort);
     }
     else{
-      this.setState(Object.assign({}, this.state,{loading:true}));
+      this.setState(Object.assign({}, this.state,{renderAction:RENDER_ACTION.WORKING}));
       api.createAccount({
           email:this.state.email,
           firstName:this.state.firstName,
@@ -158,10 +201,8 @@ export  default class SignUpView extends Component {
           username:this.state.username,
           company:this.state.company
        }).then(response=>{
-
-         this.setState(Object.assign({}, this.state,{loading:false,created:true}));
+          this.accountCreated();
        }).catch(error=>{
-         this.setState(Object.assign({}, this.state,{loading:false,created:false}));
         if(error && error.response){
               if(error.response.status===409){
                   this.setErrorMessage("The email address/Username '"+this.state.email+"' already exists.");
@@ -266,6 +307,7 @@ renderForm(){
   );
 }
 
+
 renderAccountCreated(){
   return (
 
@@ -278,7 +320,7 @@ renderAccountCreated(){
                               <div style={styles.formContainer}>
                                   <div style={styles.title}>{textValues.signup.welcome.title}</div>
                                   <div className="content">
-                                        {textValues.signup.welcome.content[0]}   <a href="/">{textValues.signup.welcome.content[1]}</a>
+                                        {textValues.signup.welcome.content[0]}   <a href="/" onClick={this.gotoSignIn.bind(this)}>{textValues.signup.welcome.content[1]}</a>
                                         {textValues.signup.welcome.content[2]}
                                   </div>
                               </div>
@@ -289,13 +331,15 @@ renderAccountCreated(){
     </div>
   );
 }
+
+
         render(){
-        if(this.state.loading){
+        if(this.state.renderAction===RENDER_ACTION.WORKING){
           return (
             <LoadingScreen/>
           );
         }
-        else if(this.state.created){
+        else if(this.state.renderAction===RENDER_ACTION.ACCOUNT_CREATED){
             return this.renderAccountCreated();
         }
         else{

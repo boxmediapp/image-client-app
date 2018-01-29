@@ -59,10 +59,15 @@ const textValues={
        },
        welcome:{
             title:"Welcome to the Box Image Asset Manager",
-            content:["You can now sign in using your email address as your user name and the password you have specified. Please click",
+            content:["You can now sign in using the username and the password you have specified. Please click",
               "here",
               " to continue"
-            ]
+            ],
+            mobile:{
+               content:["You can now sign in using the username and the password you have specified. Please click",
+                        "Please click on the following button to go to sign in page"],
+              okButton:"OK"
+            }
 
        }
     },
@@ -128,7 +133,66 @@ const textValues={
       content:"The Image is uploaded to the Box Media App",
       confirm:"OK"
     },
-    
+    account:{
+      link: "/image-app/account",
+      linkText:"Account",
+      actionText:"Account",
+      originalPasswordVerify:{
+           title:"User Verification",
+           verification:{
+                 error:"The password verification failed"
+           }
+      },
+      selectDataToModify:{
+          title:"Select Data to Modify",
+          firstName:{
+              label:"First Name"
+          },
+          lastName:{
+              label:"Last Name"
+          },
+          email:{
+              label:"Email"
+          },
+          password:{
+              label:"Change Password"
+          },
+          company:{
+              label:"Company"
+          },
+      },
+      modifyFirstName:{
+            title:"Update First Name",
+            error:"Failed to update the first name",
+            placeHolder:"First Name",
+            label:"First Name"
+      },
+      modifyLastName:{
+            title:"Update Last Name",
+            error:"Failed to update the last name",
+            placeHolder:"Last Name",
+            label:"Last Name"
+      },
+      modifyEmail:{
+            title:"Update Email",
+            error:"Failed to update the email",
+            placeHolder:"Email",
+            label:"Email"
+      },
+      modifyPassword:{
+            title:"Change Password",
+            error:"Failed to change password",
+            placeHolder:"Password",
+            label:"New Passsword"
+      },
+      modifyCompany:{
+            title:"Modifying Company",
+            error:"Failed to update the company",
+            placeHolder:"Company",
+            label:"Company"
+      },
+    },
+
 
   };
 export default textValues;

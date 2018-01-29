@@ -46,24 +46,7 @@ const ptextValues={
           link:"/",
           linkText:"Home"
       },
-      account:{
-        link: "/account",
-        linkText:"Account",
-        actionText:"Account",
-        originalPasswordVerify:{
-             titile:"Original Password Verification",
-             verification:{
-                   error:"The password verification failed"
-             }
-        },
-        modifyFirstName:{
-              title:"Modifying the First Name",
-              error:"Failed to update the first name"
-
-        }
-
-      },
-
+      
       logout:{
         link:"/",
         linkText:"Sign out"

@@ -23,6 +23,7 @@ import {WaitingApprovalApp}  from "./waiting-approval";
 import {ImageClientApp} from "./image-client";
 import {SignUpView} from "./sign-up";
 
+
 export default class App extends Component{
   constructor(props){
     super(props);

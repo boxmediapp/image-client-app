@@ -8,7 +8,15 @@ export const styles={
     formContainer:{
         display:"flex",
         flexDirection:"column",
-        justifyContent:"center"
+        justifyContent:"center",
+        alignItems:"center"
+    },
+    listContainer:{
+      display:"flex",
+      flexDirection:"column",
+      justifyContent:"center",
+      alignItems:"flex-start"
+
     },
 
     title:{
