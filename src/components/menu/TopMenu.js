@@ -4,6 +4,7 @@ import {genericUtil} from "../../utils";
 import {
   Link
 
+
 } from 'react-router-dom'
 
 
@@ -80,6 +81,7 @@ class ListMenuItems extends Component{
              <MenuItem  {...this.props} displayItem="listScheduleEpisodes" selected={this.props.selected} render={isImageApp}/>
              <MenuItem  {...this.props} displayItem="assignedEpisodes" selected={this.props.selected} render={isImageApp}/>
              <MenuItem  {...this.props} displayItem="admin" selected={this.props.selected} render={isImageApp}/>
+             <MenuItem  {...this.props} displayItem="account" selected={this.props.selected} render={true}/>
              <LogoutMenuItem/>
          </div>
 

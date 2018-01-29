@@ -20,7 +20,7 @@ import {ListAssignedEpisodesView} from "./list-assigned-episodes";
 import {ModalDialog} from "./components";
 import {AdminView} from "./admin";
 import {ManageUsersView} from "./manage-users";
-
+import {AccountView} from "./account";
 export default class RenderImageApp extends Component{
 
   render(){
@@ -40,6 +40,7 @@ export default class RenderImageApp extends Component{
                   <Route path={textValues.listScheduleEpisodes.link} component={ListScheduleEpisodesView}/>
                   <Route path={textValues.admin.link} component={AdminView}/>
                   <Route path={textValues.manageUser.link} component={ManageUsersView}/>
+                  <Route path={textValues.account.link} component={AccountView}/>
 
 
 
