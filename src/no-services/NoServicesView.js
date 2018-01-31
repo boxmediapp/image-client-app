@@ -8,11 +8,11 @@ import {
 } from 'react-router-dom'
 
 import {textValues} from "../configs";
-import {AppHeader} from "../app-header";
+import {AppHeader} from "../components";
 
 import {styles} from "./styles";
-import {genericUtil} from "../../utils";
-import {appdata} from "../../store";
+import {genericUtil} from "../utils";
+import {appdata} from "../store";
 
 export  default class NoServicesView extends Component {
 

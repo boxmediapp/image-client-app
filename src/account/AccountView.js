@@ -210,6 +210,7 @@ export default class AccountView extends Component{
                   form:{
                           id: this.state.userAccount.username+"@"+config.appid,
                           title:textValues.account.modifyFirstName.title,
+                          label:"boxmedia",
                           fields:[{
                               id:"firstName",
                               label:textValues.account.modifyFirstName.label,
@@ -245,6 +246,7 @@ export default class AccountView extends Component{
                 dataType:"form",
                 form:{
                         id: this.state.userAccount.username+"@"+config.appid,
+                        label:"boxmedia",
                         title:textValues.account.modifyLastName.title,
                         fields:[{
                             id:"lastName",
@@ -281,6 +283,7 @@ startUpdateEmail(){
               dataType:"form",
               form:{
                       id: this.state.userAccount.username+"@"+config.appid,
+                      label:"boxmedia",
                       title:textValues.account.modifyEmail.title,
                       fields:[{
                           id:"email",
@@ -318,6 +321,7 @@ startUpdatePassword(){
               dataType:"form",
               form:{
                       id: this.state.userAccount.username+"@"+config.appid,
+                      label:"boxmedia",
                       title:textValues.account.modifyPassword.title,
                       fields:[{
                           id:"password",
@@ -357,6 +361,7 @@ startUpdateCompany(){
               dataType:"form",
               form:{
                       id: this.state.userAccount.username+"@"+config.appid,
+                      label:"boxmedia",
                       title:textValues.account.modifyCompany.title,
                       fields:[{
                           id:"company",
@@ -589,6 +594,7 @@ startUpdateCompany(){
                         dataType:"verify",
                         form:{
                               id: userinfo.username+"@"+config.appid,
+                              label:"boxmedia",
                               title:textValues.account.originalPasswordVerify.title,
                               label:"ImageApp",
                               fields:[{

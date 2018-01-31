@@ -47,7 +47,7 @@ export default class AppLogin extends Component {
               form:{
                 id: "###username###@"+config.appid,
                 title:"Sign In",
-                label:"Image App Sign In",
+                label:"boxmedia",
                 fields:[{
                           id:"username",
                           label:"Username",
