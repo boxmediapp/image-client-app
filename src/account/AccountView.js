@@ -208,7 +208,7 @@ export default class AccountView extends Component{
                   action:"input",
                   dataType:"form",
                   form:{
-                          id: this.state.userAccount.username+"@"+window.location.host,
+                          id: this.state.userAccount.username+"@"+config.appid,
                           title:textValues.account.modifyFirstName.title,
                           fields:[{
                               id:"firstName",
@@ -244,7 +244,7 @@ export default class AccountView extends Component{
                 action:"input",
                 dataType:"form",
                 form:{
-                        id: this.state.userAccount.username+"@"+window.location.host,
+                        id: this.state.userAccount.username+"@"+config.appid,
                         title:textValues.account.modifyLastName.title,
                         fields:[{
                             id:"lastName",
@@ -280,7 +280,7 @@ startUpdateEmail(){
               action:"input",
               dataType:"form",
               form:{
-                      id: this.state.userAccount.username+"@"+window.location.host,
+                      id: this.state.userAccount.username+"@"+config.appid,
                       title:textValues.account.modifyEmail.title,
                       fields:[{
                           id:"email",
@@ -317,7 +317,7 @@ startUpdatePassword(){
               action:"input",
               dataType:"form",
               form:{
-                      id: this.state.userAccount.username+"@"+window.location.host,
+                      id: this.state.userAccount.username+"@"+config.appid,
                       title:textValues.account.modifyPassword.title,
                       fields:[{
                           id:"password",
@@ -356,7 +356,7 @@ startUpdateCompany(){
               action:"input",
               dataType:"form",
               form:{
-                      id: this.state.userAccount.username+"@"+window.location.host,
+                      id: this.state.userAccount.username+"@"+config.appid,
                       title:textValues.account.modifyCompany.title,
                       fields:[{
                           id:"company",
@@ -588,7 +588,7 @@ startUpdateCompany(){
                         action:"input",
                         dataType:"verify",
                         form:{
-                              id: userinfo.username+"@"+window.location.host,
+                              id: userinfo.username+"@"+config.appid,
                               title:textValues.account.originalPasswordVerify.title,
                               label:"ImageApp",
                               fields:[{

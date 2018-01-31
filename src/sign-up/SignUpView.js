@@ -71,7 +71,7 @@ export  default class SignUpView extends Component {
           action:"input",
           dataType:"subscribe",
           form:{
-            id: "###username###@"+window.location.host,
+            id: "###username###@"+config.appid,
             title:"Create Account",
             label:"Image App Account",
             fields:[{

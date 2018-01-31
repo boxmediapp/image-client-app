@@ -45,7 +45,7 @@ export default class AppLogin extends Component {
               action:"input",
               dataType:"login",
               form:{
-                id: "###username###@"+window.location.host,
+                id: "###username###@"+config.appid,
                 title:"Sign In",
                 label:"Image App Sign In",
                 fields:[{
