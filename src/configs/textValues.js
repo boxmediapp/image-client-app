@@ -192,6 +192,10 @@ const textValues={
             label:"Company"
       },
     },
+    noServices:{
+        link:"/image-app/services",
+        title:"Service Not Permitted"
+    },
 
 
   };
