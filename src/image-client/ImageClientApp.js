@@ -13,7 +13,7 @@ import {appdata,store} from "../store";
 import DisplayTAndC from "./DisplayTAndC";
 import {genericUtil} from "../utils";
 import {ApiAccessDocumentationView} from "./api-access-documentation";
-import {NoServicesView} from "./no-services";
+import {NoServicesView} from "../no-services";
 import {AccountView} from "../account";
 
 export default class ImageClientApp extends Component{

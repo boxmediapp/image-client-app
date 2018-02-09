@@ -186,8 +186,9 @@ class ServiceAPI {
                if(request.channelId){
                  queryurl+="&channelId="+request.channelId;
                }
-
-
+               if(request.contractNumber){
+                 queryurl+="&contractNumber="+request.contractNumber;
+               }
                return this.doGetRequest(queryurl);
          }
          findScheduleEpisodes(request, start=0){

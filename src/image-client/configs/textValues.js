@@ -46,7 +46,7 @@ const ptextValues={
           link:"/",
           linkText:"Home"
       },
-      
+
       logout:{
         link:"/",
         linkText:"Sign out"
@@ -60,11 +60,8 @@ const ptextValues={
             p1:["You need  a pair of a Client ID and a Client Secret to access the Box Image API.",
                 "Your client ID and client Secret, and the services endpoint:"]
         }
-      },
-      noServices:{
-          link:"/image-app/services",
-          title:"Service Not Permitted"
-      },
+      }
+
 
   };
 

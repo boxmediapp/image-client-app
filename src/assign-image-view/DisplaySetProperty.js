@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {ModalDialog} from "../components";
+
 import {genericUtil} from "../utils";
 
 import {store,appdata} from "../store";
@@ -11,47 +11,9 @@ import "./styles/index.css";
 export default class DisplaySetProperty extends Component{
   constructor(props){
       super(props);
-      this.state={title:this.props.title, modalMessage:null};
+      this.state={title:this.props.title};
   }
-  onClearMessage(){
-    this.setState(Object.assign({}, this.state,{modalMessage:null}));
-  }
-  onConfirmDeleteImageSet(){
-    this.onClearMessage();
-    this.props.deleteImageSet();
-  }
-  onCancelDeleteImageSet(){
-    this.onClearMessage();
-  }
-  checkPermission(){
-      var userinfo=appdata.getUserInfo();
-      if(genericUtil.doesUserHasFullAccess(userinfo)){
-         return true;
-      }
-      else{
-        var modalMessage={
-               title:textValues.permissionError.title,
-               content:textValues.permissionError.content,
-               onConfirm:this.onClearMessage.bind(this),
-               confirmButton:"OK"
-        }
-        this.setState(Object.assign({}, this.state,{modalMessage}));
-        return false;
-      }
-  }
-  displayConfirmDeleteDialog(){
-    if(this.checkPermission()){
-          var modalMessage={
-                 title:textValues.deleteImageSetDialog.title,
-                 content:textValues.deleteImageSetDialog.content,
-                 onConfirm:this.onConfirmDeleteImageSet.bind(this),
-                 confirmButton:textValues.deleteImageSetDialog.confirm,
-                 cancelButton:textValues.deleteImageSetDialog.cancel,
-                 onCancel:this.onCancelDeleteImageSet.bind(this)
-          }
-          this.setState(Object.assign({}, this.state,{modalMessage}));
-      }
-  }
+
   setTitle(title){
       this.setState(Object.assign({}, this.state, {title}));
   }
@@ -73,20 +35,6 @@ export default class DisplaySetProperty extends Component{
                                <label htmlFor="episodeNumber">Episode Number:</label>
                              <input type="text" className="form-control" id="episodeNumber" placeholder="Episode Number" name="episodeNumber" readOnly={true} value={episodeNumber}/>
                            </div>
-                           <div className="col-sm-4 formFieldWithLabel">
-                                <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
-
-                                    this.displayConfirmDeleteDialog();
-                                }}>Delete</button>
-                                <button type="button" className="btn btn-primary btn-normal" onClick={(evt) => {
-                                       if(this.checkPermission()){
-                                          this.props.approveImageSet();
-                                       }
-                                     }}>Approve</button>
-                           </div>
-
-
-
                        </div>
                        <div className="row">
                          <div className="col-sm-12 formFieldWithLabel">
@@ -95,7 +43,7 @@ export default class DisplaySetProperty extends Component{
                             <DisplayTitleUpdateButton statedata={this.state} {...this.props} updateTitle={this.updateTitle.bind(this)}/>
                           </div>
                        </div>
-                      <ModalDialog message={this.state.modalMessage}/>
+
                </div>
           );
 

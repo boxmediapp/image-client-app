@@ -1,5 +1,5 @@
 const textValues={
-    title:"Box Image Asset Mager",
+    title:"Box Image Asset Manager",
     uploadHDImageText:["Drop an image here",
                 "Requires: 1920 x 1080"],
     uploadPermissonError:"You do not have permission to upload image",
@@ -192,6 +192,35 @@ const textValues={
             label:"Company"
       },
     },
+    noServices:{
+        link:"/image-app/services",
+        title:"Service Not Permitted"
+    },
+    copyImageSet:{
+        action:"Copy To the Episodes with the Same Contract",
+        title:"Copying To the Episodes",
+        content:"The following episodes are found to have the same contract number. They will have the same image set if you click on the 'Copy' button.",
+        buttonName:"Copy",
+        error:{
+            title:"Error",
+            copyError:"Error when copying the images into the other episodes:",
+            loadFailed:"Error loading episode data from the server"
+        },
+        loading:{
+            title:"Loading Data",
+            content:"Loading the Episodes to copy images into"
+        },
+        noEpisodes:{
+            title:"No Episodes Found",
+            content:"There is no episodes found that has the same contract number and no images assigned"
+        },
+
+        progress:{
+          title:"Copying Images",
+          content:"Copying the images, remaining:"
+        }
+
+    }
 
 
   };
