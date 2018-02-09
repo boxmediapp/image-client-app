@@ -6,7 +6,6 @@ import {episodedata,store} from "../store";
 import {api} from "../api";
 import {textValues} from "../configs";
 import "./styles/index.css";
-import DisplaySetProperty from "./DisplaySetProperty";
 import DisplayCreateNewImageSet from "./DisplayCreateNewImageSet";
 import DisplayByContractAndEpisodeNumber from "./DisplayByContractAndEpisodeNumber";
 import {TopMenu} from "../components";

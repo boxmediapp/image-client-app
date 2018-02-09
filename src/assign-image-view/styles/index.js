@@ -1,5 +1,3 @@
-
-
 export const styles={
    mql:window.matchMedia(`(min-width: 800px)`),
    imageSetContainer:{
@@ -90,7 +88,75 @@ export const styles={
     justifyContent: "flex-start",
     alignItems: "flex-end",
 
-  }
+  },
+  backdropStyle:{
+    position: 'fixed',
+     top: 0,
+     bottom: 0,
+     left: 0,
+     right: 0,
+     backgroundColor: 'rgba(0,0,0,0.3)',
+     display:"flex",
+     flexDirection:"column",
+     justifyContent:"center",
+     alignItems:"center",
+     zIndex:100
+  },
+  dialogwindow:{
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    width: "50%",
+    height: "50%",
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"space-between",
+    boxShadow: "10px 10px 5px #888888"
+  },
+  dialogTitle:{
+    fontFamily: "'Roboto', sans-serif",
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    textTransform: "uppercase",
+    fontWeight: 500,
+    fontSize: 20,
+    color: "#FFFFFF",
+    backgroundColor:"#1a0dab",
+    paddingLeft:10
+  },
+  footer:{
+      display: "flex",
+      flexDirection:"row",
+      justifyContent:"center",
+      paddingTop:10,
+      paddingBottom:10,
+      paddingLeft:20,
+      paddingRight:20,
+  },
+  buttonContainer:{
+    display:"flex",
+    flexDirection:"row",
+    marginLeft:10,
+    marginRight:10
+
+  },
+  dialogContent:{
+    flex:1,
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"center",
+    alignItems:"center",
+    margin:10
+
+  },
+  tableContent:{
+      margin:10,
+      display:"flex",
+      flexDirection:"column",
+      justifyContent:"start",
+      alignItems:"center",
+
+      width:"100%"
+  },
 
 
 

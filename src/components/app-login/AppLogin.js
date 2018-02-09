@@ -106,7 +106,7 @@ class DisplaySignInForm extends Component{
     <div className="loginForm">
        <div className="loginTitle">{textValues.signin.title}</div>
             <div className="loginFieldContainer">
-                  <label htmlFor="username">Username/Email address:</label>
+                  <label htmlFor="username">Username:</label>
                   <input type="text" className="form-control" id="username" placeholder="Username" name="username"  onChange={(evt) => {
                   this.props.setUsername(evt.target.value);
                 }} value={this.props.username}/>

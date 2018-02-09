@@ -27,7 +27,7 @@ export default class DisplayImage extends Component{
          }
          this.setState(Object.assign({}, this.state,{modalMessage}));
       }
-      setEditImageMode(edit){        
+      setEditImageMode(edit){
         this.setState(Object.assign({}, this.state,{edit}));
 
       }
@@ -135,7 +135,7 @@ export default class DisplayImage extends Component{
       }
       updateImageStatus(imageStatus){
             var image=Object.assign({},this.state.image,{imageStatus});
-            this.setState(Object.assign({},this.state,{imageStatus}));
+            this.setState(Object.assign({},this.state,{image}));
             api.updateImage(image);
       }
       onDropFailed(errorMessage){
