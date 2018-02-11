@@ -37,6 +37,9 @@ export  default class AdminView extends Component {
                                             content={textValues.manageSchduleImport.actionText}
                                             link={textValues.manageSchduleImport.link}/>
 
+                    <BigButton label={textValues.manageSMTPConfig.linkText}
+                            content={textValues.manageSMTPConfig.actionText}
+                            link={textValues.manageSMTPConfig.link}/>
 
 
             </div>

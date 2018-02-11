@@ -91,6 +91,21 @@ const textValues={
       actionText:"Import from Pirate"
 
     },
+    manageSMTPConfig:{
+      link:"/image-app/services/manage-smtp-config",
+      linkText:"SMTP Config",
+      actionText:"Email Configuration",
+      loadingError:{
+        title:"Error Loading Config"
+      },
+      updateError:{
+        title:"Error Updating Config"
+      },
+      updateSucess:{
+         title:"Updated Successful",
+         content:"SMTP Config is updated"
+      }
+    },
     assignImageByContractAndEpidodeNumber:{
          link:"/image-app/services/assign-image/contract-episode-number",
          actionText:"Edit",

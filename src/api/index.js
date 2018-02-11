@@ -309,7 +309,12 @@ class ServiceAPI {
           updateUser(user){
             return this.doPutRequest("users/"+user.username,JSON.stringify(user));
           }
-
+          getSMTPConfig(){
+            return this.doGetRequest("smtp-service-config/default");
+          }
+          updateSMTPConfig(smtpConfig){
+            return this.doPostRequest("smtp-service-config/default", JSON.stringify(smtpConfig));
+          }
 }
 
 const api=new ServiceAPI(config, appdata);

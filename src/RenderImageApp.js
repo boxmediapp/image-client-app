@@ -21,6 +21,7 @@ import {ModalDialog} from "./components";
 import {AdminView} from "./admin";
 import {ManageUsersView} from "./manage-users";
 import {AccountView} from "./account";
+import {ManageSmtpConfig} from "./manage-smtp-config";
 export default class RenderImageApp extends Component{
 
   render(){
@@ -41,6 +42,7 @@ export default class RenderImageApp extends Component{
                   <Route path={textValues.admin.link} component={AdminView}/>
                   <Route path={textValues.manageUser.link} component={ManageUsersView}/>
                   <Route path={textValues.account.link} component={AccountView}/>
+                  <Route path={textValues.manageSMTPConfig.link} component={ManageSmtpConfig}/>
 
 
 
