@@ -97,10 +97,10 @@ export default class App extends Component{
                   return <SignUpView/>
               }
               else if(this.state.userinfo){
-                    if(this.state.userinfo.application==="boxmedia" || this.state.userinfo.application==="boximage"){
+                    if(genericUtil.canUserAccessApp(this.state.userinfo)){
                       return (<RenderImageApp userinfo={this.state.userinfo}/>);
                     }
-                    else if(this.state.userinfo.application==="imageclient"){
+                    else if(genericUtil.isUserImageClient(this.state.userinfo)){
                       return (<ImageClientApp userinfo={this.state.userinfo}/>);
                     }
 
