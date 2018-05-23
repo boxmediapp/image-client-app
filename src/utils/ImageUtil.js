@@ -62,10 +62,39 @@ export default class ImageUtil{
                 return;
             }
             this.loadImage(imagePreviewUrl,img=>{
-                    onSucess({file,imagePreviewUrl,imageType,width:img.width,height:img.height});
+                    var imageProperty={file,imagePreviewUrl,imageType,width:img.width,height:img.height};
+                    imageProperty.transparency=this.getImageTransParency(imageProperty);
+                    onSucess(imageProperty);
                   });
             };
         reader.readAsDataURL(acceptedFile);
+  }
+  getImageTransParency(imageProperty){
+      var img=new Image();
+      img.crossOrigin='Anonymous'
+      img.src=imageProperty.imagePreviewUrl;
+      var canvas = document.createElement('canvas');
+      canvas.width = imageProperty.width;
+      canvas.height = imageProperty.height;
+      canvas.getContext('2d').drawImage(img, 0, 0);
+      var imgData=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height);
+      var data=imgData.data;
+      var transparency=0;
+      var counter=0;
+      for(var i=0;i<data.length;i+=4){
+          if(data[i+3]<255){
+              transparency++;
+          }
+          counter++;
+      }
+      if(counter){
+        return transparency/counter;
+      }
+      else{
+        return 0;
+      }
+
+
   }
   resizeImage(request){
      var image = new Image();
@@ -105,7 +134,7 @@ export default class ImageUtil{
   getS3ImageURL(image){
     return image.s3BaseURL+"/"+image.filename;
   }
-  
+
   calculateFitImageWidth(resolution){
       var width=mobileImageWidth;
       var height=mobileImageHeight;

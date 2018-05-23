@@ -1,2 +1,2 @@
-import config from "./prod";
+import config from "./local";
 export default config;
