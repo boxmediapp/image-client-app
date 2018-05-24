@@ -25,7 +25,8 @@ const ptextValues={
                 "12.	Each party acknowledges that this Agreement constitutes the entire and only agreement between the parties relating to the subject matter hereof.",
                 "13.	You may not assign any of your rights and obligations under this Agreement.",
                 "14.	This Agreement shall be governed and construed in accordance with the laws of England and the parties hereby submit to the exclusive jurisdiction of the English Courts."
-            ]
+            ],
+
         },
         checkbox:{
             p1:"I agree to the ",
@@ -58,7 +59,10 @@ const ptextValues={
         content:{
             title:"Image API",
             p1:["You need  a pair of a Client ID and a Client Secret to access the Box Image API.",
-                "Your client ID and client Secret, and the services endpoint:"]
+                "Your client ID and client Secret, and the services endpoint:"],
+            p2:["Without any query parameters, the API returns all the images that are in APPROVED status and its imageSetType is not  'CUT_OUT'"],
+            p3:["The default value of the 'imageStatus' parameter is 'APPROVED'. Hence, unless the 'imageStatus' parameter is specified, it will search the approved images only. If you specfify imageStatus=WAITING_APPROVE, then it will search the images that in waiting for approval",
+                "The default value of the imageSetType is 'DEFAULT'. Hence, unless the imageSetType is specified, you will search the images that are not cutout images"]
         }
       }
 

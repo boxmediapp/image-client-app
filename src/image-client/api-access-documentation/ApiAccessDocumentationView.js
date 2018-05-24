@@ -77,10 +77,44 @@ export  default class ApiAccessDocumentationView extends Component {
                                                       <div style={styles.detailsLabel}>Service End point:</div>
                                                       <div style={styles.detailsValue}>{serviceEnpoint}</div>
                                                   </div>
+
+                                                  <DisplayContent content={textValues.apiAccessHelp.content.p2}/>
+
                                                   <div style={styles.detailsRow}>
-                                                      <div style={styles.detailsLabel}>Accepted parameters:</div>
-                                                      <div style={styles.detailsValue}>ProgrammeNumber, search</div>
+                                                      <div style={styles.detailsLabel}>Query parameters:</div>
+                                                      <div style={styles.detailsValue}>programmeNumber, search, imageStatus, imageSetType, lastModifiedFrom</div>
                                                   </div>
+                                                  <DisplayContent content={textValues.apiAccessHelp.content.p3}/>
+                                                  <div style={styles.detailsRow}>
+                                                      <div style={styles.sectiontitle}>curl command examples:</div>
+                                                  </div>
+                                                  <div style={styles.examples}>
+                                                    <div style={styles.example}>
+                                                        <div style={styles.exampleLabel}>Search by programme number:</div>
+                                                        <div style={styles.exampleValue}>curl -u "{userAccount.clientId}:{userAccount.clientSecret}" {serviceEnpoint}?programmeNumber=67141-047</div>
+                                                    </div>
+
+                                                    <div style={styles.example}>
+                                                        <div style={styles.exampleLabel}>Free text search the images:</div>
+                                                        <div style={styles.exampleValue}>curl -u "{userAccount.clientId}:{userAccount.clientSecret}" {serviceEnpoint}?search=Trending</div>
+                                                    </div>
+
+                                                    <div style={styles.example}>
+                                                        <div style={styles.exampleLabel}>Images last modified since:</div>
+                                                        <div style={styles.exampleValue}>curl -u "{userAccount.clientId}:{userAccount.clientSecret}" {serviceEnpoint}?lastModifiedFrom=1517590351000</div>
+                                                    </div>
+                                                    <div style={styles.example}>
+                                                        <div style={styles.exampleLabel}>Cutout images:</div>
+                                                        <div style={styles.exampleValue}>curl -u "{userAccount.clientId}:{userAccount.clientSecret}" {serviceEnpoint}?imageSetType=CUT_OUT</div>
+                                                    </div>
+                                                    <div style={styles.example}>
+                                                        <div style={styles.exampleLabel}>Cutout images that are in waiting for approval:</div>
+                                                        <div style={styles.exampleValue}>curl -u "{userAccount.clientId}:{userAccount.clientSecret}" {serviceEnpoint}?imageSetType=CUT_OUT&imageStatus=WAITING_APPROVE</div>
+                                                    </div>
+
+                                                  </div>
+
+
 
                                           </div>
                             </div>
