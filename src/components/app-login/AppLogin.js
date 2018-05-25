@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
-
+import QRCode from "qrcode.react";
+import {createMessageConnector} from "global-input-message";
 
 import {config,textValues} from "../../configs";
 
-import {CodeDataRenderer} from "global-input-react";
+
 import  "./styles/LoginForm.css";
 import {api} from "../../api";
 import {appdata} from "../../store";
@@ -12,8 +13,20 @@ import {genericUtil} from "../../utils";
 export default class AppLogin extends Component {
    constructor(props){
      super(props);
-     this.state={username:"",password:""};
+     this.state=this.getStateFromProps(this.props);
    }
+   getStateFromProps(props){
+        var globalInputState={
+          connector:null,
+          connected:false,
+          senderConnected:false
+        }
+        return {username:"",password:"", globalInputState};
+  }
+  componentWillReceiveProps(nextProps){
+        //this.setState(this.getStateFromProps(nextProps))
+  }
+
    setUsername(username){
         this.setState(Object.assign({}, this.state,{username}));
    }
@@ -21,6 +34,59 @@ export default class AppLogin extends Component {
 
    this.setState(Object.assign({}, this.state,{password}));
  }
+ componentDidMount(){
+      this.connectGlobalInput();
+  }
+  componentWillUnmount(){
+          this.disconnectGlobalInput();
+    }
+    onSenderConnected(sender, senders){
+         console.log("Sender Connected");
+         var globalInputState=this.state.globalInputState;
+         globalInputState.senderConnected=true;
+         this.setState(Object.assign({}, this.state,{globalInputState}));
+    }
+    onSenderDisconnected(sender,senders){
+        this.connectGlobalInput();
+   }
+
+  onConnected(){
+    console.log("Sender Connected");
+    var globalInputState=this.state.globalInputState;
+    globalInputState.connected=true;
+    this.setState(Object.assign({}, this.state,{globalInputState}));
+  }
+
+
+  disconnectGlobalInput(){
+      var globalInputState=this.state.globalInputState;
+      if(globalInputState.connector){
+              globalInputState.connector.disconnect();
+              globalInputState.connector=null;
+      }
+      this.setState(this.getStateFromProps(this.props));
+  }
+
+  sendInputMessage(message, fieldIndex){
+    if(this.globalInputState.senderConnected){
+       this.globalInputState.connector.sendInputMessage(message,fieldIndex);
+    }
+  }
+
+    connectGlobalInput(){
+        var globalInputState=this.state.globalInputState;
+        if(globalInputState.connector){
+                globalInputState.connector.disconnect();
+                globalInputState.connector=null;
+                globalInputState.connected=false;
+                globalInputState.senderConnected=false;
+        }
+        globalInputState.connector=createMessageConnector();
+        this.setState(Object.assign({}, this.state,{globalInputState}));
+        globalInputState.connector.connect(this.buildGlobalInputConfig());
+    }
+
+
   login(){
       const {username,password}=this.state;
       var that=this;
@@ -43,7 +109,7 @@ export default class AppLogin extends Component {
             securityGroup:config.securityGroup,
             initData:{
               action:"input",
-              dataType:"login",
+              dataType:"form",
               form:{
                 id: "###username###@"+config.appid,
                 title:"Sign In",
@@ -73,10 +139,16 @@ export default class AppLogin extends Component {
 
                         }]
                     }
-           }
+           },
+           onSenderConnected:this.onSenderConnected.bind(this),
+           onSenderDisconnected:this.onSenderDisconnected.bind(this),
+           onRegistered:(next)=>{
+                    next();
+                    this.onConnected();
+            }
         };
       }
-      render() {
+  render() {
           return (
              <div className="container">
                    <div className="row">
@@ -88,18 +160,36 @@ export default class AppLogin extends Component {
                                       login={this.login.bind(this)}/>
                                </div>
                        </div>
-                       <div className="col-sm-6">
-                              <CodeDataRenderer service={this}  config={this.buildGlobalInputConfig()} level="H" size="300" showControl={false}/>
-                              <div className="globalInputText">Powered by <a href="https://globalinput.co.uk/">Global Input Software</a>
-                              </div>
-                      </div>
+                       {this.renderQRCode()}
                     </div>
             </div>
           );
-        }
+
+   }
+renderQRCode(){
+    var globalInputState=this.state.globalInputState;
+    if(globalInputState && globalInputState.connector && globalInputState.connected){
+            var qrCodeContent=globalInputState.connector.buildInputCodeData();
+            console.log("qrcode:[["+qrCodeContent+"]]");
+            return(
+              <div className="col-sm-6">
+                      <QRCode
+                          value={qrCodeContent}
+                          level="H"
+                          size={300}
+                       />
+                     <div className="globalInputText">Powered by <a href="https://globalinput.co.uk/">Global Input Software</a>
+                     </div>
+             </div>
+            );
+    }
+    else{
+      return null;
+    }
+
+ }
+
 }
-
-
 class DisplaySignInForm extends Component{
   render(){
     return(

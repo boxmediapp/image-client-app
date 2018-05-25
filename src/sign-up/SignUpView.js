@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import {CodeDataRenderer} from "global-input-react";
+import QRCode from "qrcode.react";
+import {createMessageConnector} from "global-input-message";
+
 import {api} from "../api";
 import {config} from "../configs";
 
@@ -26,10 +28,74 @@ var RENDER_ACTION={
 
 export  default class SignUpView extends Component {
   constructor(props){
-        super(props);
-        this.state={firstName:"",lastName:"",email:"",password:"",company:"",modalMessage:null, username:"",
-        renderAction:RENDER_ACTION.DISPLAY_FORM};
+    super(props);
+    this.state=this.getStateFromProps(this.props);
   }
+  getStateFromProps(props){
+       var globalInputState={
+         connector:null,
+         connected:false,
+         senderConnected:false
+       }
+       return {firstName:"",lastName:"",email:"",password:"",company:"",modalMessage:null, username:"",
+       renderAction:RENDER_ACTION.DISPLAY_FORM,globalInputState};
+  }
+  componentWillReceiveProps(nextProps){
+      //this.setState(this.getStateFromProps(nextProps))
+  }
+
+  componentDidMount(){
+     this.connectGlobalInput();
+ }
+ componentWillUnmount(){
+         this.disconnectGlobalInput();
+   }
+   onSenderConnected(sender, senders){
+        console.log("Sender Connected");
+        var globalInputState=this.state.globalInputState;
+        globalInputState.senderConnected=true;
+        this.setState(Object.assign({}, this.state,{globalInputState}));
+   }
+   onSenderDisconnected(sender,senders){
+       this.connectGlobalInput();
+  }
+
+ onConnected(){
+   console.log("Sender Connected");
+   var globalInputState=this.state.globalInputState;
+   globalInputState.connected=true;
+   this.setState(Object.assign({}, this.state,{globalInputState}));
+ }
+
+
+ disconnectGlobalInput(){
+     var globalInputState=this.state.globalInputState;
+     if(globalInputState.connector){
+             globalInputState.connector.disconnect();
+             globalInputState.connector=null;
+     }
+     this.setState(this.getStateFromProps(this.props));
+ }
+
+ sendInputMessage(message, fieldIndex){
+   if(this.globalInputState.senderConnected){
+      this.globalInputState.connector.sendInputMessage(message,fieldIndex);
+   }
+ }
+
+   connectGlobalInput(){
+       var globalInputState=this.state.globalInputState;
+       if(globalInputState.connector){
+               globalInputState.connector.disconnect();
+               globalInputState.connector=null;
+               globalInputState.connected=false;
+               globalInputState.senderConnected=false;
+       }
+       globalInputState.connector=createMessageConnector();
+       this.setState(Object.assign({}, this.state,{globalInputState}));
+       globalInputState.connector.connect(this.buildGlobalInputConfig());
+   }
+
 
   setErrorMessage(message){
     var modalMessage={
@@ -69,7 +135,7 @@ export  default class SignUpView extends Component {
         securityGroup:config.securityGroup,
         initData:{
           action:"input",
-          dataType:"subscribe",
+          dataType:"form",
           form:{
             id: "###username###@"+config.appid,
             title:"Create Account",
@@ -131,6 +197,12 @@ export  default class SignUpView extends Component {
 
                     }]
                 }
+       },
+       onSenderConnected:this.onSenderConnected.bind(this),
+       onSenderDisconnected:this.onSenderDisconnected.bind(this),
+       onRegistered:(next)=>{
+         next();
+         this.onConnected();
        }
     };
   }
@@ -142,7 +214,7 @@ gotoSignIn(){
        this.setState(Object.assign({}, this.state,{renderAction:RENDER_ACTION.ACCOUNT_CREATED}));
        var initData={
                   action:"info",
-                  dataType:"select",
+                  dataType:"control",
                   form:{
                         title:textValues.signup.welcome.title,
                         fields:[{
@@ -162,12 +234,10 @@ gotoSignIn(){
        this.initGlobalInput(initData);
   }
   initGlobalInput(initData){
-      if(this.globalInput && this.globalInput.connector){
-              this.globalInput.connector.sendInitData(initData) ;
-      }
-      else{
-              console.log("Not connected");
-      }
+    var globalInputState=this.state.globalInputState;
+    if(globalInputState.connector){
+      globalInputState.connector.sendInitData(initData);
+    }
   }
 
 
@@ -223,7 +293,28 @@ gotoSignIn(){
     }
 
   }
+  renderQRCode(){
+      var globalInputState=this.state.globalInputState;
+      if(globalInputState && globalInputState.connector && globalInputState.connected){
+              var qrCodeContent=globalInputState.connector.buildInputCodeData();
+              console.log("qrcode:[["+qrCodeContent+"]]");
+              return(
+                <div style={styles.globalInputContainer}>
+                        <QRCode
+                            value={qrCodeContent}
+                            level="H"
+                            size={300}
+                         />
+                       <div className="globalInputText">Powered by <a href="https://globalinput.co.uk/">Global Input Software</a>
+                       </div>
+               </div>
+              );
+      }
+      else{
+        return null;
+      }
 
+   }
 
 renderForm(){
   return (
@@ -291,10 +382,8 @@ renderForm(){
                             </div>
 
                       </div>
-                      <div style={styles.globalInputContainer}>
-                        <CodeDataRenderer service={this}  config={this.buildGlobalInputConfig()} level="H" size="300" showControl={false}/>
-                        <div style={styles.globalInputText}>Powered by <a href="https://globalinput.co.uk/">Global Input Software</a></div>
-                      </div>
+                      {this.renderQRCode()}
+                      
                   </div>
 
 
