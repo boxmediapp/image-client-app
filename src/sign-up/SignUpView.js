@@ -213,7 +213,7 @@ gotoSignIn(){
   accountCreated(){
        this.setState(Object.assign({}, this.state,{renderAction:RENDER_ACTION.ACCOUNT_CREATED}));
        var initData={
-                  action:"info",
+                  action:"input",
                   dataType:"control",
                   form:{
                         title:textValues.signup.welcome.title,
@@ -383,7 +383,7 @@ renderForm(){
 
                       </div>
                       {this.renderQRCode()}
-                      
+
                   </div>
 
 
