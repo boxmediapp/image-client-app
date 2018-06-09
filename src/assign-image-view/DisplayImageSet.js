@@ -20,8 +20,8 @@ export default class DisplayImageSet extends Component{
   dismissCloneImageSet(){
     this.setState(Object.assign({}, this.state, {imageSetToCopy:null}));
   }
-  updateTitle(title){
-      this.props.updateImageSetTitle(this.props.imageSet, title);
+  updateImageSetProperty(imagesetProperty){
+      this.props.updateImageSetProperty(this.props.imageSet, imagesetProperty);
   }
   deleteImage(image){
       this.props.deleteImage(image,this.props.imageSet);
@@ -43,7 +43,7 @@ export default class DisplayImageSet extends Component{
 
     return (
           <div style={styles.imageSetContainer}>
-              <DisplaySetProperty {...this.props.imageSet} updateTitle={this.updateTitle.bind(this)}
+              <DisplaySetProperty {...this.props.imageSet} updateImageSetProperty={this.updateImageSetProperty.bind(this)}
               deleteImageSet={this.deleteImageSet.bind(this)}
               approveImageSet={this.approveImageSet.bind(this)}/>
               <DisplayImagesInImageSet {...this.props.imageSet} deleteImage={this.deleteImage.bind(this)}/>

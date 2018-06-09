@@ -3,8 +3,8 @@ sed -i -e "s,import AutoLogin from '../do-not-check-in';,,g" src/display-login/D
 git add .
 git commit -m "releasing"
 yarn build
-mvn jgitflow:release-start
-mvn jgitflow:release-finish
+mvn gitflow:release-start
+mvn gitflow:release-finish
 git checkout  master
 getProjectVersionFromPom
 git checkout develop

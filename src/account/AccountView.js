@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
-import {CodeDataRenderer} from "global-input-react";
+
+import {createMessageConnector} from "global-input-message";
+import QRCode from "qrcode.react";
+
 import {genericUtil} from "../utils";
 
 
@@ -21,20 +24,124 @@ var USER_ACTION={
      UPDATE_COMPANY:6
 }
 export default class AccountView extends Component{
-
   constructor(props){
-    super(props);
-    this.state={
-        password:"",
-        firstName:"",
-        lastName:"",
-        email:"",
-        company:"",
-        action:USER_ACTION.VERIFY_ORIGINAL_PASSWORD,
-        modalMessage:null,
-        userAccount:{}
-    };
-  }
+       super(props);
+       this.state=this.getStateFromProps(this.props);
+     }
+     getStateFromProps(props){
+          var globalInputState={
+            connector:null,
+            connected:false,
+            senderConnected:false
+          }
+          return {
+              password:"",
+              firstName:"",
+              lastName:"",
+              email:"",
+              company:"",
+              action:USER_ACTION.VERIFY_ORIGINAL_PASSWORD,
+              modalMessage:null,
+              userAccount:{},
+              globalInputState
+          };
+       }
+  componentWillReceiveProps(nextProps){
+       //this.setState(this.getStateFromProps(nextProps))
+   }
+
+   componentDidMount(){
+       this.connectGlobalInput();
+   }
+   componentWillUnmount(){
+           this.disconnectGlobalInput();
+     }
+     onSenderConnected(sender, senders){
+          console.log("Sender Connected");
+          var globalInputState=this.state.globalInputState;
+          globalInputState.senderConnected=true;
+          this.setState(Object.assign({}, this.state,{globalInputState}));
+     }
+     onSenderDisconnected(sender,senders){
+         this.connectGlobalInput();
+    }
+
+   onConnected(){
+     console.log("Sender Connected");
+     var globalInputState=this.state.globalInputState;
+     globalInputState.connected=true;
+     this.setState(Object.assign({}, this.state,{globalInputState}));
+   }
+
+
+   disconnectGlobalInput(){
+       var globalInputState=this.state.globalInputState;
+       if(globalInputState.connector){
+               globalInputState.connector.disconnect();
+               globalInputState.connector=null;
+       }
+       this.setState(this.getStateFromProps(this.props));
+   }
+
+   sendInputMessage(message, fieldIndex){
+     if(this.globalInputState.senderConnected){
+        this.globalInputState.connector.sendInputMessage(message,fieldIndex);
+     }
+   }
+
+     connectGlobalInput(){
+
+       var userinfo=appdata.getUserInfo();
+       var globalInputConfig={
+                     url:config.url,
+                     apikey:config.apikey,
+                     securityGroup:config.securityGroup,
+                     initData:{
+                           action:"input",
+                           dataType:"form",
+                           form:{
+                                 id: userinfo.username+"@"+config.appid,
+                                 label:"boxmedia",
+                                 title:textValues.account.originalPasswordVerify.title,
+                                 label:"ImageApp",
+                                 fields:[{
+                                       id:"password",
+                                       label:"Password",
+                                       type:"secret",
+                                       operations:{
+                                             onInput:this.setPassword.bind(this)
+                                       }
+                                       },{
+                                           label:"Verify",
+                                           type:"button",
+                                           operations:{
+                                               onInput:this.verifyOriginalPassword.bind(this)
+                                           }
+                                       }]
+                      }
+                 },
+                 onSenderConnected:this.onSenderConnected.bind(this),
+                 onSenderDisconnected:this.onSenderDisconnected.bind(this),
+                 onRegistered:(next)=>{
+                      next();
+                      this.onConnected();
+                  }
+        };
+
+
+         var globalInputState=this.state.globalInputState;
+         if(globalInputState.connector){
+                 globalInputState.connector.disconnect();
+                 globalInputState.connector=null;
+                 globalInputState.connected=false;
+                 globalInputState.senderConnected=false;
+         }
+         globalInputState.connector=createMessageConnector();
+         this.setState(Object.assign({}, this.state,{globalInputState}));
+         globalInputState.connector.connect(globalInputConfig);
+     }
+
+
   setPassword(password){
          this.setState(Object.assign({}, this.state,{password}));
   }
@@ -133,7 +240,7 @@ export default class AccountView extends Component{
        this.setState(Object.assign({}, this.state,{userAccount,action:USER_ACTION.SHOW_USER_DETAILS}));
        var initData={
                   action:"input",
-                  dataType:"select",
+                  dataType:"control",
                   form:{
                         title:textValues.account.selectDataToModify.title,
                         fields:[{
@@ -178,12 +285,10 @@ export default class AccountView extends Component{
        this.initGlobalInput(initData);
   }
   initGlobalInput(initData){
-      if(this.globalInput && this.globalInput.connector){
-              this.globalInput.connector.sendInitData(initData) ;
-      }
-      else{
-              console.log("Not connected");
-      }
+    var globalInputState=this.state.globalInputState;
+    if(globalInputState.connector){
+      globalInputState.connector.sendInitData(initData);
+    }
   }
 
   verifyOriginalPassword(){
@@ -583,37 +688,31 @@ startUpdateCompany(){
 
   }
 
+  renderQRCode(){
+      var globalInputState=this.state.globalInputState;
+      if(globalInputState && globalInputState.connector && globalInputState.connected){
+              var qrCodeContent=globalInputState.connector.buildInputCodeData();
+              console.log("qrcode:[["+qrCodeContent+"]]");
+              return(
+                <div style={styles.globalInputContainer}>
+                        <QRCode
+                            value={qrCodeContent}
+                            level="H"
+                            size={300}
+                         />
+                       <div className="globalInputText">Powered by <a href="https://globalinput.co.uk/">Global Input Software</a>
+                       </div>
+               </div>
+              );
+      }
+      else{
+        return null;
+      }
+
+   }
+
+
   renderOriginalPasswordVerificationForm(){
-    var userinfo=appdata.getUserInfo();
-    var globalInputConfig={
-                  url:config.url,
-                  apikey:config.apikey,
-                  securityGroup:config.securityGroup,
-                  initData:{
-                        action:"input",
-                        dataType:"verify",
-                        form:{
-                              id: userinfo.username+"@"+config.appid,
-                              label:"boxmedia",
-                              title:textValues.account.originalPasswordVerify.title,
-                              label:"ImageApp",
-                              fields:[{
-                                    id:"password",
-                                    label:"Password",
-                                    type:"secret",
-                                    operations:{
-                                          onInput:this.setPassword.bind(this)
-                                    }
-                                    },{
-                                        label:"Verify",
-                                        type:"button",
-                                        operations:{
-                                            onInput:this.verifyOriginalPassword.bind(this)
-                                        }
-                                    }]
-                   }
-              }
-     };
 
 
       return (
@@ -637,10 +736,7 @@ startUpdateCompany(){
                                 </div>
 
                           </div>
-                          <div style={styles.globalInputContainer}>
-                            <CodeDataRenderer service={this}  config={globalInputConfig} level="H" size="300" showControl={false}/>
-                            <div style={styles.globalInputText}>Powered by <a href="https://globalinput.co.uk/">Global Input Software</a></div>
-                          </div>
+                          {this.renderQRCode()}
             </div>
 
 

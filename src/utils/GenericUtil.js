@@ -156,6 +156,36 @@ doesUserHasFullAccess(userinfo){
     });
     return hasWriteAccess;
 }
+canUserAccessApp(userinfo){
+  if(!userinfo){
+       return false;
+  }
+  if(!userinfo.roles){
+    return false;
+  }
+  var isApp=false;
+  userinfo.roles.forEach(role=>{
+      if(role.applicationId==="MEDIA_APP"){
+            isApp=true;
+      }
+  });
+  return isApp;
+}
+isUserImageClient(userinfo){
+  if(!userinfo){
+       return false;
+  }
+  if(!userinfo.roles){
+    return false;
+  }
+  var isApp=false;
+  userinfo.roles.forEach(role=>{
+      if(role.applicationId==="IMAGE_CLIENT_APP"){
+            isApp=true;
+      }
+  });
+  return isApp;
+}
 signout(){
       this.stopRefreshLoginThread();
       if(localStorage.getItem("imageUser")){

@@ -14,15 +14,26 @@ import "./styles/index.css";
 export default class DisplayCreateNewImageSet extends Component{
 constructor(props){
   super(props);
-  this.state={progressValue:0,progressTotal:0,modalMessage:null,process:false, title:this.props.title, tags:this.props.tags,
-  resizeWidth:0, resizeHeight:0, resizeType:""};
+  this.state=this.getStateFromProps(this.props);
   this.process=new ResizeProcess(this, this.props);
 }
+getStateFromProps(props){
+    return {progressValue:0,progressTotal:0,modalMessage:null,process:false, title:this.props.title, tags:this.props.tags,
+    resizeWidth:0, resizeHeight:0, resizeType:"",imageSetType:'DEFAULT'};
+}
+
 onDropFailed(errorMessage){
       this.setErrorMessage(errorMessage);
 }
 onDropSucess(imageInfo){
+
   if(this.process.isMainImageSizeCorrect(imageInfo.width,imageInfo.height)){
+        if(imageInfo.transparency>0.02){
+            this.setImageSetType('CUT_OUT');
+        }
+        else{
+            this.setImageSetType('DEFAULT');
+        }
         return true;
   }
   else{
@@ -78,14 +89,40 @@ clearProgress(){
 setTitle(title){
   this.setState(Object.assign({}, this.state,{title}));
 }
+setImageSetType(imageSetType){
+    this.setState(Object.assign({}, this.state, {imageSetType}));
+}
 setTags(tags){
   this.setState(Object.assign({}, this.state,{tags}));
 }
 onMainAssetUploaded(data){
-    this.process.onMainAssetUploaded(data);    
+    this.process.onMainAssetUploaded(data);
 }
 
+renderImageType(){
+    var checked=false;
+    if(this.state.imageSetType ==='CUT_OUT'){
+          checked=true;
+    }
+    return(
+      <div className="col-sm-2">
+            <label htmlFor="isCutout">Cutout</label>
+              <input id="isCutout" name="isCutout" type="checkbox" checked={checked}
+                style={{marginLeft:5}}
+                onChange={evt=>{
+                    if(evt.target.checked){
+                        this.setImageSetType('CUT_OUT');
+                    }
+                    else{
+                        this.setImageSetType('DEFAULT');
+                    }
+                }}/>
+     </div>
 
+
+    );
+
+}
   render(){
     if(!this.props.contractNumber || !this.props.episodeNumber){
         return null;
@@ -93,20 +130,24 @@ onMainAssetUploaded(data){
     var appconfig=appdata.getAppConfig();
     var {contractNumber,episodeNumber}=this.props;
     var {tags,title}=this.state;
+    if(!title){
+      title="";
+    }
 
     return (
       <div style={styles.newImageSetContainer}>
             <div className="imageSetHeader">New Image Set</div>
             <div className="container">
                     <div className="row">
-                       <div className="col-sm-6 formFieldWithLabel">
+                       <div className="col-sm-5 formFieldWithLabel">
                           <label htmlFor="contractNumber">Contract Number:</label>
                           <input type="text" className="form-control" id="contractNumber" placeholder="Contract number" name="contractNumber" value={contractNumber} readOnly={true}/>
                         </div>
-                        <div className="col-sm-6 formFieldWithLabel">
+                        <div className="col-sm-5 formFieldWithLabel">
                           <label htmlFor="episodeNumber">Episode Number:</label>
                         <input type="text" className="form-control" id="episodeNumber" placeholder="Episode Number" name="episodeNumber" readOnly={true} value={episodeNumber}/>
                       </div>
+                      {this.renderImageType()}
                   </div>
                   <div className="row">
                     <div className="col-sm-12 formFieldWithLabel">
@@ -124,7 +165,7 @@ onMainAssetUploaded(data){
 
                    <div className="row">
                      <div className="col-sm-12">
-                         <RenderUploadProcess  {...this.props}                           
+                         <RenderUploadProcess  {...this.props}
                            onMainAssetUploaded={this.onMainAssetUploaded.bind(this)}
                            buildFileName={this.process.buildFileName.bind(this.process)}
                            isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
@@ -137,13 +178,13 @@ onMainAssetUploaded(data){
                            />
                      </div>
                      <ModalDialog message={this.state.modalMessage} onClearMessage={this.onClearMessage.bind(this)}/>
-                   </div>              
+                   </div>
            </div>
         </div>
       );
 
   }
-  
+
 
 
 }
@@ -156,7 +197,7 @@ class RenderUploadProcess extends Component{
     }
     else{
       return this.renderResizingprocess();
-    }    
+    }
   }
   renderMasterUpload(){
     return(
@@ -176,9 +217,9 @@ class RenderUploadProcess extends Component{
                  </div>
                  <div  style={styles.imageFooter}>
                           Generating: {resizeWidth} x {resizeHeight}
-                 </div>             
+                 </div>
            </div>
          );
   }
-  
+
 }

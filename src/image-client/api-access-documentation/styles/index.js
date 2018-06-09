@@ -31,10 +31,31 @@ export const styles={
       textAlign: "center",
       fontWeight: "lighter",
       marginLeft:10,
-      textDecoration: "underline"
+
     },
     controlButton:{
       marginLeft:10
+    },
+
+    sectiontitle:{
+      fontSize: 20,
+      color: "#101010",
+      textAlign: "center",
+      fontWeight: "bold"
+    },
+    examples:{
+      display:"flex",
+      flexDirection:"column",
+      paddingLeft:50
+    },
+    exampleLabel:{
+      fontSize: 16,
+      color: "#101010",
+    },
+    exampleValue:{
+      fontSize: 16,
+      color: "#101010",
+      paddingLeft:50
     }
 
 
