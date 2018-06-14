@@ -168,7 +168,7 @@ export default class AppLogin extends Component {
    }
 renderQRCode(){
     var globalInputState=this.state.globalInputState;
-    if(globalInputState && globalInputState.connector && globalInputState.connected){
+    if(globalInputState && globalInputState.connector && globalInputState.connected && (!globalInputState.senderConnected) && (!this.state.password)){
             var qrCodeContent=globalInputState.connector.buildInputCodeData();
             console.log("qrcode:[["+qrCodeContent+"]]");
             return(

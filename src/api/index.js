@@ -214,12 +214,31 @@ class ServiceAPI {
                }
                return this.doGetRequest(queryurl);
          }
-         findAssignedEpisodes(search, start=0){
+         findAssignedEpisodes(request, start=0){
                var queryurl="image-service/box-episodes?minNumberOfImageSets=1&start="+start;
-               if(search){
-                 queryurl+="&search="+search;
+               if(request.search){
+                 queryurl+="&search="+request.search;
+               }
+               if(request.sortBy){
+                 queryurl+="&sortBy="+request.sortBy;
+               }
+               if(request.sortOrder){
+                 queryurl+="&sortOrder="+request.sortOrder;
+               }
+               if(request.fromDate){
+                 queryurl+="&from="+genericUtil.dateValueToTimestamp(request.fromDate,"00:00:00");
+               }
+               if(request.toDate){
+                 queryurl+="&to="+genericUtil.dateValueToTimestamp(request.toDate,"23:59:59");
+               }
+               if(request.channelId){
+                 queryurl+="&channelId="+request.channelId;
                }
                return this.doGetRequest(queryurl);
+
+
+
+
          }
          findAssignedEpisodesByProgrammeNumber(programmeNumber, start=0){
                var queryurl="image-service/box-episodes?minNumberOfImageSets=1&start="+start;

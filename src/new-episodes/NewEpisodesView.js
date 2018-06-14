@@ -9,16 +9,22 @@ import {textValues} from "../configs";
 import {AppHeader,SearchWithDateRangeChannel,LoadingIcon,ModalDialog} from "../components";
 import {styles} from "./styles";
 
-
+var LOAD_EPISODE_STATUS={
+      LOADING:0,
+      PARTIAL_LOADED:1,
+      FAILED:2,
+      FULLY_LOADED:3
+};
 export default class NewEpisodesView extends Component{
+
+
   constructor(props){
         super(props);
-        this.state={loading:true,modalMessage:null, episodes:[],queryparameters:{}, channels:[],channelId:null};
+        this.state=this.getStateFromProps(this.props);
   }
   componentWillMount(){
-    this.bindToStore();
-    this.bindToQueryParameters();
     this.startLoadChannels();
+    this.startSearch(this.state.queryparameters);
   }
   startLoadChannels(){
     api.getAllBoxChannels().then(channels=>{
@@ -41,95 +47,119 @@ export default class NewEpisodesView extends Component{
             onConfirm:this.onClearMessage.bind(this),
             confirmButton:"OK"
      }
-     this.setState(Object.assign({}, this.state,{modalMessage}));
-  }
-  updateFromStore(){
-    var episodeStore=episodedata.getEpisodeStore();
-    this.setState(Object.assign({},this.state,{episodes:episodeStore.episodes, queryparameters:episodeStore.queryparameters}));
-  }
-  bindToStore(){
-    this.updateFromStore();
-    this.ubsubsribe=store.subscribe(()=>{
-            this.updateFromStore();
-    });
+     var episodesState=LOAD_EPISODE_STATUS.FAILED;
+     this.episodesState=episodesState;
+     this.setState(Object.assign({}, this.state,{modalMessage,episodesState}));
   }
 
-  bindToQueryParameters(){
-       var search=genericUtil.getQueryParam(this.props.location.search, "search");
-       if(!search){
-         search="";
-       }
-       var sortBy=genericUtil.getQueryParam(this.props.location.search, "sortBy");
-       var sortOrder=genericUtil.getQueryParam(this.props.location.search, "sortOrder");
-       var fromDate=genericUtil.getQueryParam(this.props.location.search, "fromDate");
-       var toDate=genericUtil.getQueryParam(this.props.location.search, "toDate");
-       var channelId=genericUtil.getQueryParam(this.props.location.search, "channelId");
 
-       if(!sortBy){
+  getStateFromProps(props){
+    var search=genericUtil.getQueryParam(props.location.search, "search");
+    if(!search){
+      search="";
+    }
+    var sortBy=genericUtil.getQueryParam(props.location.search, "sortBy");
+    var sortOrder=genericUtil.getQueryParam(props.location.search, "sortOrder");
+    var fromDate=genericUtil.getQueryParam(props.location.search, "fromDate");
+    var toDate=genericUtil.getQueryParam(props.location.search, "toDate");
+    var channelId=genericUtil.getQueryParam(props.location.search, "channelId");
+    if(!sortBy){
          sortBy="lastModifiedAt";
          sortOrder="desc";
-       }
-       this.startSearch({search,sortBy,sortOrder,fromDate,toDate,channelId});
+    }
+    return {
+                 modalMessage:null,
+                 episodes:[],
+                 channelId:null,
+                 queryparameters:{search,fromDate,toDate,channelId,sortBy,sortOrder},
+                 channels:[],
+                 episodesState:LOAD_EPISODE_STATUS.LOADING
+            };
+
   }
-  setLoading(loading){
-    this.setState(Object.assign({}, this.state,{loading}));
+
+
+
+  startLoadEpisodes(){
+    var episodesState=LOAD_EPISODE_STATUS.LOADING;
+    this.episodesState=episodesState;
+    this.setState(Object.assign({},this.state,{episodesState}));
   }
   startSearch(queryparameters){
-    this.setLoading(true);
+     this.startLoadEpisodes();
     api.findNewEpisodes(queryparameters).then(episodes =>{
-      this.setLoading(false);
-       var recordLimit=appdata.getAppConfig().recordLimit;
-       episodedata.setEpisodeStore({episodes,queryparameters,recordLimit});
+      this.setEpisodes(episodes,queryparameters);
    }).catch(error=>{
-
-       this.setLoading(false);
        this.setErrorMessage("Error loading episode data from the server"+error);
    });
   }
-  lastRecordsDisplayed(){
-      this.loadNextPage();
-  }
-  loadNextPage(){
-      if(episodedata.getNextBatchState()<0){
-        console.log("nore more data on the server");
-        return;
-      }
-      else{
 
-            if(this.loadingNextPage){
-              return;
-            }
-            this.loadingNextPage=true;
-            console.log("loading the next page......");
-            api.findNewEpisodes(this.state.queryparameters,episodedata.getNextBatchState()).then(episodes =>{
-               var recordLimit=appdata.getAppConfig().recordLimit;
-               console.log("Next batch of data is loaded");
-               episodedata.nextPageEpisodes({episodes,recordLimit});
-           });
-      }
-
-  }
-  setEpisodes(episodelistdata){
-
-      if(episodedata.isEpisodeListIdentical(this.state,episodelistdata)){
+  onLoadLoadNextPage(){
+    var start=this.getNextPageStart();
+      if(start<=0){
             return;
       }
-      this.setState(Object.assign({},this.state,episodelistdata));
+      this.startLoadEpisodes();
+      api.findNewEpisodes(this.state.queryparameters,start).then(episodes =>{
+               console.log("Next batch of data is loaded");
+               this.appendEpisodeForNextPage(episodes);
+           });
   }
-  onSearch(queryparameters){
-    var query=Object.assign({},this.state.queryparameters,queryparameters);
+  
 
-    query.fromDate=genericUtil.dateValueToTimestamp(queryparameters.fromDate,"00:00:00");
-
-    query.toDate=genericUtil.dateValueToTimestamp(queryparameters.toDate,"23:59:59");
-
-
-    this.startSearch(query);
+  appendEpisodeForNextPage(ep){
+    var recordLimit=appdata.getAppConfig().recordLimit;
+    var episodesState=LOAD_EPISODE_STATUS.PARTIAL_LOADED;
+    if(ep.length<recordLimit){
+          episodesState=LOAD_EPISODE_STATUS.FULLY_LOADED;
+    }
+    var episodes=[...this.state.episodes,...ep];
+    this.episodesState=episodesState;
+    this.setState(Object.assign({},this.state,{episodes,episodesState}));
   }
 
+
+
+  getNextPageStart(){
+    if(this.episodesState===LOAD_EPISODE_STATUS.PARTIAL_LOADED){
+          return this.state.episodes.length;
+    }
+    else{
+          return -1;
+    }
+  }
+
+
+  setEpisodes(episodes, queryparameters){
+        var recordLimit=appdata.getAppConfig().recordLimit;
+        var episodesState=LOAD_EPISODE_STATUS.PARTIAL_LOADED;
+        if(episodes.length<recordLimit){
+              episodesState=LOAD_EPISODE_STATUS.FULLY_LOADED;
+        }
+        this.episodesState=episodesState;
+        this.setState(Object.assign({},this.state,{episodes,episodesState,queryparameters}));
+  }
+  onSearch(newquery){
+
+    var queryparameters=Object.assign({},this.state.queryparameters,newquery);
+
+    queryparameters.fromDate=genericUtil.dateValueToTimestamp(newquery.fromDate,"00:00:00");
+
+    queryparameters.toDate=genericUtil.dateValueToTimestamp(newquery.toDate,"23:59:59");
+
+
+    this.startSearch(queryparameters);
+  }
+  changeSort(sortBy, sortOrder){
+      console.log("change sort here:sortBy=["+sortBy+"]sortOrder=["+sortOrder);
+      var queryparameters=this.state.queryparameters;
+      queryparameters.sortBy=sortBy;
+      queryparameters.sortOrder=sortOrder;
+      this.startSearch(queryparameters);
+  }
 
   render(){
-      this.loadingNextPage=false;
+
 
       var queryparameters={search:this.state.queryparameters.search};
       queryparameters.fromDate=genericUtil.timestampToDateValue(this.state.queryparameters.fromDate);
@@ -141,18 +171,18 @@ export default class NewEpisodesView extends Component{
                <div style={styles.listHeader}>
                  <SearchWithDateRangeChannel queryparameters={queryparameters} onSearch={this.onSearch.bind(this)}
                    channels={this.state.channels}/>
-                 <LoadingIcon loading={this.state.loading}/>
+                 <LoadingIcon loading={this.state.episodesState===LOAD_EPISODE_STATUS.LOADING}/>
                </div>
-               <ListNewEpisodes data={this.state} lastRecordsDisplayed={this.lastRecordsDisplayed.bind(this)} />
+
+                <ListNewEpisodes episodes={this.state.episodes}
+                  onLoadLoadNextPage={this.onLoadLoadNextPage.bind(this)}
+                   queryparameters={this.state.queryparameters}
+                   changeSort={this.changeSort.bind(this)}/>
             </div>
             <ModalDialog message={this.state.modalMessage}/>
            </div>
          );
   }
 
-  componentWillUnmount(){
-    if(this.ubsubsribe){
-      this.ubsubsribe();
-    }
-  }
+
 }
