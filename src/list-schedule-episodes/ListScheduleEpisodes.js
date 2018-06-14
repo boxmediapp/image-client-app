@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import {Table, Column, Cell} from "fixed-data-table-2";
-import {textValues} from "../configs";
+import {textValues,localImages} from "../configs";
 import "fixed-data-table-2/dist/fixed-data-table.min.css";
 import {
   Link
@@ -21,19 +21,36 @@ export  default class ListScheduleEpisodes extends Component {
     }
 
   renderEpisodes(episodes,onLoadLoadNextPage){
-    var data={episodes, onLoadLoadNextPage}
+    var queryparameters=this.props.queryparameters;
+    var changeSort=this.props.changeSort;
+    var data={episodes, queryparameters,onLoadLoadNextPage,changeSort,headers:[{
+                            columnKey:"schedule.scheduleTimestamp",title:"Date",
+                            sortBy:"scheduleTimestamp"
+                        },{
+                                columnKey:"schedule.channel",title:"Channel",
+                                sortBy:"boxChannel.channelName"
+                        },{
+                                columnKey:"contractNumber",title:"Contract",
+                                sortBy:"boxEpisode.programmeNumber"
+                        },{
+                                columnKey:"title",title:"Title",
+                                sortBy:"boxEpisode.title"
+                        }]
+    };
+
+
     return(
       <div className="content">
                <Table
                  rowHeight={50}
                  headerHeight={50}
                  rowsCount={episodes.length}
-                 width={1000}
+                 width={1050}
                  height={1000}>
 
                  <Column
                           columnKey="schedule.scheduleTimestamp"
-                          header={<Cell>Date</Cell>}
+                          header={<HeaderCellSorting data={data}/>}
                           cell={<ScheduleDateCell data={data}/>}
                           width={100}
                           fixed={true}
@@ -41,17 +58,17 @@ export  default class ListScheduleEpisodes extends Component {
 
                <Column
                         columnKey="schedule.channel"
-                        header={<Cell>Channel</Cell>}
+                        header={<HeaderCellSorting data={data}/>}
                         cell={<ChannelDateCell data={data}/>}
                         width={100}
                         fixed={true}
                 />
                <Column
                            columnKey="contractNumber"
-                           header={<Cell>Contract</Cell>}
+                           header={<HeaderCellSorting data={data}/>}
                            cell={<TextCell data={data}/>}
                            fixed={true}
-                           width={100}
+                           width={150}
                            />
                <Column
                                columnKey="episodeNumber"
@@ -61,11 +78,11 @@ export  default class ListScheduleEpisodes extends Component {
                                width={100}
                                />
                 <Column
-                                           columnKey="title"
-                                           header={<Cell>Title</Cell>}
-                                           cell={<TextCell data={data}/>}
-                                           width={400}
-                                           fixed={true}
+                            columnKey="title"
+                            header={<HeaderCellSorting data={data}/>}
+                            cell={<TextCell data={data}/>}
+                            width={400}
+                            fixed={true}
                                           />
 
                                           <Column
@@ -86,7 +103,6 @@ export  default class ListScheduleEpisodes extends Component {
 
 
 }
-
 
 
 class TextCell extends Component {
@@ -199,4 +215,45 @@ class ActionCell extends Component {
   }
 
 
+}
+class HeaderCellSorting extends Component {
+  onChangeSort(matchedHeader,queryparameters,changeSort){
+      var sortOrder="desc";
+      if(queryparameters.sortBy===matchedHeader.sortBy && queryparameters.sortOrder==='desc'){
+              sortOrder="asc";
+      }
+      changeSort(matchedHeader.sortBy, sortOrder);
+
+  }
+    render(){
+
+        var queryparameters=this.props.data.queryparameters;
+        var matchedHeaders=this.props.data.headers.filter(h=>h.columnKey===this.props.columnKey);
+        var changeSort=this.props.data.changeSort;
+        var imageurl=localImages.notSorted;
+
+        var matchedHeader=null;
+        if(matchedHeaders.length){
+              matchedHeader=matchedHeaders[0];
+        }
+
+        if(matchedHeader && queryparameters.sortBy===matchedHeader.sortBy){
+            if(queryparameters.sortOrder==='asc'){
+              imageurl=localImages.ascending;
+            }
+            else{
+              imageurl=localImages.descending;
+            }
+        }
+
+        return(
+          <Cell>
+            <a onClick={e=>{this.onChangeSort(matchedHeader,queryparameters,changeSort)}}>
+            <img src={imageurl}/>
+            </a>
+
+          {matchedHeader.title}
+          </Cell>
+        );
+    }
 }

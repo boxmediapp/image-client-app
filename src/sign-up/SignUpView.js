@@ -295,7 +295,7 @@ gotoSignIn(){
   }
   renderQRCode(){
       var globalInputState=this.state.globalInputState;
-      if(globalInputState && globalInputState.connector && globalInputState.connected){
+      if(globalInputState && globalInputState.connector && globalInputState.connected && (!globalInputState.senderConnected)){
               var qrCodeContent=globalInputState.connector.buildInputCodeData();
               console.log("qrcode:[["+qrCodeContent+"]]");
               return(

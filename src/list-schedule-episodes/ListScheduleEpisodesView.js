@@ -20,19 +20,23 @@ var LOAD_EPISODE_STATUS={
 export default class ListScheduleEpisodesView extends Component{
   constructor(props){
         super(props);
-        this.state=this.buildDefaultState();
+
+        this.state=this.getStateFromProps(this.props);
         this.episodesState=this.state.episodesState;
   }
-  buildDefaultState(){
-    var search=genericUtil.getQueryParam(this.props.location.search, "search");
+componentWillReceiveProps(nextProps){
+     //this.setState(this.getStateFromProps(nextProps))
+ }
+  getStateFromProps(props){
+    var search=genericUtil.getQueryParam(props.location.search, "search");
     if(!search){
       search="";
     }
-    var sortBy=genericUtil.getQueryParam(this.props.location.search, "sortBy");
-    var sortOrder=genericUtil.getQueryParam(this.props.location.search, "sortOrder");
-    var fromDate=genericUtil.getQueryParam(this.props.location.search, "fromDate");
-    var toDate=genericUtil.getQueryParam(this.props.location.search, "toDate");
-    var channelId=genericUtil.getQueryParam(this.props.location.search, "channelId");
+    var sortBy=genericUtil.getQueryParam(props.location.search, "sortBy");
+    var sortOrder=genericUtil.getQueryParam(props.location.search, "sortOrder");
+    var fromDate=genericUtil.getQueryParam(props.location.search, "fromDate");
+    var toDate=genericUtil.getQueryParam(props.location.search, "toDate");
+    var channelId=genericUtil.getQueryParam(props.location.search, "channelId");
     if(!sortBy){
          sortBy="scheduleTimestamp";
          sortOrder="desc";
@@ -53,14 +57,14 @@ export default class ListScheduleEpisodesView extends Component{
   setChannels(channels){
         this.setState(Object.assign({},this.state,{channels}));
   }
-  setEpisodes(episodes){
+  setEpisodes(episodes,queryparameters){
       var recordLimit=appdata.getAppConfig().recordLimit;
       var episodesState=LOAD_EPISODE_STATUS.PARTIAL_LOADED;
       if(episodes.length<recordLimit){
             episodesState=LOAD_EPISODE_STATUS.FULLY_LOADED;
       }
       this.episodesState=episodesState;
-      this.setState(Object.assign({},this.state,{episodes,episodesState}));
+      this.setState(Object.assign({},this.state,{episodes,episodesState,queryparameters}));
   }
   appendEpisodeForNextPage(ep){
     var recordLimit=appdata.getAppConfig().recordLimit;
@@ -117,7 +121,7 @@ export default class ListScheduleEpisodesView extends Component{
   startSearch(queryparameters){
           this.startLoadEpisodes();
           api.findScheduleEpisodes(queryparameters).then(episodes =>{
-              this.setEpisodes(episodes);
+              this.setEpisodes(episodes,queryparameters);
          }).catch(error=>{
              this.setErrorMessage("Error loading episode data from the server"+error);
          });
@@ -140,6 +144,13 @@ export default class ListScheduleEpisodesView extends Component{
     this.setState(Object.assign({}, this.state,{queryparameters}));
     this.startSearch(queryparameters);
   }
+  changeSort(sortBy, sortOrder){
+      console.log("change sort here:sortBy=["+sortBy+"]sortOrder=["+sortOrder);
+      var queryparameters=this.state.queryparameters;
+      queryparameters.sortBy=sortBy;
+      queryparameters.sortOrder=sortOrder;
+      this.startSearch(queryparameters);
+  }
 
   render(){
       var queryparameters={search:this.state.queryparameters.search};
@@ -152,9 +163,11 @@ export default class ListScheduleEpisodesView extends Component{
                <div style={styles.listHeader}>
                  <SearchEcheduleEpisodes queryparameters={queryparameters} onSearch={this.onSearch.bind(this)}
                    channels={this.state.channels}/>
-                 <LoadingIcon loading={this.state.episodesState===LOAD_EPISODE_STATUS.LOADING}/>
+                   <LoadingIcon loading={this.state.episodesState===LOAD_EPISODE_STATUS.LOADING}/>
                </div>
-               <ListScheduleEpisodes episodes={this.state.episodes} onLoadLoadNextPage={this.onLoadLoadNextPage.bind(this)} />
+               <ListScheduleEpisodes episodes={this.state.episodes} onLoadLoadNextPage={this.onLoadLoadNextPage.bind(this)}
+                 queryparameters={this.state.queryparameters}
+                 changeSort={this.changeSort.bind(this)}/>
             </div>
             <ModalDialog message={this.state.modalMessage}/>
            </div>
