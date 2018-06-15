@@ -35,6 +35,10 @@ export  default class ListScheduleEpisodes extends Component {
                         },{
                                 columnKey:"title",title:"Title",
                                 sortBy:"boxEpisode.title"
+                        },{
+                          columnKey:"id",title:"Action",
+                          sortBy:"boxEpisode.imageSets"
+
                         }]
     };
 
@@ -87,7 +91,7 @@ export  default class ListScheduleEpisodes extends Component {
 
                                           <Column
                                            columnKey="id"
-                                           header={<Cell></Cell>}
+                                           header={<HeaderCellSorting data={data}/>}
                                            cell={<ActionCell data={data}/>}
                                            fixed={true}
                                            width={200}
