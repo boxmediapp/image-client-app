@@ -58,12 +58,15 @@ export default class DisplaySetProperty extends Component{
                 <input id="isCutout" name="isCutout" type="checkbox" checked={checked}
                   style={{marginLeft:5}}
                   onChange={evt=>{
+                    if(appdata.isUserAdmin()){
                       if(evt.target.checked){
                           this.setImageSetType('CUT_OUT');
                       }
                       else{
                           this.setImageSetType('DEFAULT');
                       }
+                    }
+
                   }}/>
        </div>
 

@@ -10,7 +10,21 @@ export default class AppSettingsStore{
   getUserInfo(){
     return this.store.getState().userSettings.userinfo;
   }
-  
+  isUserAdmin(){
+    var userinfo=this.getUserInfo();
+    if(!userinfo){
+      return false;
+    }
+    if(!userinfo.roles){
+        return false;
+    }
+    for(var i=0;i<userinfo.roles.length;i++){
+        if(userinfo.roles[i].operationAccess==='admin'){
+          return true;
+        }
+    }
+    return false;
+  }
 
   setAppConfig(appconfig){
     this.store.dispatch(applicationSettings.actions.appconfig(appconfig));
