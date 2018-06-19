@@ -109,18 +109,25 @@ renderImageType(){
     if(this.state.imageSetType ==='CUT_OUT'){
           checked=true;
     }
+
+
+
+
+
     return(
       <div className="col-sm-2">
             <label htmlFor="isCutout">Cutout</label>
               <input id="isCutout" name="isCutout" type="checkbox" checked={checked}
                 style={{marginLeft:5}}
                 onChange={evt=>{
+                  if(appdata.isUserAdmin()){
                     if(evt.target.checked){
                         this.setImageSetType('CUT_OUT');
                     }
                     else{
                         this.setImageSetType('DEFAULT');
                     }
+                  }
                 }}/>
      </div>
 
