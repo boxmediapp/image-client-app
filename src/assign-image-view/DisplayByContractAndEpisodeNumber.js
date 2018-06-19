@@ -147,9 +147,7 @@ class CreateNewImageSetInEpisode extends Component{
               var fileCounter=genericUtil.getMaximumFileCounter(this.props.imageSets);
               fileCounter++;
               var imageSet=this.props.imageSets[0];
-
-
-              fileCounter++;
+              
                 return (
 
                     <DisplayCreateNewImageSet

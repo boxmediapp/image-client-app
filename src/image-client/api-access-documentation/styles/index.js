@@ -56,6 +56,24 @@ export const styles={
       fontSize: 16,
       color: "#101010",
       paddingLeft:50
+    },
+    section:{
+      display:"flex",
+      flexDirection:"column",
+      justifyContent:"flex-start",
+      alignItems:"flex-start",
+      paddingTop:10
+    },
+    sectionTitle:{
+      fontSize: 20,
+      color: "#101010",
+      textAlign: "center",
+      fontWeight: "bold",
+      display:"flex",
+      flexDirection:"row",
+      justifyContent:"flex-start",
+      alignItems:"flex-start",
+
     }
 
 

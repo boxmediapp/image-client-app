@@ -72,7 +72,7 @@ export default class EpisodeView extends Component{
              <div>
                    <AppHeader selected="newepisodes"/>
                    <div style={AppHeader.styles.content}>
-                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber} 
+                      <DisplayByContractAndEpisodeNumber contractNumber={this.state.contractNumber}
                       episodeNumber={this.state.episodeNumber}
                       redirectToImageLibrary={this.redirectToImageLibrary.bind(this)}/>
                    </div>

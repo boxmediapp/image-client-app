@@ -102,6 +102,10 @@ export default class GenericUtil{
     while(fileVersion.length<3){
       fileVersion="0"+fileVersion;
     }
+    if(typeof contractNumber==='undefined'){
+          console.error("contract nunber is undefined in buildImageFileName");
+          contractNumber=(new Date()).getTime();
+    }
     return contractNumber+"_"+episodeNumber+"_"+fileVersion+"_"+width+"x"+height+"."+type;
   }
 

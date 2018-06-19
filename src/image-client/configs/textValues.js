@@ -62,7 +62,12 @@ const ptextValues={
                 "Your client ID and client Secret, and the services endpoint:"],
             p2:["Without any query parameters, the API returns all the images that are in APPROVED status and its imageSetType is not  'CUT_OUT'"],
             p3:["The default value of the 'imageStatus' parameter is 'APPROVED'. Hence, unless the 'imageStatus' parameter is specified, it will search the approved images only. If you specfify imageStatus=WAITING_APPROVE, then it will search the images that in waiting for approval",
-                "The default value of the imageSetType is 'DEFAULT'. Hence, unless the imageSetType is specified, you will search the images that are not cutout images"]
+                "The default value of the imageSetType is 'DEFAULT'. Hence, unless the imageSetType is specified, you will search the images that are not cutout images"],
+
+            p4:[
+                "When the result of a query is too big , for example if you would like to download the entire data set, you need to  use the 'limit' and 'start' parameters to implement the pagination",
+                "Following is an example of how to do pagination:"
+            ]
         }
       }
 

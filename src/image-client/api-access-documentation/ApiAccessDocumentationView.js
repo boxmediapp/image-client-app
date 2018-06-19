@@ -112,11 +112,59 @@ export  default class ApiAccessDocumentationView extends Component {
                                                         <div style={styles.exampleValue}>curl -u "{userAccount.clientId}:{userAccount.clientSecret}" {serviceEnpoint}?imageSetType=CUT_OUT&imageStatus=WAITING_APPROVE</div>
                                                     </div>
 
+
+
+
                                                   </div>
+
+                                                      <div style={styles.section}>
+                                                          <div style={styles.sectionTitle}>Pagination</div>
+                                                          <DisplayContent content={textValues.apiAccessHelp.content.p4}/>
+                                                          <div style={styles.exampleValue}>
+
+                                                            (1) Set the initial values of the variable:
+                                                              <div style={styles.exampleValue}>
+                                                                limit=100;//the number of records per page is 100
+                                                              </div>
+                                                              <div style={styles.exampleValue}>
+                                                                start=0; //start from the first record (index starts with 0)
+                                                              </div>
+                                                              <div style={styles.exampleValue}>
+
+                                                              </div>
+
+                                                          </div>
+
+                                                          <div style={styles.exampleValue}>
+
+                                                            (2) Load the array of image metadata from the URL:
+                                                              {serviceEnpoint}?start=start&limit=limit
+
+                                                          </div>
+
+
+                                                          <div style={styles.exampleValue}>
+
+                                                            (3) Process the loaded array.
+
+
+                                                          </div>
+
+
+                                                          <div style={styles.exampleValue}>
+
+                                                            (4) Check if the size of array is less than the value of the limit, if yes, finish the process;
+                                                            if not then increase the value of the 'start' by the size of the array and then loop back to (2)
+
+
+                                                          </div>
+                                                      </div>
 
 
 
                                           </div>
+
+
                             </div>
                   </div>
 
