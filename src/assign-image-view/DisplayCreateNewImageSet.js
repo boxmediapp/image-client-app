@@ -15,11 +15,16 @@ export default class DisplayCreateNewImageSet extends Component{
 constructor(props){
   super(props);
   this.state=this.getStateFromProps(this.props);
-  this.process=new ResizeProcess(this, this.props);
+
 }
 getStateFromProps(props){
-    return {progressValue:0,progressTotal:0,modalMessage:null,process:false, title:this.props.title, tags:this.props.tags,
-    resizeWidth:0, resizeHeight:0, resizeType:"",imageSetType:'DEFAULT'};
+    return {progressValue:0,progressTotal:0,modalMessage:null,process:false, title:props.title, tags:props.tags,
+    resizeWidth:0, resizeHeight:0, resizeType:"",imageSetType:'DEFAULT',resizeProcess:new ResizeProcess(this, props)};
+}
+componentWillReceiveProps(nextProps){
+  if(this.props.contractNumber!==nextProps.contractNumber || this.props.episodeNumber!==nextProps.episodeNumber){
+       this.setState(this.getStateFromProps(nextProps))
+  }
 }
 
 onDropFailed(errorMessage){
@@ -27,7 +32,7 @@ onDropFailed(errorMessage){
 }
 onDropSucess(imageInfo){
 
-  if(this.process.isMainImageSizeCorrect(imageInfo.width,imageInfo.height)){
+  if(this.state.resizeProcess.isMainImageSizeCorrect(imageInfo.width,imageInfo.height)){
         if(imageInfo.transparency>0.02){
             this.setImageSetType('CUT_OUT');
         }
@@ -96,7 +101,7 @@ setTags(tags){
   this.setState(Object.assign({}, this.state,{tags}));
 }
 onMainAssetUploaded(data){
-    this.process.onMainAssetUploaded(data);
+    this.state.resizeProcess.onMainAssetUploaded(data);
 }
 
 renderImageType(){
@@ -167,12 +172,12 @@ renderImageType(){
                      <div className="col-sm-12">
                          <RenderUploadProcess  {...this.props}
                            onMainAssetUploaded={this.onMainAssetUploaded.bind(this)}
-                           buildFileName={this.process.buildFileName.bind(this.process)}
-                           isUploadImageSizeCorrect={this.process.isMainImageSizeCorrect.bind(this.process)}
+                           buildFileName={this.state.resizeProcess.buildFileName.bind(this.state.resizeProcess)}
+                           isUploadImageSizeCorrect={this.state.resizeProcess.isMainImageSizeCorrect.bind(this.state.resizeProcess)}
                            bucket={appconfig.imageBucket} onDropFailed={this.onDropFailed.bind(this)}
                            onDropSucess={this.onDropSucess.bind(this)}
                            onUploadError={this.onUploadError.bind(this)}
-                           resizing={this.state.process} process={this.process}
+                           resizing={this.state.process} process={this.state.resizeProcess}
                            resizeWidth={this.state.resizeWidth} resizeHeight={this.state.resizeHeight}
                            progressValue={this.state.progressValue} progressTotal={this.state.progressTotal}
                            />

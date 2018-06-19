@@ -147,7 +147,11 @@ export default class ListAssignedEpisodesView extends Component{
              <AppHeader selected="assignedEpisodes"/>
              <div style={AppHeader.styles.content}>
                 <div style={styles.listHeader}>
-                    <SearchBox search={this.state.search} startSearch={this.startSearch.bind(this)}/>
+                    <SearchBox search={this.state.search} startSearch={(search)=>{
+                          var queryparameters=this.state.queryparameters;
+                          queryparameters.search=search;
+                          this.startSearch(queryparameters);
+                      }}/>
                       <LoadingIcon loading={this.state.episodesState===LOAD_EPISODE_STATUS.LOADING}/>
                 </div>
 

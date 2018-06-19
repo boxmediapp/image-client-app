@@ -177,7 +177,7 @@ export default class DisplayImage extends Component{
                                             <button type="button" className="btn btn-primary btn-normal imageButtons" onClick={(evt) => {
                                                  this.displayConfirmDeleteDialog();
                                              }}>Delete</button>
-                                             <DisplayBoxMediaButtons image={this.state.image} uploadToBoxMediaApp={this.uploadImageToMediaApp.bind(this)}/>
+                                             
                                         </div>
                                 </div>
                                 <ModalDialog message={this.state.modalMessage}/>

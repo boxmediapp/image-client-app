@@ -22,6 +22,7 @@ export default class NewEpisodesView extends Component{
         super(props);
         this.state=this.getStateFromProps(this.props);
   }
+  
   componentWillMount(){
     this.startLoadChannels();
     this.startSearch(this.state.queryparameters);
@@ -105,7 +106,7 @@ export default class NewEpisodesView extends Component{
                this.appendEpisodeForNextPage(episodes);
            });
   }
-  
+
 
   appendEpisodeForNextPage(ep){
     var recordLimit=appdata.getAppConfig().recordLimit;
