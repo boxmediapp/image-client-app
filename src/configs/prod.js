@@ -1,5 +1,6 @@
 var config={
     appid:"boxmediaapp",
+    url:"https://image.boxnetwork.co.uk",
     apikey:"k7jc3QcMPKEXGW5UC",
     securityGroup:"1CNbWCFpsbmRQuKdd",
     version:"1.3.6",
