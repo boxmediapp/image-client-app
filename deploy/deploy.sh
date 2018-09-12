@@ -9,3 +9,4 @@ buildVariables
 createFolders
 uploadZipFile
 unzipZipFile
+#uploaUserGuideFile

@@ -1,7 +1,8 @@
 var config={
     appid:"boxmediaapp",
-    apikey:"k7jc3QcMPKEXGW5UC",
-    securityGroup:"1CNbWCFpsbmRQuKdd",
+    url:"@@@global_input_url@@@",
+    apikey:"@@@global_input_apikey@@@",
+    securityGroup:"@@@global_input_apikey_securityGroup@@@",
     version:"1.3.6",
     api:{
       base:"https://mediaapp.boxplus.com/mule/boxtv/",

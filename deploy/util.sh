@@ -1,5 +1,5 @@
 projectName="image-client-app"
-
+userguidefilepath="/Users/dilshathewzulla/Dropbox/boxtv/image-workflow/UserGuide.pdf"
 getProjectVersionFromPom(){
   projectversion=`grep -A 0 -B 2 "<packaging>" pom.xml  | grep version  | cut -d\> -f 2 | cut -d\< -f 1`
   export projectversion
@@ -54,8 +54,9 @@ unzipAndReplaceVariables(){
     echo "creating the script:/tmp/script_$uniqueidforfilename.sh"
     echo "cd $destzipfolder" > /tmp/script_$uniqueidforfilename.sh
     echo "unzip -o $zipfilename" >> /tmp/script_$uniqueidforfilename.sh
-
-    #echo  'sed -i -e "s,@@@db_user@@@,'$db_user',g" mysql/box-scripts/mysql.env' >> /tmp/script_$uniqueidforfilename.sh
+    echo  'find static/js/ -iname "*.js" -exec sed -i -e "s,@@@global_input_url@@@,'$global_input_url',g" {} \;' >> /tmp/script_$uniqueidforfilename.sh
+    echo  'find static/js/ -iname "*.js" -exec sed -i -e "s,@@@global_input_apikey@@@,'$global_input_apikey',g" {} \;' >> /tmp/script_$uniqueidforfilename.sh
+    echo  'find static/js/ -iname "*.js" -exec sed -i -e "s,@@@global_input_apikey_securityGroup@@@,'$global_input_apikey_securityGroup',g" {} \;' >> /tmp/script_$uniqueidforfilename.sh
 
 
 }
@@ -98,4 +99,8 @@ copyTheAppToDockerFolder(){
 }
 buildAndStartDocker(){
     executeDeployedScriptOnServer start.sh
+}
+uploaUserGuideFile(){
+    echo "uploading the userguide to  $deploy_to_username@$deploy_to_hostname:$destzipfolder/"
+    scp $userguidefilepath $deploy_to_username@$deploy_to_hostname:$destzipfolder/
 }
