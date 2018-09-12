@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 import {AppLogin} from "../components";
 import AppHeader from "./app-header/AppHeader"
-import {textValues} from "../configs";
+import {textValues,config} from "../configs";
 
 import  "./styles/DisplayLogin.css";
 import {genericUtil} from "../utils";
@@ -67,6 +67,10 @@ class SubscriptionLink extends Component{
         <div className="content">
             <div   style={styles.subscription}>
                 <a href={textValues.signup.link}>{textValues.signup.linkText}</a>
+                  <div style={styles.userGuide}>
+                    <a href={config.userGuide} download="UserGuide">{textValues.userGuide.linkText}</a>
+                </div>
+
             </div>
         </div>
 

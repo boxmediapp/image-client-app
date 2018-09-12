@@ -2,6 +2,7 @@ const textValues={
     title:"Box Image Asset Manager",
     uploadHDImageText:["Drop an image here",
                 "Requires: 1920 x 1080"],
+
     uploadPermissonError:"You do not have permission to upload image",
     permissionError:{
         title:"Permission Error",
@@ -10,7 +11,9 @@ const textValues={
     signin:{
         title:"Sign in"
     },
-
+    userGuide:{
+        linkText:"User Guide"
+    },
     newepisodes:{
       link:"/image-app/services/new-episodes",
       linkText:"Assign Images",
