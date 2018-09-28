@@ -10,7 +10,7 @@
     "json-loader": "^0.5.7",
     "qrcode.react": "^0.7.1",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2",
+    "react-dom": "*",
     "react-dropzone": "^4.3.0",
     "react-markdown": "^3.6.0",
     "react-redux": "^5.0.7",
@@ -18,7 +18,7 @@
     "redux": "^3.7.2",
     "redux-persist": "^4.10.2",
     "redux-thunk": "^2.3.0",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "react-scripts": "1.0.10"
