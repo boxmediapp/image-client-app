@@ -114,7 +114,7 @@ class DisplaySubmitButton extends Component{
 
     render(){
       if(this.props.loading){
-          <LoadingIcon/>
+          return(<LoadingIcon/>);
       }
       else{
         return(<button type="submit" className="btn btn-primary btn-normal"onClick={(evt) => {
