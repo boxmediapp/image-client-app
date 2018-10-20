@@ -64,7 +64,9 @@ export default class App extends Component{
        if(userinfo.application==="boxmedia" ||userinfo.application==="boximage"){
                api.loadConfig().then(appconfig=>{
                         var loading=false;
+                        console.log("config is loaded");
                         this.setState(Object.assign({}, this.state, {userinfo,loading}));
+                        console.log("config is set");
                         appdata.setAppConfig(appconfig);
 
                }).catch((err)=>{
