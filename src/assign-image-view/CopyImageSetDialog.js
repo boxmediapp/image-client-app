@@ -292,11 +292,15 @@ displayImage(imageSet, index){
 
 renderEpisodeList(){
 
+    var title=textValues.copyImageSet.title;
+    if(this.props.imageSetToCopy && this.props.imageSetToCopy.imageSetType==='CUT_OUT'){
+      title=textValues.copyImageSet.cutoutTitle;
+    }
 
     return(
       <div style={styles.backdropStyle}>
       <div style={styles.imageSetDialogwindow}>
-          <div style={styles.dialogTitle}>{textValues.copyImageSet.title}</div>
+          <div style={styles.dialogTitle}>{title}</div>
           <div style={styles.imageSetDialogContent}>
                    <div style={styles.tableContent}>
                    <div>{textValues.copyImageSet.content}</div>

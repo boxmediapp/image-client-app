@@ -219,7 +219,8 @@ const textValues={
     },
     copyImageSet:{
         action:"Copy To the Episodes with the Same Contract",
-        title:"Copying To the Episodes",
+        title:"Copying Image Sets",
+        cutoutTitle:"Copying CUTOUT Image Sets",
         content:"The following episodes are found to have the same contract number.",
         help:"The 'Copy' button copies the images to the episodes that do not have images. The 'Delete' button deletes all the existing images.",
         deleteImageSet:{
