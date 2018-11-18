@@ -191,6 +191,32 @@ class ServiceAPI {
                }
                return this.doGetRequest(queryurl);
          }
+         findEpisodes(request, start=0){
+
+                    var queryurl="image-service/box-episodes?start="+start;
+                    if(request.search){
+                      queryurl+="&search="+request.search;
+                    }
+                    if(request.sortBy){
+                      queryurl+="&sortBy="+request.sortBy;
+                    }
+                    if(request.sortOrder){
+                      queryurl+="&sortOrder="+request.sortOrder;
+                    }
+                    if(request.fromDate){
+                      queryurl+="&from="+request.fromDate;
+                    }
+                    if(request.toDate){
+                      queryurl+="&to="+request.toDate;
+                    }
+                    if(request.channelId){
+                      queryurl+="&channelId="+request.channelId;
+                    }
+                    if(request.contractNumber){
+                      queryurl+="&contractNumber="+request.contractNumber;
+                    }
+                    return this.doGetRequest(queryurl);
+              }
          findScheduleEpisodes(request, start=0){
 
                var queryurl="image-service/box-schedule-episodes?start="+start;

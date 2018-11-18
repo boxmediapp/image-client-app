@@ -100,7 +100,8 @@ export const styles={
      flexDirection:"column",
      justifyContent:"center",
      alignItems:"center",
-     zIndex:100
+     zIndex:100,
+
   },
   dialogwindow:{
     backgroundColor: '#fff',
@@ -112,6 +113,7 @@ export const styles={
     justifyContent:"space-between",
     boxShadow: "10px 10px 5px #888888"
   },
+
   dialogTitle:{
     fontFamily: "'Roboto', sans-serif",
     borderTopLeftRadius: 15,
@@ -158,6 +160,64 @@ export const styles={
       width:"100%"
   },
 
+  imageSetDialogwindow:{
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    width: "90%",
+    height: "90%",
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"space-between",
+    boxShadow: "10px 10px 5px #888888"
+  },
+  imageSetDialogContent:{
+    flex:1,
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"start",
+    alignItems:"center",
+    margin:10,
+    overflow:"scroll"
+  },
+  dialogTable:{
+      marginTop:50,
+      borderCollapse: "collapse",
+      width: "100%"
+  },
+  dialogTableHeader:{
+    border: "1px solid #dddddd",
+    textAlign: "left",
+    padding: 8
+  },
+  dialogTableDataCell:{
+    border: "1px solid #dddddd",
+    textAlign: "left",
+    padding: 8,
+  },
+  existingImageCell:{
+    border: "5px solid #ff0000",
+    textAlign: "left",
+    padding: 8,
+
+  },
+  emptyImageCell:{
+    border: "5px solid #0000ff",
+    textAlign: "left",
+    padding: 8,
+
+  },
+
+  imagethumbnailContainer:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"flex-start",
+    alignItems:"start"
+  },
+
+  imageDialogSetContainer:{
+      width: 100,
+
+  },
 
 
 };

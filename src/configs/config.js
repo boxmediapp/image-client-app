@@ -21,7 +21,7 @@ var config={
 config.version=apppackage.version;
 if(process && process.env && process.env.NODE_ENV){
     //prodelopment, production,test environment
-    if(process.env.NODE_ENV==='prodelopment'){
+    if(process.env.NODE_ENV==='development'){
         config.url=process.env.REACT_APP_GLOBALINPUT_URL;
         config.apikey=process.env.REACT_APP_GLOBALINPUT_APIKEY;
         config.securityGroup=process.env.REACT_APP_GLOBALINPUT_SECURITY_GROUP;

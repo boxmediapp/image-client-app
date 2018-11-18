@@ -43,7 +43,7 @@ export default class ResizeProcess{
                        height:data.height,
                        tags:this.caller.state.tags,
                        imageSet:imageSet,
-                       imageStatus:'WAITING_APPROVE',
+                       imageStatus:'APPROVED',
                     };
                     api.createImage(image).then(image=>{
                           this.startResizeProcess(imageSet,image);
@@ -161,7 +161,7 @@ export default class ResizeProcess{
            height:this.height,
            tags:this.image.tags,
            imageSet:this.imageSet,
-           imageStatus:'WAITING_APPROVE',
+           imageStatus:'APPROVED',
         };
         api.createImage(image).then(image=>{
               this.goto(this.step+1);

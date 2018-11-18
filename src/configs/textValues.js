@@ -214,10 +214,20 @@ const textValues={
         link:"/image-app/services",
         title:"Service Not Permitted"
     },
+    deleteAllImageSet:{
+        buttonName:"Delete the Existing Images",
+    },
     copyImageSet:{
         action:"Copy To the Episodes with the Same Contract",
-        title:"Copying To the Episodes",
-        content:"The following episodes are found to have the same contract number. They will have the same image set if you click on the 'Copy' button.",
+        title:"Copying Image Sets",
+        cutoutTitle:"Copying CUTOUT Image Sets",
+        content:"The following episodes are found to have the same contract number.",
+        help:"The 'Copy' button copies the images to the episodes that do not have images. The 'Delete' button deletes all the existing images.",
+        deleteImageSet:{
+            title:"Deleting the image sets in the episodes",
+            content:"Are you sure you want permanantly delete the images in the episodes?",
+            deleteError:"Failed to delete the image set:"
+        },
         buttonName:"Copy",
         error:{
             title:"Error",
@@ -234,8 +244,8 @@ const textValues={
         },
 
         progress:{
-          title:"Copying Images",
-          content:"Copying the images, remaining:"
+          title:"Work in Progress",
+          content:"Jobs remaining:"
         }
 
     }
