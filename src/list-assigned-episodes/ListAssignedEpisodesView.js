@@ -20,38 +20,58 @@ export default class ListAssignedEpisodesView extends Component{
 
   constructor(props){
         super(props);
-        this.state=this.getStateFromProps(this.props);
+        this.state=this.buildNewState();
 
 
   }
-  getStateFromProps(props){
-    var search=genericUtil.getQueryParam(props.location.search, "search");
+  buildNewState(newState){
+
+    var search=genericUtil.getQueryParam(this.props.location.search, "search");
     if(!search){
       search="";
     }
-    var programmeNumber=genericUtil.getQueryParam(this.props.location.search, "programmeNumber");
-    var sortBy=genericUtil.getQueryParam(props.location.search, "sortBy");
-    var sortOrder=genericUtil.getQueryParam(props.location.search, "sortOrder");
-    var fromDate=genericUtil.getQueryParam(props.location.search, "fromDate");
-    var toDate=genericUtil.getQueryParam(props.location.search, "toDate");
-    var channelId=genericUtil.getQueryParam(props.location.search, "channelId");
+
+
+    var contractNumber=genericUtil.getQueryParam(this.props.location.search, "contractNumber");
+    var sortBy=genericUtil.getQueryParam(this.props.location.search, "sortBy");
+    var sortOrder=genericUtil.getQueryParam(this.props.location.search, "sortOrder");
+    var fromDate=genericUtil.getQueryParam(this.props.location.search, "fromDate");
+    var toDate=genericUtil.getQueryParam(this.props.location.search, "toDate");
+    var channelId=genericUtil.getQueryParam(this.props.location.search, "channelId");
     if(!sortBy){
          sortBy="lastModifiedAt";
          sortOrder="desc";
     }
-    return {
+    var st={
                  modalMessage:null,
                  episodes:[],
                  channelId:null,
-                 queryparameters:{search,programmeNumber,fromDate,toDate,channelId,sortBy,sortOrder},
+                 queryparameters:{search,contractNumber,fromDate,toDate,channelId,sortBy,sortOrder},
                  channels:[],
                  episodesState:LOAD_EPISODE_STATUS.LOADING
             };
 
+    if(newState){
+          return Object.assign(st,newState);
+    }
+    else{
+      return st;
+    }
   }
-  componentWillMount(){
-    this.startSearch(this.state.queryparameters);
+  componentDidMount(){
+      this.startSearch(this.state.queryparameters);
   }
+
+  componentDidUpdate(prevPops){
+     if(this.props.location.search!=prevPops.location.search || this.props.location.contractNumber!=prevPops.location.contractNumber){
+        var newstate=this.buildNewState();
+        this.setState(newstate);
+        this.startSearch(newstate.queryparameters);
+     }
+  }
+
+
+
   startLoadEpisodes(){
     var episodesState=LOAD_EPISODE_STATUS.LOADING;
     this.episodesState=episodesState;
@@ -74,13 +94,13 @@ export default class ListAssignedEpisodesView extends Component{
   startSearch(queryparameters){
      this.startLoadEpisodes();
 
-       if(queryparameters.programmeNumber){
-         // api.findAssignedEpisodesByProgrammeNumber(queryparameters.programmeNumber).then(episodes =>{
-         //
-         //      //this.setImageSets(episodes);
-         // }).catch(error=>{
-         //       this.setErrorMessage("Error loading episode data from the server"+error);
-         // });
+       if(queryparameters.contractNumber){
+
+         api.findEpisodes(queryparameters).then(episodes =>{
+              this.setEpisodes(episodes,queryparameters);
+         }).catch(error=>{
+               this.setErrorMessage("Error loading episode data from the server"+error);
+         });
        }
        else {
           api.findAssignedEpisodes(queryparameters).then(episodes =>{
@@ -106,10 +126,20 @@ export default class ListAssignedEpisodesView extends Component{
             return;
       }
       this.startLoadEpisodes();
-      api.findAssignedEpisodes(this.state.queryparameters,start).then(episodes =>{
-               console.log("Next batch of data is loaded");
-               this.appendEpisodeForNextPage(episodes);
-           });
+      if(this.state.queryparameters.contractNumber){
+        api.findEpisodes(this.state.queryparameters,start).then(episodes =>{
+             this.appendEpisodeForNextPage(episodes);
+        }).catch(error=>{
+              this.setErrorMessage("Error loading episode data from the server"+error);
+        });
+      }
+      else{
+        api.findAssignedEpisodes(this.state.queryparameters,start).then(episodes =>{
+                 console.log("Next batch of data is loaded");
+                 this.appendEpisodeForNextPage(episodes);
+             });
+      }
+
   }
   appendEpisodeForNextPage(ep){
     var recordLimit=appdata.getAppConfig().recordLimit;
