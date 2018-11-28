@@ -47,7 +47,7 @@ export  default class ListAssignedEpisodes extends Component {
                          <Column
                            columnKey="contractNumber"
                            header={<HeaderCellSorting data={data}/>}
-                           cell={<TextCell data={data}/>}
+                           cell={<ContractNumberCell data={data}/>}
                            fixed={true}
                            width={150}
                            />
@@ -98,30 +98,84 @@ class TextCell extends Component {
     );
   }
 };
+class ContractNumberCell extends Component {
+  render() {
+    var queryparameters=this.props.data.queryparameters;
+
+
+    const {data, rowIndex, columnKey, ...props} = this.props;
+    if(data && data.episodes && data.episodes.length && (rowIndex+10)>=data.episodes.length){
+      this.props.data.onLoadLoadNextPage();
+    }
+    var contractNumber=data.episodes[rowIndex][columnKey];
+
+
+    if(queryparameters.contractNumber){
+
+      return (
+        <Cell {...props}>
+
+          {data.episodes[rowIndex][columnKey]}
+
+        </Cell>
+      );
+    }
+    else{
+      var linkurl=textValues.assignedEpisodes.link+"?contractNumber="+contractNumber;
+      return (
+        <Cell {...props}>
+          <a href={linkurl}>
+          {data.episodes[rowIndex][columnKey]}
+          </a>
+        </Cell>
+      );
+    }
+
+  }
+};
 
 class ImageCell extends Component {
   render() {
     const {data, rowIndex, columnKey, ...props} = this.props;
     var imageSets=data.episodes[rowIndex].imageSets;
     var link=textValues.assignImageByContractAndEpidodeNumber.link+"/?contractNumber="+data.episodes[rowIndex].contractNumber+"&episodeNumber="+data.episodes[rowIndex].episodeNumber;
+    var noImageLink=textValues.assignImageByEpisode.link+"/?episodeid="+data.episodes[rowIndex].id;
+    
 
 
+    if(imageSets){
+      return (
+        <Cell {...props}>
+              <div style={styles.thumbnailContainer}>
+                      {imageSets.map(imageSet=>{
+                          return (
+                            <Link to={link} key={imageSet.id}>
+                            <div key={imageSet.id} style={styles.thumbnail}>
+                                  <DisplayThumbnail imageSet={imageSet}/>
+                            </div>
+                            </Link>
+
+                          );
+                      })}
+              </div>
+        </Cell>
+      );
+    }
+  else{
     return (
       <Cell {...props}>
             <div style={styles.thumbnailContainer}>
-                    {imageSets.map(imageSet=>{
-                        return (
-                          <Link to={link} key={imageSet.id}>
-                          <div key={imageSet.id} style={styles.thumbnail}>
-                                <DisplayThumbnail imageSet={imageSet}/>
+                          <Link to={noImageLink}>
+                          <div style={styles.thumbnail}>
+                                    <img src={localImages.missing} style={styles.image(192,108)}/>
                           </div>
                           </Link>
-
-                        );
-                    })}
             </div>
       </Cell>
     );
+  }
+
+
   }
 
 
@@ -130,7 +184,7 @@ class ImageCell extends Component {
 class DisplayThumbnail extends Component{
     render(){
       var imageSet=this.props.imageSet;
-      var link=textValues.assignImageByContractAndEpidodeNumber.link+"/?contractNumber="+imageSet.contractNumber+"&episodeNumber="+imageSet.episodeNumber;
+
       var thumbnailImages=imageSet.images.filter(image=>image.width===192 && image.height===108);
       var imgurl=null;
       var width=0;
