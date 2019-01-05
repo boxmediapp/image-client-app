@@ -232,13 +232,13 @@ class CreateNewScheduledImport extends Component{
                <h1>Create tasks</h1>
                <div className="row">
                     <div className="col-sm-4 formFieldWithLabel">
-                      <label htmlFor="fromDayOffset">From day:</label>
+                      <label htmlFor="fromDayOffset">From (days):</label>
                       <input type="text" className="form-control" id="fromDayOffset"
                       placeholder="fromDayOffset" name="fromDayOffset" value={this.state.fromDayOffset}
                       onChange={evt=>{this.setFromDayOffset(evt.target.value)}}/>
                     </div>
                     <div className="col-sm-4 formFieldWithLabel">
-                      <label htmlFor="toDayOffset">To day:</label>
+                      <label htmlFor="toDayOffset">To (days):</label>
                       <input type="text" className="form-control" id="toDayOffset" placeholder="toDayOffset"
                       name="toDayOffset" value={this.state.toDayOffset}
                       onChange={evt=>{this.setToDayOffset(evt.target.value)}}/>
@@ -259,7 +259,7 @@ class CreateNewScheduledImport extends Component{
 
                 <div className="row">
                     <div className="col-sm-4 formFieldWithLabel">
-                       <label htmlFor="runOnTime">Execution on:</label>
+                       <label htmlFor="runOnTime">Execute on:</label>
                        <input type="text" className="form-control" id="runOnTime" placeholder="Execution Time" name="runOnTime" value={this.state.runOnTime}
                        onChange={evt=>{this.setRunOnTime(evt.target.value)}}/>
                      </div>
