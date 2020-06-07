@@ -7,7 +7,7 @@
     "crypto-js": "^3.1.9-1",
     "eslint-config-react-app": "^2.1.0",
     "fixed-data-table-2": "^0.8.15",
-    "global-input-message": "^1.5.5",
+    "global-input-message": "^1.7.10",
     "json-loader": "^0.5.7",
     "qrcode.react": "^0.7.1",
     "react": "^16.6.0",
